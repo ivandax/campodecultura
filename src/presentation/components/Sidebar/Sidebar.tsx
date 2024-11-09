@@ -14,19 +14,19 @@ const Sidebar: React.FC = () => {
 
   return (
     <SidebarWrapper>
-      <SidebarTitle>Planets App</SidebarTitle>
+      <SidebarTitle>Campo de cultura</SidebarTitle>
       <SidebarItems>
         <SidebarItem
-          onClick={() => navigate("/planets")}
+          onClick={() => navigate("/home")}
           $active={location.pathname === "/planets"}
         >
-          Planets
+          Inicio
         </SidebarItem>
         <SidebarItem
-          onClick={() => navigate("/favorites")}
-          $active={location.pathname === "/favorites"}
+          onClick={() => navigate("/sponsors")}
+          $active={location.pathname === "/sponsors"}
         >
-          Favorites
+          Sponsors
         </SidebarItem>
       </SidebarItems>
     </SidebarWrapper>
