@@ -3,14 +3,11 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { Sidebar } from "@src/presentation/components/Sidebar";
 import { RootContainer, MainContent, GlobalStyle } from "./Root.Styles";
-import { usePlanets } from "@src/presentation/hooks/usePlanets";
-import { Planets } from "@src/presentation/views/Planets";
-import { Favorites } from "@src/presentation/views/Favorites";
-import { PlanetDetail } from "@src/presentation/components/PlanetDetail";
+import { useHomePublications } from "@src/presentation/hooks/useHomePublications";
+import { Home } from "@src/presentation/views/Home";
 
 const Root: React.FC = () => {
-  const { planets, handleUpdatePlanets, handleToggleFavoritePlanet } =
-    usePlanets();
+  const { publications } = useHomePublications();
 
   return (
     <BrowserRouter>
@@ -20,30 +17,10 @@ const Root: React.FC = () => {
         <MainContent>
           <Routes>
             <Route
-              path="/planets"
-              element={
-                <Planets
-                  planets={planets}
-                  handleUpdatePlanets={handleUpdatePlanets}
-                  handleToggleFavoritePlanet={handleToggleFavoritePlanet}
-                />
-              }
-            >
-              <Route
-                path=":planetId"
-                element={<PlanetDetail planets={planets} />}
-              />
-            </Route>
-            <Route
-              path="/favorites"
-              element={
-                <Favorites
-                  planets={planets}
-                  handleToggleFavoritePlanet={handleToggleFavoritePlanet}
-                />
-              }
+              path="/home"
+              element={<Home latestPublications={publications} />}
             />
-            <Route path="/" element={<Navigate to="/planets" replace />} />
+            <Route path="/" element={<Navigate to="/home" replace />} />
           </Routes>
         </MainContent>
       </RootContainer>

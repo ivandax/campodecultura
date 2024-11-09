@@ -4,32 +4,23 @@ const mockData = {
   previous: "1",
   results: [
     {
-      name: "Mars",
-      climate: "Temperate",
-      diameter: 95,
-      population: 400,
-      url: "someURL",
-      id: "1",
-      gravity: "500",
+      title: "Understanding React State Management",
+      publishedDate: "2024-11-09",
+      author: "Jane Doe",
+      content: "This article delves into the different approaches for managing state in React applications, covering basic useState to complex patterns with context and Zustand."
     },
     {
-      name: "Jupiter",
-      climate: "Chilly",
-      diameter: 80,
-      population: 300,
-      url: "someURL1",
-      id: "2",
-      gravity: "600",
+      title: "Java Spring Boot Essentials",
+      publishedDate: "2024-10-15",
+      author: "John Smith",
+      content: "A comprehensive guide for beginners looking to get started with Java Spring Boot, exploring its core features, setup, and best practices."
     },
     {
-      name: "Saturn",
-      climate: "Flaming",
-      diameter: 50,
-      population: 500,
-      url: "someURL3",
-      id: "3",
-      gravity: "700",
-    },
+      title: "Web Development Trends 2024",
+      publishedDate: "2024-09-30",
+      author: "Alex Johnson",
+      content: "An overview of the most anticipated web development trends for 2024, including AI integrations, performance optimization, and immersive 3D experiences."
+    }
   ],
 };
 

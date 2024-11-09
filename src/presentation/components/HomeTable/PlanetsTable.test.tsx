@@ -1,7 +1,7 @@
 import { render, fireEvent } from "@testing-library/react";
 import { expect, vi } from "vitest";
 import { ThemeProvider } from "styled-components";
-import { PlanetsTable } from "./PlanetsTable";
+import { PlanetsTable } from "./HomeTable";
 import { theme } from "@src/presentation/styles/theme";
 import { UIPlanet } from "@src/presentation/hooks/usePlanets";
 import { MemoryRouter } from "react-router-dom";
