@@ -11,3 +11,6 @@
 
  - `yarn test` To run tests
 
+### Useful commands
+
+ - `firebase deploy --only hosting`
