@@ -15,6 +15,8 @@ const Sidebar: React.FC = () => {
 
   const appUser = useAuthStore((state) => state.user);
 
+  console.log("store user", appUser);
+
   return (
     <SidebarWrapper>
       <SidebarTitle>Campo de cultura</SidebarTitle>

@@ -11,8 +11,8 @@ service cloud.firestore {
       // Allow read access for everyone (authenticated or not)
       allow read;
 
-      // Allow write access only for authenticated users
-      allow write: if request.auth != null;
+      // Allow write access only for authenticated users with role admin
+      allow write: if request.auth != null && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "ADMIN";
     }
   }
 }

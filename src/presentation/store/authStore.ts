@@ -23,12 +23,12 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
-  error: null,    
+  error: null,
   isLoading: false,
 
   initializeAuth: (): Unsubscribe => {
     const cancelObserver = registerAuthObserver(async (user) => {
-      console.log(user)
+      console.log(user);
       set({ isLoading: true });
       if (user) {
         const userProfileResult = await getUser(user.uid);
@@ -45,6 +45,7 @@ export const useAuthStore = create<AuthState>((set) => ({
             name: "",
             createdOn: +new Date(),
             verified: false,
+            role: "STANDARD",
           };
           const createResult = await createUser(newProfile, user.uid);
           if (createResult.data) {
@@ -68,7 +69,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ error: result.error, isLoading: false });
       return null;
     }
-    return result.data
+    return result.data;
   },
 
   logout: async () => {
