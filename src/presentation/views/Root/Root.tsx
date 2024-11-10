@@ -7,6 +7,7 @@ import { useHomePublications } from "@src/presentation/hooks/useHomePublications
 import { Home } from "@src/presentation/views/Home";
 import { Login } from "@src/presentation/views/Login";
 import { SignUp } from "@src/presentation/views/SignUp";
+import { CreatePost } from "@src/presentation/views/CreatePost";
 
 const Root: React.FC = () => {
   const { publications } = useHomePublications();
@@ -24,6 +25,7 @@ const Root: React.FC = () => {
             />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/create" element={<CreatePost />} />
             <Route path="/" element={<Navigate to="/home" replace />} />
           </Routes>
         </MainContent>

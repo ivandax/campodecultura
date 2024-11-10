@@ -7,10 +7,13 @@ import {
   SidebarItems,
   SidebarItem,
 } from "./Sidebar.Styles";
+import { useAuthStore } from "@src/presentation/store/authStore";
 
 const Sidebar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const appUser = useAuthStore((state) => state.user);
 
   return (
     <SidebarWrapper>
@@ -22,6 +25,14 @@ const Sidebar: React.FC = () => {
         >
           Inicio
         </SidebarItem>
+        {appUser && (
+          <SidebarItem
+            onClick={() => navigate("/create")}
+            $active={location.pathname === "/create"}
+          >
+            Crear post
+          </SidebarItem>
+        )}
         <SidebarItem
           onClick={() => navigate("/login")}
           $active={location.pathname === "/login"}
