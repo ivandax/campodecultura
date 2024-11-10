@@ -26,25 +26,33 @@ const Sidebar: React.FC = () => {
           Inicio
         </SidebarItem>
         {appUser && (
-          <SidebarItem
-            onClick={() => navigate("/create")}
-            $active={location.pathname === "/create"}
-          >
-            Crear post
-          </SidebarItem>
+          <>
+            <SidebarItem
+              onClick={() => navigate("/create")}
+              $active={location.pathname === "/create"}
+            >
+              Crear post
+            </SidebarItem>
+          </>
         )}
-        <SidebarItem
-          onClick={() => navigate("/login")}
-          $active={location.pathname === "/login"}
-        >
-          Iniciar sesión
-        </SidebarItem>
-        <SidebarItem
-          onClick={() => navigate("/signup")}
-          $active={location.pathname === "/signup"}
-        >
-          Crear cuenta
-        </SidebarItem>
+
+        {appUser === null && (
+          <>
+            <SidebarItem
+              onClick={() => navigate("/login")}
+              $active={location.pathname === "/login"}
+            >
+              Iniciar sesión
+            </SidebarItem>
+            <SidebarItem
+              onClick={() => navigate("/signup")}
+              $active={location.pathname === "/signup"}
+            >
+              Crear cuenta
+            </SidebarItem>
+          </>
+        )}
+
         <SidebarItem
           onClick={() => navigate("/sponsors")}
           $active={location.pathname === "/sponsors"}

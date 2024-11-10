@@ -1,6 +1,6 @@
 import { ViewTitle } from "@src/presentation/components/ViewTitle";
 import { Outlet } from "react-router-dom";
-import { Main, Wrapper } from "./Home.Styles";
+import { Main, Wrapper, MessageWrapper, LoadingWrapper } from "./Home.Styles";
 import { HomeTable } from "@src/presentation/components/HomeTable";
 import { getPosts } from "@src/persistence/post";
 import { useEffect, useState } from "react";
@@ -30,8 +30,8 @@ function Home() {
     <Wrapper>
       <Main>
         <ViewTitle>Campo de Cultura</ViewTitle>
-        {isLoading && <div>Cargando...</div>}
-        {message && <div>{message}</div>}
+        {isLoading && <LoadingWrapper>Cargando...</LoadingWrapper>}
+        {message && <MessageWrapper>{message}</MessageWrapper>}
         {posts && <HomeTable posts={posts} />}
       </Main>
       <Outlet />

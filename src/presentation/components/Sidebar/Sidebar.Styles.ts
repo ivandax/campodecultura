@@ -3,6 +3,8 @@ import styled, { css } from "styled-components";
 export const SidebarWrapper = styled.div`
   width: 266px;
   background-color: ${(props) => props.theme.colors.primary};
+  display: flex;
+  flex-direction: column;
 `;
 
 export const SidebarTitle = styled.h1`
@@ -36,4 +38,10 @@ export const SidebarItem = styled.li<SidebarItemProps>`
 export const SidebarItems = styled.ul`
   display: flex;
   flex-direction: column;
+`;
+
+export const BottomSidebarItems = styled.ul`
+  display: flex;
+  flex-direction: column;
+  align-self: flex-end;
 `;
