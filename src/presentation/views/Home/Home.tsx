@@ -1,34 +1,41 @@
-import { FullView } from "@src/presentation/components/FullView";
 import { ViewTitle } from "@src/presentation/components/ViewTitle";
-import { AsyncOp } from "@src/presentation/types/AsyncOp";
 import { Outlet } from "react-router-dom";
-import { PlanetsMain, PlanetsViewWrapper } from "./Home.Styles";
-import { Publication } from "@src/domain/Publication";
+import { Main, Wrapper } from "./Home.Styles";
 import { HomeTable } from "@src/presentation/components/HomeTable";
+import { getPosts } from "@src/persistence/post";
+import { useEffect, useState } from "react";
+import { Post } from "@src/domain/Post";
 
-interface HomeProps {
-  latestPublications: AsyncOp<Publication[], Error>;
-}
+function Home() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<null | string>(null);
+  const [posts, setPosts] = useState<Post[] | null>(null);
 
-function Home({ latestPublications }: HomeProps) {
-  if (latestPublications.status === "pending" || latestPublications.status === "in-progress") {
-    return <FullView title="Loading..." />;
-  }
+  useEffect(() => {
+    const handleGetPosts = async () => {
+      setIsLoading(true);
+      const posts = await getPosts();
+      setIsLoading(false);
 
-  if (latestPublications.status === "failed") {
-    return <div>Error: Could not retrieve publications</div>;
-  }
+      if (posts.error) {
+        setMessage("Error cargando publicaciones");
+        return;
+      }
+      setPosts(posts.data);
+    };
+    handleGetPosts();
+  }, []);
 
   return (
-    <PlanetsViewWrapper>
-      <PlanetsMain>
+    <Wrapper>
+      <Main>
         <ViewTitle>Campo de Cultura</ViewTitle>
-        <HomeTable
-          publications={latestPublications.data}
-        />
-      </PlanetsMain>
+        {isLoading && <div>Cargando...</div>}
+        {message && <div>{message}</div>}
+        {posts && <HomeTable posts={posts} />}
+      </Main>
       <Outlet />
-    </PlanetsViewWrapper>
+    </Wrapper>
   );
 }
 

@@ -1,27 +1,33 @@
 import { Table, TableCell, TableRow } from "./HomeTable.Styles";
 import { BodyText, H2CategoryTitle } from "@src/presentation/components/Texts";
 import { TableHeaderCell } from "@src/presentation/components/TableHeaderCell";
-import { Publication } from "@src/domain/Publication";
+import { Post } from "@src/domain/Post";
 
 interface HomeTableProps {
-  publications: Publication[];
+  posts: Post[];
 }
 
-function HomeTable({ publications }: HomeTableProps) {
+function HomeTable({ posts }: HomeTableProps) {
   return (
     <Table>
       <thead>
         <tr>
           <TableHeaderCell $width={20}>
-            <BodyText color={"gray"}>Name</BodyText>
+            <BodyText color={"gray"}>Título</BodyText>
+          </TableHeaderCell>
+          <TableHeaderCell $width={20}>
+            <BodyText color={"gray"}>Fecha de publicación</BodyText>
           </TableHeaderCell>
         </tr>
       </thead>
       <tbody>
-        {publications.map((item) => (
+        {posts.map((item) => (
           <TableRow key={item.title}>
             <TableCell $pointer onClick={() => void 0} $width={20}>
               <H2CategoryTitle>{item.title}</H2CategoryTitle>
+            </TableCell>
+            <TableCell $pointer onClick={() => void 0} $width={20}>
+              <H2CategoryTitle>{item.createdOn}</H2CategoryTitle>
             </TableCell>
           </TableRow>
         ))}

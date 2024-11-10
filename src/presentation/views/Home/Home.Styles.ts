@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-export const PlanetsViewWrapper = styled.div`
+export const Wrapper = styled.div`
   display: flex;
 `;
 
-export const PlanetsMain = styled.div`
+export const Main = styled.div`
   flex-grow: 1;
 `;
