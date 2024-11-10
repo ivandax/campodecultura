@@ -15,7 +15,7 @@ interface AuthState {
   user: AppUser | null;
   error: Error | null;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<FirebaseUser | null>;
   logout: () => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
   initializeAuth: () => Unsubscribe;
@@ -61,13 +61,14 @@ export const useAuthStore = create<AuthState>((set) => ({
     return cancelObserver;
   },
 
-  login: async (email, password) => {
+  login: async (email, password): Promise<null | FirebaseUser> => {
     set({ isLoading: true, error: null });
     const result: Result<FirebaseUser> = await login(email, password);
     if (result.error) {
-      set({ error: result.error });
+      set({ error: result.error, isLoading: false });
+      return null;
     }
-    set({ isLoading: false });
+    return result.data
   },
 
   logout: async () => {

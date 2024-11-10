@@ -1,35 +1,44 @@
-import { FullView } from "@src/presentation/components/FullView";
-import { ViewTitle } from "@src/presentation/components/ViewTitle";
-import { AsyncOp } from "@src/presentation/types/AsyncOp";
-import { Outlet } from "react-router-dom";
-import { PlanetsMain, PlanetsViewWrapper } from "./Home.Styles";
-import { Publication } from "@src/domain/Publication";
-import { HomeTable } from "@src/presentation/components/HomeTable";
+import { useState } from "react";
+import { LoginFormWrapper } from "./Login.Styles";
+import { useAuthStore } from "@src/presentation/store/authStore";
+import { useNavigate } from "react-router-dom";
 
-interface HomeProps {
-  latestPublications: AsyncOp<Publication[], Error>;
-}
+function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, error, isLoading } = useAuthStore();
+  const navigate = useNavigate()
 
-function Home({ latestPublications }: HomeProps) {
-  if (latestPublications.status === "pending" || latestPublications.status === "in-progress") {
-    return <FullView title="Loading..." />;
-  }
-
-  if (latestPublications.status === "failed") {
-    return <div>Error: Could not retrieve publications</div>;
-  }
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const userOrNull = await login(email, password);
+    if(userOrNull){
+      navigate("/home")
+    }
+  };
 
   return (
-    <PlanetsViewWrapper>
-      <PlanetsMain>
-        <ViewTitle>Campo de Cultura</ViewTitle>
-        <HomeTable
-          publications={latestPublications.data}
-        />
-      </PlanetsMain>
-      <Outlet />
-    </PlanetsViewWrapper>
+    <LoginFormWrapper onSubmit={handleLogin}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        required
+      />
+      <button type="submit" disabled={isLoading}>
+        {isLoading ? "Logging in..." : "Login"}
+      </button>
+      {error && <p>{error.message}</p>}
+    </LoginFormWrapper>
   );
 }
 
-export { Home };
+export { Login };

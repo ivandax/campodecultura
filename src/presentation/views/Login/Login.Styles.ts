@@ -1,9 +1,13 @@
 import styled from "styled-components";
 
-export const PlanetsViewWrapper = styled.div`
+export const LoginFormWrapper = styled.form`
+  width: 280px;
   display: flex;
-`;
+  flex-direction: column;
+  padding: 24px;
+  gap: 8px;
 
-export const PlanetsMain = styled.div`
-  flex-grow: 1;
+  input {
+    padding: 4px;
+  }
 `;

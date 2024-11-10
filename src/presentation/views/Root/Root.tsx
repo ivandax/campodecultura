@@ -5,6 +5,7 @@ import { Sidebar } from "@src/presentation/components/Sidebar";
 import { RootContainer, MainContent, GlobalStyle } from "./Root.Styles";
 import { useHomePublications } from "@src/presentation/hooks/useHomePublications";
 import { Home } from "@src/presentation/views/Home";
+import { Login } from "@src/presentation/views/Login";
 
 const Root: React.FC = () => {
   const { publications } = useHomePublications();
@@ -20,6 +21,7 @@ const Root: React.FC = () => {
               path="/home"
               element={<Home latestPublications={publications} />}
             />
+            <Route path="/login" element={<Login />} />
             <Route path="/" element={<Navigate to="/home" replace />} />
           </Routes>
         </MainContent>
