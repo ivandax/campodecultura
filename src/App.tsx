@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 
 import { theme } from "@src/presentation/styles/theme";
 import { Root } from "@src/presentation/views/Root/Root";
+import { useAuthStore } from '@src/presentation/store/authStore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBuHfmEg5j-eTEEM3sgHTDFMmBxAhJecu8",
@@ -19,6 +21,16 @@ const app = initializeApp(firebaseConfig);
 getAnalytics(app);
 
 function App() {
+  const initializeAuth = useAuthStore((state) => state.initializeAuth);
+
+  useEffect(()=>{
+    const cancelObserver = initializeAuth();
+    return () => {
+      cancelObserver();
+  };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <Root />
