@@ -27,7 +27,7 @@ const Sidebar: React.FC = () => {
         >
           Inicio
         </SidebarItem>
-        {appUser && (
+        {appUser && appUser.role === "ADMIN" && (
           <>
             <SidebarItem
               onClick={() => navigate("/create")}

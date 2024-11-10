@@ -19,7 +19,7 @@ function CreatePost() {
     setMessage(null);
     const result = await createPost({
       title,
-      content: [content],
+      content: content.split("\n"),
       createdOn: +new Date(),
       author: user.email,
     });
@@ -44,6 +44,7 @@ function CreatePost() {
         value={content}
         onChange={(e) => setContent(e.target.value)}
         placeholder="Contenido"
+        rows={24}
       />
       <button type="submit" disabled={isLoading}>
         {isLoading ? "Guardando..." : "Guardar"}

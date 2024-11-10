@@ -3,12 +3,15 @@ import { BodyText, H2CategoryTitle } from "@src/presentation/components/Texts";
 import { TableHeaderCell } from "@src/presentation/components/TableHeaderCell";
 import { Post } from "@src/domain/Post";
 import { timestampToHumanReadbleDate } from "@src/presentation/utils";
+import { useNavigate } from "react-router-dom";
 
 interface HomeTableProps {
   posts: Post[];
 }
 
 function HomeTable({ posts }: HomeTableProps) {
+  const navigate = useNavigate();
+
   return (
     <Table>
       <thead>
@@ -23,7 +26,10 @@ function HomeTable({ posts }: HomeTableProps) {
       </thead>
       <tbody>
         {posts.map((item) => (
-          <TableRow key={item.title}>
+          <TableRow
+            key={item.title}
+            onClick={() => navigate(`/view/${item.id}`)}
+          >
             <TableCell $pointer onClick={() => void 0} $width={20}>
               <H2CategoryTitle>{item.title}</H2CategoryTitle>
             </TableCell>
