@@ -5,6 +5,11 @@ export const SidebarWrapper = styled.div`
   background-color: ${(props) => props.theme.colors.primary};
   display: flex;
   flex-direction: column;
+
+  /* Hide sidebar in mobile */
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const SidebarTitle = styled.h1`
