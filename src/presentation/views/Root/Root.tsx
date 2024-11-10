@@ -6,6 +6,7 @@ import { RootContainer, MainContent, GlobalStyle } from "./Root.Styles";
 import { useHomePublications } from "@src/presentation/hooks/useHomePublications";
 import { Home } from "@src/presentation/views/Home";
 import { Login } from "@src/presentation/views/Login";
+import { SignUp } from "@src/presentation/views/SignUp";
 
 const Root: React.FC = () => {
   const { publications } = useHomePublications();
@@ -22,6 +23,7 @@ const Root: React.FC = () => {
               element={<Home latestPublications={publications} />}
             />
             <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
             <Route path="/" element={<Navigate to="/home" replace />} />
           </Routes>
         </MainContent>

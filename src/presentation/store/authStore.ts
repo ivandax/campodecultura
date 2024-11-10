@@ -17,7 +17,7 @@ interface AuthState {
   isLoading: boolean;
   login: (email: string, password: string) => Promise<FirebaseUser | null>;
   logout: () => Promise<void>;
-  signup: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string) => Promise<null | string>;
   initializeAuth: () => Unsubscribe;
 }
 
@@ -80,12 +80,13 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ isLoading: false });
   },
 
-  signup: async (email, password) => {
+  signup: async (email, password): Promise<null | string> => {
     set({ isLoading: true, error: null });
     const result: Result<void> = await signup(email, password);
     if (result.error) {
-      set({ error: result.error });
+      set({ error: result.error, isLoading: false });
+      return "Error signing up";
     }
-    set({ isLoading: false });
+    return null;
   },
 }));

@@ -1,25 +1,24 @@
 import { useState } from "react";
-import { LoginFormWrapper } from "./Login.Styles";
+import { SignUpFormWrapper } from "./SignUp.Styles";
 import { useAuthStore } from "@src/presentation/store/authStore";
-import { useNavigate } from "react-router-dom";
 
-function Login() {
+function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, error, isLoading } = useAuthStore();
-  const navigate = useNavigate()
+  const [message, setMessage] = useState<null | string>(null);
+  const { signup, error, isLoading } = useAuthStore();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    const userOrNull = await login(email, password);
-    if(userOrNull){
-      navigate("/home")
+    const maybeError = await signup(email, password);
+    if (!maybeError) {
+      setMessage("Cuenta creada. Revise su correo para verificar la cuenta");
     }
   };
 
   return (
-    <LoginFormWrapper onSubmit={handleLogin}>
-      <h5>Iniciar sesión</h5>
+    <SignUpFormWrapper onSubmit={handleSignup}>
+      <h5>Crear cuenta</h5>
       <input
         type="email"
         value={email}
@@ -35,11 +34,12 @@ function Login() {
         required
       />
       <button type="submit" disabled={isLoading}>
-        {isLoading ? "Iniciando..." : "Iniciar sesión"}
+        {isLoading ? "Creando cuenta..." : "Crear cuenta"}
       </button>
       {error && <p>{error.message}</p>}
-    </LoginFormWrapper>
+      {message && <p>{message}</p>}
+    </SignUpFormWrapper>
   );
 }
 
-export { Login };
+export { SignUp };
