@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FormWrapper } from "./CreatePost.Styles";
 import { createPost } from "@src/persistence/post";
 import { useAuthStore } from "@src/presentation/store/authStore";
+import { useNavigate } from "react-router-dom";
 
 function CreatePost() {
   const [title, setTitle] = useState("");
@@ -9,6 +10,7 @@ function CreatePost() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<null | string>(null);
   const { user } = useAuthStore();
+  const navigate = useNavigate();
 
   const handleCreatePost = async (e: React.FormEvent) => {
     if (!user) return;
@@ -26,7 +28,7 @@ function CreatePost() {
       setMessage(result.error.message);
       return;
     }
-    setMessage("Creado!");
+    navigate("/home");
   };
 
   return (
