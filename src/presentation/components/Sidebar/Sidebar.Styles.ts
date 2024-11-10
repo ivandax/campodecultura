@@ -39,9 +39,3 @@ export const SidebarItems = styled.ul`
   display: flex;
   flex-direction: column;
 `;
-
-export const BottomSidebarItems = styled.ul`
-  display: flex;
-  flex-direction: column;
-  align-self: flex-end;
-`;

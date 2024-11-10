@@ -2,6 +2,7 @@ import { Table, TableCell, TableRow } from "./HomeTable.Styles";
 import { BodyText, H2CategoryTitle } from "@src/presentation/components/Texts";
 import { TableHeaderCell } from "@src/presentation/components/TableHeaderCell";
 import { Post } from "@src/domain/Post";
+import { timestampToHumanReadbleDate } from "@src/presentation/utils";
 
 interface HomeTableProps {
   posts: Post[];
@@ -27,7 +28,9 @@ function HomeTable({ posts }: HomeTableProps) {
               <H2CategoryTitle>{item.title}</H2CategoryTitle>
             </TableCell>
             <TableCell $pointer onClick={() => void 0} $width={20}>
-              <H2CategoryTitle>{item.createdOn}</H2CategoryTitle>
+              <H2CategoryTitle>
+                {timestampToHumanReadbleDate(item.createdOn, "es")}
+              </H2CategoryTitle>
             </TableCell>
           </TableRow>
         ))}
