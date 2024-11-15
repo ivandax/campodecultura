@@ -37,6 +37,12 @@ function CreatePost() {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
+    if (file.size > maxSizeInBytes) {
+      setMessage("Image size must be less than 2MB.");
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = () => {
       setPhoto(reader.result as string); // Base64 string
