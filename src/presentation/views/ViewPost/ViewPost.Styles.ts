@@ -27,3 +27,13 @@ export const Content = styled.div`
 export const PhotoPreview = styled.div`
   width: 200px;
 `;
+
+export const AdminBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: ${(props) => props.theme.colors.gray};
+`;

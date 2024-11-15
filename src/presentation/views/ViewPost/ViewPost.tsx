@@ -5,17 +5,40 @@ import {
   GrayWrapper,
   Content,
   PhotoPreview,
+  AdminBlock,
 } from "./ViewPost.Styles";
-import { getPost } from "@src/persistence/post";
+import { getPost, deletePost } from "@src/persistence/post";
 import { useNavigate, useParams } from "react-router-dom";
 import { Post } from "@src/domain/Post";
 import { timestampToHumanReadbleDate } from "@src/presentation/utils";
+import { useAuthStore } from "@src/presentation/store/authStore";
+import { DeleteButton } from "@src/presentation/components/Buttons/DeleteButton/DeleteButton";
 
 function ViewPost() {
   const [post, setPost] = useState<Post | null>(null);
   const [message, setMessage] = useState<null | string>(null);
   const navigate = useNavigate();
   const { postId } = useParams();
+  const { user } = useAuthStore();
+
+  // ADMIN
+  const [deleteInput, setDeleteInput] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    if (!postId || user?.role !== "ADMIN") return;
+    setIsDeleting(true);
+    const result = await deletePost(postId);
+    setIsDeleting(false);
+
+    if (result.error) {
+      setMessage(result.error.message);
+      return;
+    }
+
+    setMessage("Post eliminado correctamente");
+    navigate("/home");
+  };
 
   useEffect(() => {
     const handleGetPost = async () => {
@@ -61,6 +84,24 @@ function ViewPost() {
           </Content>
           <GrayWrapper>{post.author}</GrayWrapper>
           <button onClick={() => navigate("/home")}>Volver</button>
+          <hr></hr>
+          {user?.role === "ADMIN" && (
+            <AdminBlock>
+              <h5>Acciones admin</h5>
+              <input
+                type="text"
+                placeholder="Escribe 'delete'"
+                value={deleteInput}
+                onChange={(e) => setDeleteInput(e.target.value)}
+                style={{ marginBottom: "10px", padding: "8px", width: "100%" }}
+              />
+              <DeleteButton
+                isDeleting={isDeleting}
+                deleteInput={deleteInput}
+                handleDelete={handleDelete}
+              />
+            </AdminBlock>
+          )}
         </>
       )}
 
