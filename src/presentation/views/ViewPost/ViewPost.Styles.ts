@@ -23,3 +23,7 @@ export const Content = styled.div`
 
   gap: 8px;
 `;
+
+export const PhotoPreview = styled.div`
+  width: 200px;
+`;

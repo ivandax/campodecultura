@@ -4,6 +4,7 @@ import {
   LoadingWrapper,
   GrayWrapper,
   Content,
+  PhotoPreview,
 } from "./ViewPost.Styles";
 import { getPost } from "@src/persistence/post";
 import { useNavigate, useParams } from "react-router-dom";
@@ -39,6 +40,15 @@ function ViewPost() {
         <LoadingWrapper>Cargando...</LoadingWrapper>
       ) : (
         <>
+          {post.coverImage ? (
+            <PhotoPreview>
+              <img
+                src={post.coverImage}
+                alt="Preview"
+                style={{ maxWidth: "100%" }}
+              />
+            </PhotoPreview>
+          ) : null}
           <h4>{post.title}</h4>
           <GrayWrapper>{`Publicado en: ${timestampToHumanReadbleDate(
             post.createdOn,

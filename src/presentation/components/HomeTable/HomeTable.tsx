@@ -25,6 +25,12 @@ function HomeTable({ posts }: HomeTableProps) {
         </tr>
       </thead>
       <tbody>
+        {posts.length === 0 && (
+          <TableRow>
+            <TableCell>No hay datos</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        )}
         {posts.map((item) => (
           <TableRow
             key={item.title}

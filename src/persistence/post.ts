@@ -6,6 +6,7 @@ import {
   addDoc,
   doc,
   getDoc,
+  deleteDoc,
 } from "firebase/firestore";
 import { tryCatch } from "./tryCatch";
 import { Result } from "@src/domain/Result";
@@ -51,6 +52,15 @@ export async function getPosts(): Promise<Result<Post[]>> {
         } else {
             return [];
         }
+    };
+    return tryCatch(callback);
+}
+
+export async function deletePost(postId: string): Promise<Result<void>> {
+    const db = getFirestore();
+    const callback = async (): Promise<void> => {
+        const docRef = doc(db, "posts", postId);
+        await deleteDoc(docRef);
     };
     return tryCatch(callback);
 }

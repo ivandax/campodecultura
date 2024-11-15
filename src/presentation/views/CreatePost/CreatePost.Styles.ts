@@ -14,3 +14,7 @@ export const FormWrapper = styled.form`
     padding: 4px;
   }
 `;
+
+export const PhotoPreview = styled.div`
+  width: 200px;
+`;
