@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import { Sidebar } from "@src/presentation/components/Sidebar";
+import { Topbar } from "@src/presentation/components/Topbar";
 import { RootContainer, MainContent, GlobalStyle } from "./Root.Styles";
 import { Home } from "@src/presentation/views/Home";
 import { Login } from "@src/presentation/views/Login";
@@ -14,6 +15,7 @@ const Root: React.FC = () => {
     <BrowserRouter>
       <GlobalStyle />
       <RootContainer>
+        <Topbar />
         <Sidebar />
         <MainContent>
           <Routes>
