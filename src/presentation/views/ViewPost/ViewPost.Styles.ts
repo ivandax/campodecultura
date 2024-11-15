@@ -5,6 +5,8 @@ export const Wrapper = styled.div`
   flex-direction: column;
   padding: 24px;
   gap: 8px;
+  overflow: scroll;
+  max-height: 100%;
 `;
 
 export const LoadingWrapper = styled.div`
