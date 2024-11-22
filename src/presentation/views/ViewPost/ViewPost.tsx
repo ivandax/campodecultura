@@ -78,8 +78,10 @@ function ViewPost() {
             "es"
           )}`}</GrayWrapper>
           <Content>
-            {post.content.map((paragraph, index) => {
-              return <p key={index}>{paragraph}</p>;
+            {post.content.map((item, index) => {
+              return item.type === "text"
+                ? item.content.split("\n").map((p) => <p key={index}>{p}</p>)
+                : null;
             })}
           </Content>
           <GrayWrapper>{post.author}</GrayWrapper>
