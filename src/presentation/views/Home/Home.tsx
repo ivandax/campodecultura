@@ -29,8 +29,8 @@ function Home() {
   return (
     <Wrapper>
       <Main>
-        <ViewTitle>Campo de Cultura</ViewTitle>
-        {isLoading && <LoadingWrapper>Cargando...</LoadingWrapper>}
+        <ViewTitle>Posts</ViewTitle>
+        {isLoading && <LoadingWrapper>Loading...</LoadingWrapper>}
         {message && <MessageWrapper>{message}</MessageWrapper>}
         {posts && <HomeTable posts={posts} />}
       </Main>

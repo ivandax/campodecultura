@@ -52,16 +52,16 @@ function CreatePost() {
     reader.onerror = () => {
       setMessage("Error loading the image.");
     };
-    reader.readAsDataURL(file); // Convert to Base64
+    reader.readAsDataURL(file);
   };
 
   return (
     <FormWrapper onSubmit={handleCreatePost}>
-      <h5>Crear publicación</h5>
+      <h5>Create post</h5>
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        placeholder="Título"
+        placeholder="Title"
         required
       />
       <ReactQuill
@@ -84,7 +84,7 @@ function CreatePost() {
         </PhotoPreview>
       )}
       <button type="submit" disabled={isLoading}>
-        {isLoading ? "Guardando..." : "Guardar"}
+        {isLoading ? "Saving..." : "Save"}
       </button>
       {message && <p>{message}</p>}
     </FormWrapper>

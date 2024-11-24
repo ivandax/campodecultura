@@ -28,7 +28,7 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
         $active={location.pathname === "/home"}
         $displayOn={displayOn}
       >
-        Inicio
+        Home
       </SidebarItem>
       {appUser && appUser.role === "ADMIN" && (
         <>
@@ -37,7 +37,7 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
             $active={location.pathname === "/create"}
             $displayOn={displayOn}
           >
-            Crear post
+            Create post
           </SidebarItem>
         </>
       )}
@@ -49,14 +49,14 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
             $active={location.pathname === "/login"}
             $displayOn={displayOn}
           >
-            Iniciar sesión
+            Log in
           </SidebarItem>
           <SidebarItem
             onClick={() => handleNavigate("/signup")}
             $active={location.pathname === "/signup"}
             $displayOn={displayOn}
           >
-            Crear cuenta
+            Create account
           </SidebarItem>
         </>
       )}

@@ -37,14 +37,14 @@ function ViewPost() {
       return;
     }
 
-    setMessage("Post eliminado correctamente");
+    setMessage("Post removed");
     navigate("/home");
   };
 
   useEffect(() => {
     const handleGetPost = async () => {
       if (!postId) {
-        setMessage("Error obteniendo el post id de params");
+        setMessage("Error getting id from params");
         return;
       }
       const postResult = await getPost(postId);
@@ -61,7 +61,7 @@ function ViewPost() {
   return (
     <Wrapper>
       {!post ? (
-        <LoadingWrapper>Cargando...</LoadingWrapper>
+        <LoadingWrapper>Loading...</LoadingWrapper>
       ) : (
         <>
           {post.coverImage ? (
@@ -74,20 +74,20 @@ function ViewPost() {
             </PhotoPreview>
           ) : null}
           <h4>{post.title}</h4>
-          <GrayWrapper>{`Publicado en: ${timestampToHumanReadbleDate(
+          <GrayWrapper>{`Published on: ${timestampToHumanReadbleDate(
             post.createdOn,
             "es"
           )}`}</GrayWrapper>
           <Content>{parse(post.content)}</Content>
           <GrayWrapper>{`Written by: ${post.author}`}</GrayWrapper>
-          <button onClick={() => navigate("/home")}>Volver</button>
+          <button onClick={() => navigate("/home")}>Go back</button>
           <hr></hr>
           {user?.role === "ADMIN" && (
             <AdminBlock>
-              <h5>Acciones admin</h5>
+              <h5>ADMIN actions</h5>
               <input
                 type="text"
-                placeholder="Escribe 'delete'"
+                placeholder="Write 'delete' to enable button"
                 value={deleteInput}
                 onChange={(e) => setDeleteInput(e.target.value)}
                 style={{ marginBottom: "10px", padding: "8px", width: "100%" }}

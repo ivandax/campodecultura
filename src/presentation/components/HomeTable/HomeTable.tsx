@@ -17,17 +17,17 @@ function HomeTable({ posts }: HomeTableProps) {
       <thead>
         <tr>
           <TableHeaderCell $width={20}>
-            <BodyText color={"gray"}>Título</BodyText>
+            <BodyText color={"gray"}>Title</BodyText>
           </TableHeaderCell>
           <TableHeaderCell $width={20}>
-            <BodyText color={"gray"}>Fecha de publicación</BodyText>
+            <BodyText color={"gray"}>Published date</BodyText>
           </TableHeaderCell>
         </tr>
       </thead>
       <tbody>
         {posts.length === 0 && (
           <TableRow>
-            <TableCell>No hay datos</TableCell>
+            <TableCell>No data</TableCell>
             <TableCell></TableCell>
           </TableRow>
         )}

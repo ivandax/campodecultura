@@ -18,7 +18,7 @@ function SignUp() {
 
   return (
     <SignUpFormWrapper onSubmit={handleSignup}>
-      <h5>Crear cuenta</h5>
+      <h5>Create account</h5>
       <input
         type="email"
         value={email}
@@ -30,11 +30,11 @@ function SignUp() {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Contraseña"
+        placeholder="Password"
         required
       />
       <button type="submit" disabled={isLoading}>
-        {isLoading ? "Creando cuenta..." : "Crear cuenta"}
+        {isLoading ? "Creating..." : "Create account"}
       </button>
       {error && <p>{error.message}</p>}
       {message && <p>{message}</p>}

@@ -6,7 +6,7 @@ import { SidebarItems } from "../SidebarItems";
 const Sidebar: React.FC = () => {
   return (
     <SidebarWrapper>
-      <SidebarTitle>Campo de cultura</SidebarTitle>
+      <SidebarTitle>Working title</SidebarTitle>
       <SidebarItems displayOn="desktop" />
     </SidebarWrapper>
   );

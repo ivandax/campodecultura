@@ -19,7 +19,7 @@ function Login() {
 
   return (
     <LoginFormWrapper onSubmit={handleLogin}>
-      <h5>Iniciar sesión</h5>
+      <h5>Log in</h5>
       <input
         type="email"
         value={email}
@@ -31,11 +31,11 @@ function Login() {
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Contraseña"
+        placeholder="Password"
         required
       />
       <button type="submit" disabled={isLoading}>
-        {isLoading ? "Iniciando..." : "Iniciar sesión"}
+        {isLoading ? "Logging in..." : "Log in"}
       </button>
       {error && <p>{error.message}</p>}
     </LoginFormWrapper>
