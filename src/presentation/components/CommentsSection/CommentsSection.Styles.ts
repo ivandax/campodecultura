@@ -82,6 +82,10 @@ export const Button = styled.button`
 
 export const MenuContainer = styled.div`
   position: relative;
+
+  &:hover > div {
+    display: block;
+  }
 `;
 
 export const MenuButton = styled.button`
@@ -92,8 +96,9 @@ export const MenuButton = styled.button`
 `;
 
 export const PopupMenu = styled.div`
+  display: none;
   position: absolute;
-  top: 1.5rem;
+  top: 0;
   right: 0;
   background: white;
   border: 1px solid gray;

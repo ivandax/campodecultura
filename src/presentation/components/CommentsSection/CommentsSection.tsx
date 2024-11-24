@@ -22,7 +22,6 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<null | string>(null);
-  const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -70,7 +69,6 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
       return;
     }
     setComments((prev) => prev.filter((comment) => comment.id !== commentId));
-    setActiveMenu(null);
   };
 
   if (!user) {
@@ -107,24 +105,12 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
 
               {comment.userId === user.id && (
                 <S.MenuContainer>
-                  <S.MenuButton
-                    onClick={() =>
-                      setActiveMenu((prev) =>
-                        prev === comment.id ? null : comment.id
-                      )
-                    }
-                  >
-                    ⋮
-                  </S.MenuButton>
-                  {activeMenu === comment.id && (
-                    <S.PopupMenu>
-                      <S.MenuItem
-                        onClick={() => handleDeleteComment(comment.id)}
-                      >
-                        Delete
-                      </S.MenuItem>
-                    </S.PopupMenu>
-                  )}
+                  <S.MenuButton>⋮</S.MenuButton>
+                  <S.PopupMenu>
+                    <S.MenuItem onClick={() => handleDeleteComment(comment.id)}>
+                      Delete
+                    </S.MenuItem>
+                  </S.PopupMenu>
                 </S.MenuContainer>
               )}
             </S.CommentItem>
