@@ -28,7 +28,6 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   initializeAuth: (): Unsubscribe => {
     const cancelObserver = registerAuthObserver(async (user) => {
-      console.log(user);
       set({ isLoading: true });
       if (user) {
         const userProfileResult = await getUser(user.uid);
