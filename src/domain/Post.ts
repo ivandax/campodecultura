@@ -11,7 +11,7 @@ export interface ImageContent {
 export type Content = ImageContent | TextContent;
 export interface CreatePostData {
   title: string;
-  content: Array<Content>;
+  content: string;
   createdOn: number;
   author: string;
   coverImage: string | null;

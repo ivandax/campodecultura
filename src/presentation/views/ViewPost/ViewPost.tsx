@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import parse from "html-react-parser";
 import {
   Wrapper,
   LoadingWrapper,
@@ -77,14 +78,8 @@ function ViewPost() {
             post.createdOn,
             "es"
           )}`}</GrayWrapper>
-          <Content>
-            {post.content.map((item, index) => {
-              return item.type === "text"
-                ? item.content.split("\n").map((p) => <p key={index}>{p}</p>)
-                : null;
-            })}
-          </Content>
-          <GrayWrapper>{post.author}</GrayWrapper>
+          <Content>{parse(post.content)}</Content>
+          <GrayWrapper>{`Written by: ${post.author}`}</GrayWrapper>
           <button onClick={() => navigate("/home")}>Volver</button>
           <hr></hr>
           {user?.role === "ADMIN" && (

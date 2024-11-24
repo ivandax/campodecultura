@@ -3,32 +3,17 @@ import { FormWrapper, PhotoPreview } from "./CreatePost.Styles";
 import { createPost } from "@src/persistence/post";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { useNavigate } from "react-router-dom";
-import { Content } from "@src/domain/Post";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 function CreatePost() {
   const [title, setTitle] = useState("");
-  const [content, setContent] = useState<Content[]>([
-    { type: "text", content: "" },
-  ]);
+  const [content, setContent] = useState("");
   const [photo, setPhoto] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<null | string>(null);
   const { user } = useAuthStore();
   const navigate = useNavigate();
-
-  const handleAddParagraph = () => {
-    setContent([...content, { type: "text", content: "" }]);
-  };
-
-  const handleContentChange = (index: number, newContent: string) => {
-    setContent((prevParagraphs: Content[]) =>
-      prevParagraphs.map((paragraph, i) =>
-        i === index && paragraph.type === "text"
-          ? { ...paragraph, content: newContent }
-          : paragraph
-      )
-    );
-  };
 
   const handleCreatePost = async (e: React.FormEvent) => {
     if (!user) return;
@@ -37,7 +22,7 @@ function CreatePost() {
     setMessage(null);
     const result = await createPost({
       title,
-      content,
+      content: content,
       createdOn: +new Date(),
       author: user.email,
       coverImage: photo,
@@ -79,38 +64,18 @@ function CreatePost() {
         placeholder="Título"
         required
       />
-      {content.map((item, index) => (
-        <div key={index} style={{ marginBottom: "1rem" }}>
-          {item.type === "text" ? (
-            <textarea
-              value={item.content}
-              onChange={(e) => handleContentChange(index, e.target.value)}
-              rows={4}
-              cols={50}
-              placeholder={`Paragraph ${index + 1}`}
-            />
-          ) : item.type === "image" ? (
-            <div>
-              <img
-                src={item.src}
-                alt={`Paragraph ${index + 1}`}
-                style={{ maxWidth: "100%", marginBottom: "0.5rem" }}
-              />
-              <input
-                type="text"
-                value={item.src}
-                onChange={() => void 0}
-                placeholder="Image URL"
-                style={{ width: "100%" }}
-              />
-            </div>
-          ) : null}
-        </div>
-      ))}
-      <button type="button" onClick={handleAddParagraph}>
-        Add Text Paragraph
-      </button>
-
+      <ReactQuill
+        value={content}
+        onChange={(value) => setContent(value)}
+        modules={{
+          toolbar: [
+            ["bold", "italic", "underline"],
+            ["image"],
+            [{ list: "ordered" }, { list: "bullet" }],
+          ],
+        }}
+        formats={["bold", "italic", "underline", "image", "list", "bullet"]}
+      />
       <h5>Cover image (optional)</h5>
       <input type="file" accept="image/*" onChange={handlePhotoUpload} />
       {photo && (
