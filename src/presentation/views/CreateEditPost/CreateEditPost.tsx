@@ -5,6 +5,7 @@ import { useAuthStore } from "@src/presentation/store/authStore";
 import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 
 function CreateEditPost() {
   const [title, setTitle] = useState("");
@@ -125,9 +126,9 @@ function CreateEditPost() {
           <img src={photo} alt="Preview" style={{ maxWidth: "100%" }} />
         </PhotoPreview>
       )}
-      <button type="submit" disabled={isLoading}>
+      <MainButton type="submit" disabled={isLoading}>
         {isLoading ? "Saving..." : "Save"}
-      </button>
+      </MainButton>
       {message && <p>{message}</p>}
     </FormWrapper>
   );

@@ -1,19 +1,13 @@
 import { useEffect, useState } from "react";
 import parse from "html-react-parser";
-import {
-  Wrapper,
-  LoadingWrapper,
-  GrayWrapper,
-  Content,
-  PhotoPreview,
-  AdminBlock,
-} from "./ViewPost.Styles";
+import * as S from "./ViewPost.Styles";
 import { getPost, deletePost } from "@src/persistence/post";
 import { useNavigate, useParams } from "react-router-dom";
 import { Post } from "@src/domain/Post";
 import { timestampToHumanReadbleDate } from "@src/presentation/utils";
 import { useAuthStore } from "@src/presentation/store/authStore";
-import { DeleteButton } from "@src/presentation/components/Buttons/DeleteButton/DeleteButton";
+import { DeleteButton } from "@src/presentation/components/Buttons/DeleteButton";
+import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 
 function ViewPost() {
   const [post, setPost] = useState<Post | null>(null);
@@ -59,30 +53,33 @@ function ViewPost() {
   }, [postId]);
 
   return (
-    <Wrapper>
+    <S.Wrapper>
       {!post ? (
-        <LoadingWrapper>Loading...</LoadingWrapper>
+        <S.LoadingWrapper>Loading...</S.LoadingWrapper>
       ) : (
         <>
           {post.coverImage ? (
-            <PhotoPreview>
+            <S.PhotoPreview>
               <img
                 src={post.coverImage}
                 alt="Preview"
                 style={{ maxWidth: "100%" }}
               />
-            </PhotoPreview>
+            </S.PhotoPreview>
           ) : null}
           <h3>{post.title}</h3>
-          <GrayWrapper>{`Edited on: ${timestampToHumanReadbleDate(
+          <S.GrayWrapper>{`Edited on: ${timestampToHumanReadbleDate(
             post.editedOn,
             "es"
-          )}`}</GrayWrapper>
-          <Content>{parse(post.content)}</Content>
-          <GrayWrapper>{`Written by: ${post.author}`}</GrayWrapper>
-          <button onClick={() => navigate("/home")}>Go back</button>
+          )}`}</S.GrayWrapper>
+          <S.Content>{parse(post.content)}</S.Content>
+          <S.GrayWrapper>{`Written by: ${post.author}`}</S.GrayWrapper>
+          <S.Footer>
+            <MainButton onClick={() => navigate("/home")}>Go back</MainButton>
+          </S.Footer>
+
           {user?.role === "ADMIN" && (
-            <AdminBlock>
+            <S.AdminBlock>
               <h5>ADMIN actions</h5>
               <button onClick={() => navigate(`/edit/${postId}`)}>
                 Edit post
@@ -110,13 +107,13 @@ function ViewPost() {
                 deleteInput={deleteInput}
                 handleDelete={handleDelete}
               />
-            </AdminBlock>
+            </S.AdminBlock>
           )}
         </>
       )}
 
       {message && <p>{message}</p>}
-    </Wrapper>
+    </S.Wrapper>
   );
 }
 

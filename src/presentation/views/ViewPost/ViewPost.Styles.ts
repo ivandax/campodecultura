@@ -30,6 +30,11 @@ export const PhotoPreview = styled.div`
   width: 200px;
 `;
 
+export const Footer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
 export const AdminBlock = styled.div`
   width: 260px;
   display: flex;
