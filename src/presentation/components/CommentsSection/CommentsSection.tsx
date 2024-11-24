@@ -5,6 +5,7 @@ import {
   createComment,
   getCommentsByPostId,
   deleteComment,
+  editComment,
 } from "@src/persistence/comment";
 import { AppUser } from "@src/domain/AppUser";
 import * as S from "./CommentsSection.Styles";
@@ -22,6 +23,8 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<null | string>(null);
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [editedCommentText, setEditedCommentText] = useState<string>("");
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -71,6 +74,38 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
     setComments((prev) => prev.filter((comment) => comment.id !== commentId));
   };
 
+  const resetEditMode = () => {
+    setEditingCommentId(null);
+    setEditedCommentText("");
+  };
+
+  const handleEditComment = (commentId: string, currentText: string) => {
+    setEditingCommentId(commentId);
+    setEditedCommentText(currentText);
+  };
+
+  const handleSaveEditedComment = async (commentId: string) => {
+    if (editedCommentText.trim() === "") {
+      setMessage("Edited comment cannot be empty");
+      return;
+    }
+
+    const result = await editComment(commentId, { text: editedCommentText });
+    if (result.error) {
+      setMessage("Failed to update comment");
+      return;
+    }
+
+    setComments((prev) =>
+      prev.map((comment) =>
+        comment.id === commentId
+          ? { ...comment, text: editedCommentText }
+          : comment
+      )
+    );
+    resetEditMode();
+  };
+
   if (!user) {
     return (
       <S.Container>
@@ -95,18 +130,51 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
           {comments.map((comment) => (
             <S.CommentItem key={comment.id}>
               <S.CommentContent>
-                <S.CommentText>
-                  <strong>{comment.author}</strong>: {comment.text}
-                </S.CommentText>
-                <S.CommentDate>
-                  {timestampToHumanReadbleDate(comment.createdOn, "es")}
-                </S.CommentDate>
+                {editingCommentId === comment.id ? (
+                  <>
+                    <S.TextArea
+                      value={editedCommentText}
+                      onChange={(e) => setEditedCommentText(e.target.value)}
+                      rows={3}
+                    />
+                    <S.CommentEditActions>
+                      <S.Button
+                        onClick={resetEditMode}
+                        disabled={editedCommentText === ""}
+                      >
+                        Cancel
+                      </S.Button>
+                      <S.Button
+                        onClick={() => handleSaveEditedComment(comment.id)}
+                        disabled={editedCommentText === ""}
+                      >
+                        Save changes
+                      </S.Button>
+                    </S.CommentEditActions>
+                  </>
+                ) : (
+                  <>
+                    <S.CommentText>
+                      <strong>{comment.author}</strong>: {comment.text}
+                    </S.CommentText>
+                    <S.CommentDate>
+                      {timestampToHumanReadbleDate(comment.createdOn, "es")}
+                    </S.CommentDate>
+                  </>
+                )}
               </S.CommentContent>
 
-              {comment.userId === user.id && (
+              {comment.userId === user.id && !editingCommentId && (
                 <S.MenuContainer>
                   <S.MenuButton>⋮</S.MenuButton>
                   <S.PopupMenu>
+                    <S.MenuItem
+                      onClick={() =>
+                        handleEditComment(comment.id, comment.text)
+                      }
+                    >
+                      Edit
+                    </S.MenuItem>
                     <S.MenuItem onClick={() => handleDeleteComment(comment.id)}>
                       Delete
                     </S.MenuItem>

@@ -92,6 +92,7 @@ export const MenuButton = styled.button`
   background: none;
   border: none;
   font-size: 1.2rem;
+  padding: 0 8px;
   cursor: pointer;
 `;
 
@@ -119,4 +120,9 @@ export const MenuItem = styled.button`
   &:hover {
     background: #f0f0f0;
   }
+`;
+
+export const CommentEditActions = styled.div`
+  display: flex;
+  gap: 8px;
 `;
