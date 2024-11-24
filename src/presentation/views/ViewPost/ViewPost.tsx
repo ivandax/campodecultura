@@ -8,6 +8,7 @@ import { timestampToHumanReadbleDate } from "@src/presentation/utils";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { DeleteButton } from "@src/presentation/components/Buttons/DeleteButton";
 import { MainButton } from "@src/presentation/components/Buttons/MainButton";
+import { CommentsSection } from "@src/presentation/components/CommentsSection";
 
 function ViewPost() {
   const [post, setPost] = useState<Post | null>(null);
@@ -74,6 +75,7 @@ function ViewPost() {
           )}`}</S.GrayWrapper>
           <S.Content>{parse(post.content)}</S.Content>
           <S.GrayWrapper>{`Written by: ${post.author}`}</S.GrayWrapper>
+          <CommentsSection postId={post.id} user={user} />
           <S.Footer>
             <MainButton onClick={() => navigate("/home")}>Go back</MainButton>
           </S.Footer>

@@ -7,6 +7,11 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
+    match /comments/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+
     match /posts/{postId} {
       // Allow read access for everyone (authenticated or not)
       allow read;
