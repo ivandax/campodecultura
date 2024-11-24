@@ -17,7 +17,7 @@ export function DeleteButton({
       disabled={deleteInput !== "delete" || isDeleting}
       $isActive={deleteInput === "delete"}
     >
-      {isDeleting ? "Eliminando..." : "Eliminar"}
+      {isDeleting ? "Deleting..." : "Delete"}
     </S.DeleteButton>
   );
 }

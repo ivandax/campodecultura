@@ -1,12 +1,12 @@
-import { useState } from "react";
-import { FormWrapper, PhotoPreview } from "./CreatePost.Styles";
-import { createPost } from "@src/persistence/post";
+import { useState, useEffect } from "react";
+import { FormWrapper, PhotoPreview } from "./CreateEditPost.Styles";
+import { createPost, editPost, getPost } from "@src/persistence/post";
 import { useAuthStore } from "@src/presentation/store/authStore";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-function CreatePost() {
+function CreateEditPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [photo, setPhoto] = useState<null | string>(null);
@@ -14,6 +14,7 @@ function CreatePost() {
   const [message, setMessage] = useState<null | string>(null);
   const { user } = useAuthStore();
   const navigate = useNavigate();
+  const { postId } = useParams();
 
   const handleCreatePost = async (e: React.FormEvent) => {
     if (!user) return;
@@ -25,6 +26,24 @@ function CreatePost() {
       content: content,
       createdOn: +new Date(),
       author: user.email,
+      coverImage: photo,
+    });
+    setIsLoading(false);
+    if (result.error) {
+      setMessage(result.error.message);
+      return;
+    }
+    navigate("/home");
+  };
+
+  const handleEditPost = async (e: React.FormEvent) => {
+    if (!user || !postId) return;
+    e.preventDefault();
+    setIsLoading(true);
+    setMessage(null);
+    const result = await editPost(postId, {
+      title,
+      content: content,
       coverImage: photo,
     });
     setIsLoading(false);
@@ -55,8 +74,29 @@ function CreatePost() {
     reader.readAsDataURL(file);
   };
 
+  useEffect(() => {
+    const handleGetPost = async () => {
+      if (postId) {
+        const postResult = await getPost(postId);
+        if (postResult.error) {
+          setMessage(postResult.error.message);
+          return;
+        }
+        if (postResult.data === null) {
+          setMessage("Data is null");
+          return;
+        }
+        setTitle(postResult.data.title);
+        setContent(postResult.data.content);
+        setPhoto(postResult.data.coverImage);
+      }
+    };
+
+    handleGetPost();
+  }, [postId]);
+
   return (
-    <FormWrapper onSubmit={handleCreatePost}>
+    <FormWrapper onSubmit={postId ? handleEditPost : handleCreatePost}>
       <h5>Create post</h5>
       <input
         value={title}
@@ -91,4 +131,4 @@ function CreatePost() {
   );
 }
 
-export { CreatePost };
+export { CreateEditPost };

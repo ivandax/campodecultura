@@ -33,9 +33,9 @@ export const PhotoPreview = styled.div`
 export const AdminBlock = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   margin-top: 16px;
   padding: 8px;
   border-radius: 8px;
-  background-color: ${(props) => props.theme.colors.gray};
+  background-color: ${(props) => props.theme.colors.lightwarning};
 `;

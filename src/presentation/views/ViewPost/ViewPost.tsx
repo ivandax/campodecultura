@@ -81,16 +81,29 @@ function ViewPost() {
           <Content>{parse(post.content)}</Content>
           <GrayWrapper>{`Written by: ${post.author}`}</GrayWrapper>
           <button onClick={() => navigate("/home")}>Go back</button>
-          <hr></hr>
           {user?.role === "ADMIN" && (
             <AdminBlock>
               <h5>ADMIN actions</h5>
+              <button onClick={() => navigate(`/edit/${postId}`)}>
+                Edit post
+              </button>
+              <h5
+                style={{
+                  marginTop: "24px",
+                  padding: "8px",
+                  width: "100%",
+                }}
+              >
+                Delete post:
+              </h5>
               <input
                 type="text"
                 placeholder="Write 'delete' to enable button"
                 value={deleteInput}
                 onChange={(e) => setDeleteInput(e.target.value)}
-                style={{ marginBottom: "10px", padding: "8px", width: "100%" }}
+                style={{
+                  padding: "8px",
+                }}
               />
               <DeleteButton
                 isDeleting={isDeleting}

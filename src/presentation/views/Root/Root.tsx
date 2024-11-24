@@ -7,7 +7,7 @@ import { RootContainer, MainContent, GlobalStyle } from "./Root.Styles";
 import { Home } from "@src/presentation/views/Home";
 import { Login } from "@src/presentation/views/Login";
 import { SignUp } from "@src/presentation/views/SignUp";
-import { CreatePost } from "@src/presentation/views/CreatePost";
+import { CreateEditPost } from "@src/presentation/views/CreateEditPost";
 import { ViewPost } from "@src/presentation/views/ViewPost";
 
 const Root: React.FC = () => {
@@ -22,7 +22,8 @@ const Root: React.FC = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/create" element={<CreatePost />} />
+            <Route path="/create" element={<CreateEditPost />} />
+            <Route path="/edit/:postId" element={<CreateEditPost />} />
             <Route path="/view/:postId" element={<ViewPost />} />
             <Route path="/" element={<Navigate to="/home" replace />} />
           </Routes>
