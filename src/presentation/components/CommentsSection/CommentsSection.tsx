@@ -34,7 +34,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
     fetchComments();
   }, [postId]);
 
-  const handleAddComment = async () => {
+  const handleAddComment = async (userId: string) => {
     if (newComment.trim() === "") {
       setMessage("Comment cannot be empty");
       return;
@@ -45,6 +45,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
       author: "Anonymous",
       createdOn: Date.now(),
       postId,
+      userId,
     };
 
     const result = await createComment(commentData);
@@ -98,7 +99,10 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
           rows={3}
         />
         {message && <S.Error>{message}</S.Error>}
-        <S.Button onClick={handleAddComment} disabled={!newComment.trim()}>
+        <S.Button
+          onClick={() => handleAddComment(user.id)}
+          disabled={!newComment.trim()}
+        >
           Post Comment
         </S.Button>
       </S.AddComment>
