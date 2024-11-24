@@ -9,8 +9,9 @@ export const Container = styled.div`
   flex-direction: column;
 `;
 
-export const Title = styled.h3`
-  margin-bottom: 16px;
+export const Title = styled.span`
+  margin-bottom: 12px;
+  font-size: 16px;
 `;
 
 export const CommentsList = styled.ul`
@@ -20,12 +21,17 @@ export const CommentsList = styled.ul`
 `;
 
 export const CommentItem = styled.li`
+  display: flex;
   border-bottom: 1px solid #eee;
   padding: 8px 0;
 
   &:last-child {
     border-bottom: none;
   }
+`;
+
+export const CommentContent = styled.li`
+  flex-grow: 1;
 `;
 
 export const CommentText = styled.p`
@@ -71,5 +77,41 @@ export const Button = styled.button`
   &:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+  }
+`;
+
+export const MenuContainer = styled.div`
+  position: relative;
+`;
+
+export const MenuButton = styled.button`
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+`;
+
+export const PopupMenu = styled.div`
+  position: absolute;
+  top: 1.5rem;
+  right: 0;
+  background: white;
+  border: 1px solid gray;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 10;
+`;
+
+export const MenuItem = styled.button`
+  display: block;
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+
+  &:hover {
+    background: #f0f0f0;
   }
 `;

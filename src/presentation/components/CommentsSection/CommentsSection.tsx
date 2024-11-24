@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { CreateCommentData, Comment } from "@src/domain/Comment";
 import { Result } from "@src/domain/Result";
-import { createComment, getCommentsByPostId } from "@src/persistence/comment";
+import {
+  createComment,
+  getCommentsByPostId,
+  deleteComment,
+} from "@src/persistence/comment";
 import { AppUser } from "@src/domain/AppUser";
 import * as S from "./CommentsSection.Styles";
 import { Link } from "react-router-dom";
+import { timestampToHumanReadbleDate } from "@src/presentation/utils";
 
 interface CommentsSectionProps {
   postId: string;
@@ -17,6 +22,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<null | string>(null);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -57,11 +63,21 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
     setNewComment("");
   };
 
+  const handleDeleteComment = async (commentId: string) => {
+    const result = await deleteComment(commentId);
+    if (result.error) {
+      setMessage("Failed to delete comment");
+      return;
+    }
+    setComments((prev) => prev.filter((comment) => comment.id !== commentId));
+    setActiveMenu(null);
+  };
+
   if (!user) {
     return (
       <S.Container>
         <p>To view and add comments you must log in</p>
-        <Link to="/login" />
+        <Link to="/login">Log in</Link>
       </S.Container>
     );
   }
@@ -80,12 +96,37 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
         <S.CommentsList>
           {comments.map((comment) => (
             <S.CommentItem key={comment.id}>
-              <S.CommentText>
-                <strong>{comment.author}</strong>: {comment.text}
-              </S.CommentText>
-              <S.CommentDate>
-                {new Date(comment.createdOn).toLocaleString()}
-              </S.CommentDate>
+              <S.CommentContent>
+                <S.CommentText>
+                  <strong>{comment.author}</strong>: {comment.text}
+                </S.CommentText>
+                <S.CommentDate>
+                  {timestampToHumanReadbleDate(comment.createdOn, "es")}
+                </S.CommentDate>
+              </S.CommentContent>
+
+              {comment.userId === user.id && (
+                <S.MenuContainer>
+                  <S.MenuButton
+                    onClick={() =>
+                      setActiveMenu((prev) =>
+                        prev === comment.id ? null : comment.id
+                      )
+                    }
+                  >
+                    ⋮
+                  </S.MenuButton>
+                  {activeMenu === comment.id && (
+                    <S.PopupMenu>
+                      <S.MenuItem
+                        onClick={() => handleDeleteComment(comment.id)}
+                      >
+                        Delete
+                      </S.MenuItem>
+                    </S.PopupMenu>
+                  )}
+                </S.MenuContainer>
+              )}
             </S.CommentItem>
           ))}
         </S.CommentsList>
