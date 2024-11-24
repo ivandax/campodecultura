@@ -5,8 +5,8 @@ export const Wrapper = styled.div`
   flex-direction: column;
   padding: 24px;
   gap: 8px;
-  overflow: scroll;
   max-height: 100%;
+  overflow: auto;
 `;
 
 export const LoadingWrapper = styled.div`
@@ -31,6 +31,7 @@ export const PhotoPreview = styled.div`
 `;
 
 export const AdminBlock = styled.div`
+  width: 260px;
   display: flex;
   flex-direction: column;
   gap: 12px;

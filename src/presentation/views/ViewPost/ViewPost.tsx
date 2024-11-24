@@ -73,9 +73,9 @@ function ViewPost() {
               />
             </PhotoPreview>
           ) : null}
-          <h4>{post.title}</h4>
-          <GrayWrapper>{`Published on: ${timestampToHumanReadbleDate(
-            post.createdOn,
+          <h3>{post.title}</h3>
+          <GrayWrapper>{`Edited on: ${timestampToHumanReadbleDate(
+            post.editedOn,
             "es"
           )}`}</GrayWrapper>
           <Content>{parse(post.content)}</Content>

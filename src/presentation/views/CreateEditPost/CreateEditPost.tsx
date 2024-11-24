@@ -25,7 +25,8 @@ function CreateEditPost() {
       title,
       content: content,
       createdOn: +new Date(),
-      author: user.email,
+      editedOn: +new Date(),
+      author: user.name ?? user.email,
       coverImage: photo,
     });
     setIsLoading(false);
@@ -45,6 +46,7 @@ function CreateEditPost() {
       title,
       content: content,
       coverImage: photo,
+      editedOn: +new Date(),
     });
     setIsLoading(false);
     if (result.error) {
