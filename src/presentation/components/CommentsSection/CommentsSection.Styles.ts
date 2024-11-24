@@ -11,7 +11,6 @@ export const Container = styled.div`
 
 export const Title = styled.h3`
   margin-bottom: 16px;
-  color: #333;
 `;
 
 export const CommentsList = styled.ul`
@@ -31,7 +30,6 @@ export const CommentItem = styled.li`
 
 export const CommentText = styled.p`
   margin: 0;
-  color: #444;
 `;
 
 export const CommentDate = styled.small`
@@ -41,7 +39,6 @@ export const CommentDate = styled.small`
 `;
 
 export const Message = styled.p`
-  color: #555;
   text-align: center;
 `;
 
