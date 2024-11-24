@@ -29,6 +29,8 @@ function CreateEditPost() {
       editedOn: +new Date(),
       author: user.name ?? user.email,
       coverImage: photo,
+      language: "en",
+      categories: [],
     });
     setIsLoading(false);
     if (result.error) {

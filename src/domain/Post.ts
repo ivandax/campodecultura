@@ -5,6 +5,8 @@ export interface CreatePostData {
   editedOn: number;
   author: string;
   coverImage: string | null;
+  categories: string[];
+  language: "en" | "es";
 }
 
 export type Post = CreatePostData & { id: string };
