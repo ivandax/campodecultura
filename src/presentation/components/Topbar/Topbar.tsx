@@ -22,7 +22,7 @@ const Topbar: React.FC = () => {
     <>
       <TopbarWrapper>
         <BurgerButton onClick={toggleSidebar}>☰</BurgerButton>
-        <h4>Working title</h4>
+        <h4>Culturetxt.com</h4>
       </TopbarWrapper>
       <Backdrop isOpen={isSidebarOpen} onClick={closeSidebar} />
       <SidebarOverlay isOpen={isSidebarOpen}>
