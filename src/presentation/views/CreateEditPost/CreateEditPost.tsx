@@ -31,7 +31,7 @@ function CreateEditPost() {
       coverImage: photo,
       language: "en",
       categories: [],
-      status: "published"
+      status: "published",
     });
     setIsLoading(false);
     if (result.error) {
@@ -57,6 +57,10 @@ function CreateEditPost() {
       setMessage(result.error.message);
       return;
     }
+  };
+
+  const handleEditPostAndNavigateAway = async (e: React.FormEvent) => {
+    await handleEditPost(e);
     navigate("/home");
   };
 
@@ -102,7 +106,9 @@ function CreateEditPost() {
   }, [postId]);
 
   return (
-    <FormWrapper onSubmit={postId ? handleEditPost : handleCreatePost}>
+    <FormWrapper
+      onSubmit={postId ? handleEditPostAndNavigateAway : handleCreatePost}
+    >
       <h5>Create post</h5>
       <input
         value={title}
@@ -129,8 +135,17 @@ function CreateEditPost() {
           <img src={photo} alt="Preview" style={{ maxWidth: "100%" }} />
         </PhotoPreview>
       )}
+      <MainButton
+        disabled={isLoading}
+        onClick={(e) => {
+          e.preventDefault();
+          handleEditPost(e);
+        }}
+      >
+        {isLoading ? "Saving..." : "Save changes"}
+      </MainButton>
       <MainButton type="submit" disabled={isLoading}>
-        {isLoading ? "Saving..." : "Save"}
+        {isLoading ? "Saving..." : "Save and exit"}
       </MainButton>
       {message && <p>{message}</p>}
     </FormWrapper>

@@ -40,11 +40,13 @@ export async function getPost(postId: string): Promise<Result<Post | null>> {
   return tryCatch(callback);
 }
 
-export async function getPosts(): Promise<Result<Post[]>> {
+export async function getPosts(isAdmin: boolean): Promise<Result<Post[]>> {
   const db = getFirestore();
   const callback = async (): Promise<Post[]> => {
     const collectionRef = collection(db, "posts");
-    const q = query(collectionRef, where('status', '==', 'published'));
+    const q = isAdmin
+      ? query(collectionRef)
+      : query(collectionRef, where("status", "==", "published"));
     const documents = await getDocs(q);
     if (documents.size > 0) {
       const parsed: Post[] = [];

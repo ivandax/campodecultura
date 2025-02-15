@@ -22,6 +22,9 @@ function HomeTable({ posts }: HomeTableProps) {
           <TableHeaderCell $width={20}>
             <BodyText color={"gray"}>Published date</BodyText>
           </TableHeaderCell>
+          <TableHeaderCell $width={20}>
+            <BodyText color={"gray"}>Status</BodyText>
+          </TableHeaderCell>
         </tr>
       </thead>
       <tbody>
@@ -43,6 +46,9 @@ function HomeTable({ posts }: HomeTableProps) {
               <H2CategoryTitle>
                 {timestampToHumanReadbleDate(item.createdOn, "es")}
               </H2CategoryTitle>
+            </TableCell>
+            <TableCell $pointer onClick={() => void 0} $width={20}>
+              <BodyText>{item.status}</BodyText>
             </TableCell>
           </TableRow>
         ))}
