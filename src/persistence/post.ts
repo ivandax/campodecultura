@@ -8,6 +8,7 @@ import {
   getDoc,
   deleteDoc,
   setDoc,
+  where,
 } from "firebase/firestore";
 import { tryCatch } from "./tryCatch";
 import { Result } from "@src/domain/Result";
@@ -43,7 +44,7 @@ export async function getPosts(): Promise<Result<Post[]>> {
   const db = getFirestore();
   const callback = async (): Promise<Post[]> => {
     const collectionRef = collection(db, "posts");
-    const q = query(collectionRef);
+    const q = query(collectionRef, where('status', '==', 'published'));
     const documents = await getDocs(q);
     if (documents.size > 0) {
       const parsed: Post[] = [];

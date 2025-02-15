@@ -31,6 +31,7 @@ function CreateEditPost() {
       coverImage: photo,
       language: "en",
       categories: [],
+      status: "published"
     });
     setIsLoading(false);
     if (result.error) {

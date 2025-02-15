@@ -7,6 +7,7 @@ export interface CreatePostData {
   coverImage: string | null;
   categories: string[];
   language: "en" | "es";
+  status: "draft" | "published";
 }
 
 export type Post = CreatePostData & { id: string };
