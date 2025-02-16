@@ -109,7 +109,7 @@ function CreateEditPost() {
     <FormWrapper
       onSubmit={postId ? handleEditPostAndNavigateAway : handleCreatePost}
     >
-      <h5>Create post</h5>
+      <h5>{postId ? "Edit post" : "Create post"}</h5>
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}

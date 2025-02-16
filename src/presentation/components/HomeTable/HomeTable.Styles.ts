@@ -19,7 +19,7 @@ export const TableCell = styled.td<TableCellProps>`
   padding-top: 16px;
   padding-bottom: 16px;
   padding-left: 16px;
-  width: ${(props) => `${props.$width}%` ?? "auto"};
+  width: ${(props) => (props.$width ? `${props.$width}%` : "auto")};
   ${(props) =>
     props.$pointer &&
     css`

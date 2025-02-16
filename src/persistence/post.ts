@@ -9,6 +9,7 @@ import {
   deleteDoc,
   setDoc,
   where,
+  orderBy,
 } from "firebase/firestore";
 import { tryCatch } from "./tryCatch";
 import { Result } from "@src/domain/Result";
@@ -45,8 +46,12 @@ export async function getPosts(isAdmin: boolean): Promise<Result<Post[]>> {
   const callback = async (): Promise<Post[]> => {
     const collectionRef = collection(db, "posts");
     const q = isAdmin
-      ? query(collectionRef)
-      : query(collectionRef, where("status", "==", "published"));
+      ? query(collectionRef, orderBy("createdOn", "asc"))
+      : query(
+          collectionRef,
+          where("status", "==", "published"),
+          orderBy("createdOn", "asc")
+        );
     const documents = await getDocs(q);
     if (documents.size > 0) {
       const parsed: Post[] = [];

@@ -44,7 +44,7 @@ function HomeTable({ posts }: HomeTableProps) {
             </TableCell>
             <TableCell $pointer onClick={() => void 0} $width={20}>
               <H2CategoryTitle>
-                {timestampToHumanReadbleDate(item.createdOn, "es")}
+                {timestampToHumanReadbleDate(item.createdOn, "en")}
               </H2CategoryTitle>
             </TableCell>
             <TableCell $pointer onClick={() => void 0} $width={20}>
