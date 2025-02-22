@@ -2,15 +2,39 @@ import { Table, TableCell, TableRow } from "./HomeTable.Styles";
 import { BodyText, H2CategoryTitle } from "@src/presentation/components/Texts";
 import { TableHeaderCell } from "@src/presentation/components/TableHeaderCell";
 import { Post } from "@src/domain/Post";
-import { timestampToHumanReadbleDate } from "@src/presentation/utils";
+import {
+  notifyError,
+  timestampToHumanReadbleDate,
+} from "@src/presentation/utils";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getPosts } from "@src/persistence/post";
+import { AsyncOp } from "@src/presentation/types/AsyncOp";
 
 interface HomeTableProps {
-  posts: Post[];
+  isAdmin: boolean;
 }
 
-function HomeTable({ posts }: HomeTableProps) {
+function HomeTable({ isAdmin }: HomeTableProps) {
   const navigate = useNavigate();
+  const [postsTask, setPostsTask] = useState<AsyncOp<Post[], null>>({
+    status: "pending",
+  });
+
+  useEffect(() => {
+    const handleGetPosts = async () => {
+      setPostsTask({ status: "in-progress" });
+      const posts = await getPosts(isAdmin);
+
+      if (posts.error) {
+        notifyError("Error loading posts");
+        return;
+      }
+      setPostsTask({ status: "successful", data: posts.data });
+    };
+    handleGetPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Table>
@@ -28,30 +52,38 @@ function HomeTable({ posts }: HomeTableProps) {
         </tr>
       </thead>
       <tbody>
-        {posts.length === 0 && (
+        {postsTask.status === "in-progress" && (
+          <TableRow>
+            <TableCell>Loading...</TableCell>
+            <TableCell></TableCell>
+          </TableRow>
+        )}
+        {postsTask.status === "successful" && postsTask.data.length === 0 && (
           <TableRow>
             <TableCell>No data</TableCell>
             <TableCell></TableCell>
           </TableRow>
         )}
-        {posts.map((item) => (
-          <TableRow
-            key={item.title}
-            onClick={() => navigate(`/view/${item.id}`)}
-          >
-            <TableCell $pointer onClick={() => void 0} $width={20}>
-              <H2CategoryTitle>{item.title}</H2CategoryTitle>
-            </TableCell>
-            <TableCell $pointer onClick={() => void 0} $width={20}>
-              <H2CategoryTitle>
-                {timestampToHumanReadbleDate(item.createdOn, "en")}
-              </H2CategoryTitle>
-            </TableCell>
-            <TableCell $pointer onClick={() => void 0} $width={20}>
-              <BodyText>{item.status}</BodyText>
-            </TableCell>
-          </TableRow>
-        ))}
+        {postsTask.status === "successful" &&
+          postsTask.data.length > 0 &&
+          postsTask.data.map((item) => (
+            <TableRow
+              key={item.title}
+              onClick={() => navigate(`/view/${item.id}`)}
+            >
+              <TableCell $pointer onClick={() => void 0} $width={20}>
+                <H2CategoryTitle>{item.title}</H2CategoryTitle>
+              </TableCell>
+              <TableCell $pointer onClick={() => void 0} $width={20}>
+                <H2CategoryTitle>
+                  {timestampToHumanReadbleDate(item.createdOn, "en")}
+                </H2CategoryTitle>
+              </TableCell>
+              <TableCell $pointer onClick={() => void 0} $width={20}>
+                <BodyText>{item.status}</BodyText>
+              </TableCell>
+            </TableRow>
+          ))}
       </tbody>
     </Table>
   );
