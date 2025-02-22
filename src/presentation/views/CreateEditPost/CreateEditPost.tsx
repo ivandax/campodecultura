@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { MainButton } from "@src/presentation/components/Buttons/MainButton";
+import { notifyError, notifySuccess } from "@src/presentation/utils";
 
 function CreateEditPost() {
   const [title, setTitle] = useState("");
@@ -54,9 +55,10 @@ function CreateEditPost() {
     });
     setIsLoading(false);
     if (result.error) {
-      setMessage(result.error.message);
+      notifyError("Something went wrong while saving.");
       return;
     }
+    notifySuccess("Successfully edited the post");
   };
 
   const handleEditPostAndNavigateAway = async (e: React.FormEvent) => {
