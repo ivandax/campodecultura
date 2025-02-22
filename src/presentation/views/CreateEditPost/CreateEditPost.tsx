@@ -7,6 +7,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 import { notifyError, notifySuccess } from "@src/presentation/utils";
+import { Spinner } from "@src/presentation/components/Spinner";
 
 function CreateEditPost() {
   const [title, setTitle] = useState("");
@@ -17,6 +18,7 @@ function CreateEditPost() {
   const { userTask } = useAuthStore();
   const navigate = useNavigate();
   const { postId } = useParams();
+  const [isLoadingPost, setIsLoadingPost] = useState(false);
 
   const user = userTask.status === "successful" ? userTask.data : null;
 
@@ -91,7 +93,9 @@ function CreateEditPost() {
   useEffect(() => {
     const handleGetPost = async () => {
       if (postId) {
+        setIsLoadingPost(true);
         const postResult = await getPost(postId);
+        setIsLoadingPost(false);
         if (postResult.error) {
           setMessage(postResult.error.message);
           return;
@@ -119,7 +123,9 @@ function CreateEditPost() {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
         required
+        disabled={isLoadingPost}
       />
+      {isLoadingPost && <Spinner />}
       <ReactQuill
         value={content}
         onChange={(value) => setContent(value)}
@@ -131,6 +137,7 @@ function CreateEditPost() {
           ],
         }}
         formats={["bold", "italic", "underline", "image", "list", "bullet"]}
+        className="custom-quill-editor"
       />
       <h5>Cover image (optional)</h5>
       <input type="file" accept="image/*" onChange={handlePhotoUpload} />

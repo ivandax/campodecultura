@@ -13,3 +13,7 @@ button {
 a {
   text-decoration: none;
 }
+
+.custom-quill-editor .ql-editor {
+  min-height: 150px;
+}
