@@ -6,13 +6,13 @@ function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState<null | string>(null);
-  const { signup, error, isLoading } = useAuthStore();
+  const { signup, userTask } = useAuthStore();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     const maybeError = await signup(email, password);
     if (!maybeError) {
-      setMessage("Cuenta creada. Revise su correo para verificar la cuenta");
+      setMessage("Account created. Please check your inbox.");
     }
   };
 
@@ -33,10 +33,10 @@ function SignUp() {
         placeholder="Password"
         required
       />
-      <button type="submit" disabled={isLoading}>
-        {isLoading ? "Creating..." : "Create account"}
+      <button type="submit" disabled={userTask.status === "in-progress"}>
+        {userTask.status === "in-progress" ? "Creating..." : "Create account"}
       </button>
-      {error && <p>{error.message}</p>}
+      {userTask.status === "failed" && <p>{userTask.error.message}</p>}
       {message && <p>{message}</p>}
     </SignUpFormWrapper>
   );

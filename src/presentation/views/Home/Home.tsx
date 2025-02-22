@@ -5,15 +5,18 @@ import { HomeTable } from "@src/presentation/components/HomeTable";
 import { useAuthStore } from "@src/presentation/store/authStore";
 
 function Home() {
-  const { user, isLoading } = useAuthStore((state) => state);
+  const { userTask } = useAuthStore((state) => state);
 
-  const isAdmin = user && user.role === "ADMIN" ? true : false;
+  const isAdmin =
+    userTask.status === "successful" && userTask.data?.role === "ADMIN"
+      ? true
+      : false;
 
   return (
     <Wrapper>
       <Main>
         <ViewTitle>Posts</ViewTitle>
-        {isLoading ? (
+        {userTask.status === "pending" || userTask.status === "in-progress" ? (
           <LoadingWrapper>Loading...</LoadingWrapper>
         ) : (
           <HomeTable isAdmin={isAdmin} />

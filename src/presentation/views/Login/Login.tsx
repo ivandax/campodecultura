@@ -6,14 +6,14 @@ import { useNavigate } from "react-router-dom";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, error, isLoading } = useAuthStore();
-  const navigate = useNavigate()
+  const { login, userTask } = useAuthStore();
+  const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     const userOrNull = await login(email, password);
-    if(userOrNull){
-      navigate("/home")
+    if (userOrNull) {
+      navigate("/home");
     }
   };
 
@@ -34,10 +34,10 @@ function Login() {
         placeholder="Password"
         required
       />
-      <button type="submit" disabled={isLoading}>
-        {isLoading ? "Logging in..." : "Log in"}
+      <button type="submit" disabled={userTask.status === "in-progress"}>
+        {userTask.status === "in-progress" ? "Logging in..." : "Log in"}
       </button>
-      {error && <p>{error.message}</p>}
+      {userTask.status === "failed" && <p>{userTask.error.message}</p>}
     </LoginFormWrapper>
   );
 }

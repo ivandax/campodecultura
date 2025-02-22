@@ -12,7 +12,7 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const appUser = useAuthStore((state) => state.user);
+  const userTask = useAuthStore((state) => state.userTask);
 
   const handleNavigate = (route: string) => {
     navigate(route);
@@ -30,19 +30,21 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
       >
         Home
       </SidebarItem>
-      {appUser && appUser.role === "ADMIN" && (
-        <>
-          <SidebarItem
-            onClick={() => handleNavigate("/create")}
-            $active={location.pathname === "/create"}
-            $displayOn={displayOn}
-          >
-            Create post
-          </SidebarItem>
-        </>
-      )}
+      {userTask.status === "successful" &&
+        userTask.data !== null &&
+        userTask.data.role === "ADMIN" && (
+          <>
+            <SidebarItem
+              onClick={() => handleNavigate("/create")}
+              $active={location.pathname === "/create"}
+              $displayOn={displayOn}
+            >
+              Create post
+            </SidebarItem>
+          </>
+        )}
 
-      {appUser === null && (
+      {userTask.status === "successful" && userTask.data === null && (
         <>
           <SidebarItem
             onClick={() => handleNavigate("/login")}
