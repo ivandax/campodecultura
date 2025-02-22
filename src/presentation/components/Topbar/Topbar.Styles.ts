@@ -24,7 +24,7 @@ export const BurgerButton = styled.button`
   padding: 0;
 `;
 
-export const SidebarOverlay = styled.div<{ isOpen: boolean }>`
+export const SidebarOverlay = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
   right: 0;
@@ -32,20 +32,20 @@ export const SidebarOverlay = styled.div<{ isOpen: boolean }>`
   height: 100%;
   background-color: #ffffff;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-  transform: ${({ isOpen }) => (isOpen ? "translateX(0)" : "translateX(100%)")};
+  transform: ${({ $isOpen }) => ($isOpen ? "translateX(0)" : "translateX(100%)")};
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
 `;
 
-export const Backdrop = styled.div<{ isOpen: boolean }>`
+export const Backdrop = styled.div<{ $isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
-  opacity: ${({ isOpen }) => (isOpen ? 1 : 0)};
-  visibility: ${({ isOpen }) => (isOpen ? "visible" : "hidden")};
+  opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
+  visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};
   transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
   z-index: 999;
 `;

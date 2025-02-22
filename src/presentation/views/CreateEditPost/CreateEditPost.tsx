@@ -14,9 +14,11 @@ function CreateEditPost() {
   const [photo, setPhoto] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<null | string>(null);
-  const { user } = useAuthStore();
+  const { userTask } = useAuthStore();
   const navigate = useNavigate();
   const { postId } = useParams();
+
+  const user = userTask.status === "successful" ? userTask.data : null;
 
   const handleCreatePost = async (e: React.FormEvent) => {
     if (!user) return;

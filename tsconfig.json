@@ -9,7 +9,8 @@
     "paths": {
       "@src/*": ["src/*"]
     },
-
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,

@@ -24,8 +24,8 @@ const Topbar: React.FC = () => {
         <BurgerButton onClick={toggleSidebar}>☰</BurgerButton>
         <h4>Culturetxt.com</h4>
       </TopbarWrapper>
-      <Backdrop isOpen={isSidebarOpen} onClick={closeSidebar} />
-      <SidebarOverlay isOpen={isSidebarOpen}>
+      <Backdrop $isOpen={isSidebarOpen} onClick={closeSidebar} />
+      <SidebarOverlay $isOpen={isSidebarOpen}>
         <SidebarItems displayOn="mobile" closeSidebar={closeSidebar} />
       </SidebarOverlay>
     </>
