@@ -113,11 +113,13 @@ function CreateEditPost() {
     handleGetPost();
   }, [postId]);
 
+  const isEditMode = postId !== undefined;
+
   return (
     <FormWrapper
-      onSubmit={postId ? handleEditPostAndNavigateAway : handleCreatePost}
+      onSubmit={isEditMode ? handleEditPostAndNavigateAway : handleCreatePost}
     >
-      <h5>{postId ? "Edit post" : "Create post"}</h5>
+      <h5>{isEditMode ? "Edit post" : "Create post"}</h5>
       <input
         value={title}
         onChange={(e) => setTitle(e.target.value)}
@@ -146,15 +148,18 @@ function CreateEditPost() {
           <img src={photo} alt="Preview" style={{ maxWidth: "100%" }} />
         </PhotoPreview>
       )}
-      <MainButton
-        disabled={isLoading}
-        onClick={(e) => {
-          e.preventDefault();
-          handleEditPost(e);
-        }}
-      >
-        {isLoading ? "Saving..." : "Save changes"}
-      </MainButton>
+      {isEditMode && (
+        <MainButton
+          disabled={isLoading}
+          onClick={(e) => {
+            e.preventDefault();
+            handleEditPost(e);
+          }}
+        >
+          {isLoading ? "Saving..." : "Save changes"}
+        </MainButton>
+      )}
+
       <MainButton type="submit" disabled={isLoading}>
         {isLoading ? "Saving..." : "Save and exit"}
       </MainButton>
