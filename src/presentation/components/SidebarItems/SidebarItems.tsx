@@ -30,6 +30,13 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
       >
         Home
       </SidebarItem>
+      <SidebarItem
+        onClick={() => handleNavigate("/news")}
+        $active={location.pathname === "/news"}
+        $displayOn={displayOn}
+      >
+        News
+      </SidebarItem>
       {userTask.status === "successful" &&
         userTask.data !== null &&
         userTask.data.role === "ADMIN" && (
