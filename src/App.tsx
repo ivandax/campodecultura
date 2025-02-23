@@ -31,7 +31,7 @@ const CustomToastContainer = styled(ToastContainer)`
 `;
 
 const app = initializeApp(firebaseConfig);
-getAnalytics(app);
+const analytics = getAnalytics(app);
 
 function App() {
   const initializeAuth = useAuthStore((state) => state.initializeAuth);
@@ -46,7 +46,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Root />
+      <Root analytics={analytics}/>
       <CustomToastContainer position="bottom-center" hideProgressBar={true} />
     </ThemeProvider>
   );

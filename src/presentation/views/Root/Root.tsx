@@ -9,10 +9,17 @@ import { Login } from "@src/presentation/views/Login";
 import { SignUp } from "@src/presentation/views/SignUp";
 import { CreateEditPost } from "@src/presentation/views/CreateEditPost";
 import { ViewPost } from "@src/presentation/views/ViewPost";
+import { AnalyticsTracker } from "@src/presentation/components/AnalyticsTracker";
+import { Analytics } from "firebase/analytics";
 
-const Root: React.FC = () => {
+interface RootProps {
+  analytics: Analytics;
+}
+
+const Root: React.FC<RootProps> = ({ analytics }: RootProps) => {
   return (
     <BrowserRouter>
+      <AnalyticsTracker analytics={analytics} />
       <GlobalStyle />
       <RootContainer>
         <Topbar />
