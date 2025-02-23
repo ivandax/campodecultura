@@ -19,6 +19,6 @@ export type PostRetrieveData = CreatePostData & {
 
 export type Post = CreatePostData & {
   authorRef: DocumentReference;
-  author: AppUser;
   id: string;
+  author: AppUser | null;
 };

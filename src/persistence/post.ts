@@ -15,6 +15,7 @@ import { tryCatch } from "./tryCatch";
 import { Result } from "@src/domain/Result";
 import { parseDoc } from "./utils";
 import { CreatePostData, Post, PostRetrieveData } from "@src/domain/Post";
+import { AppUser } from "@src/domain/AppUser";
 
 export async function createPost(
   postData: CreatePostData
@@ -45,11 +46,9 @@ export async function getPost(postId: string): Promise<Result<Post | null>> {
   return tryCatch(callback);
 }
 
-export async function getPosts(
-  isAdmin: boolean
-): Promise<Result<PostRetrieveData[]>> {
+export async function getPosts(isAdmin: boolean): Promise<Result<Post[]>> {
   const db = getFirestore();
-  const callback = async (): Promise<PostRetrieveData[]> => {
+  const callback = async (): Promise<Post[]> => {
     const collectionRef = collection(db, "posts");
     const q = isAdmin
       ? query(collectionRef, orderBy("createdOn", "asc"))
@@ -64,7 +63,13 @@ export async function getPosts(
         documents.docs.map(async (doc) => {
           const post = parseDoc<PostRetrieveData>(doc);
 
-          return post;
+          const userRef = post.authorRef;
+          const userDoc = await getDoc(userRef);
+          if (userDoc.exists()) {
+            const parsedUser = parseDoc<AppUser>(userDoc);
+            return { ...post, author: parsedUser };
+          }
+          return { ...post, author: null };
         })
       );
       console.log(posts);

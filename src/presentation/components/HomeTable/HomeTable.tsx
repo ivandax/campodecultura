@@ -1,7 +1,7 @@
 import { Table, TableCell, TableRow } from "./HomeTable.Styles";
 import { BodyText, H2CategoryTitle } from "@src/presentation/components/Texts";
 import { TableHeaderCell } from "@src/presentation/components/TableHeaderCell";
-import { PostRetrieveData } from "@src/domain/Post";
+import { Post } from "@src/domain/Post";
 import {
   notifyError,
   timestampToHumanReadbleDate,
@@ -18,11 +18,9 @@ interface HomeTableProps {
 
 function HomeTable({ isAdmin }: HomeTableProps) {
   const navigate = useNavigate();
-  const [postsTask, setPostsTask] = useState<AsyncOp<PostRetrieveData[], null>>(
-    {
-      status: "pending",
-    }
-  );
+  const [postsTask, setPostsTask] = useState<AsyncOp<Post[], null>>({
+    status: "pending",
+  });
 
   useEffect(() => {
     const handleGetPosts = async () => {
@@ -52,6 +50,9 @@ function HomeTable({ isAdmin }: HomeTableProps) {
           <TableHeaderCell $width={20}>
             <BodyText color={"gray"}>Status</BodyText>
           </TableHeaderCell>
+          <TableHeaderCell $width={20}>
+            <BodyText color={"gray"}>Author</BodyText>
+          </TableHeaderCell>
         </tr>
       </thead>
       <tbody>
@@ -62,11 +63,14 @@ function HomeTable({ isAdmin }: HomeTableProps) {
             </TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
+            <TableCell></TableCell>
           </TableRow>
         )}
         {postsTask.status === "successful" && postsTask.data.length === 0 && (
           <TableRow>
             <TableCell>No data</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
             <TableCell></TableCell>
           </TableRow>
         )}
@@ -87,6 +91,9 @@ function HomeTable({ isAdmin }: HomeTableProps) {
               </TableCell>
               <TableCell $pointer onClick={() => void 0} $width={20}>
                 <BodyText>{item.status}</BodyText>
+              </TableCell>
+              <TableCell $pointer onClick={() => void 0} $width={20}>
+                <BodyText>{item.author?.name}</BodyText>
               </TableCell>
             </TableRow>
           ))}
