@@ -1,7 +1,7 @@
 import { Table, TableCell, TableRow } from "./HomeTable.Styles";
 import { BodyText, H2CategoryTitle } from "@src/presentation/components/Texts";
 import { TableHeaderCell } from "@src/presentation/components/TableHeaderCell";
-import { Post } from "@src/domain/Post";
+import { PostRetrieveData } from "@src/domain/Post";
 import {
   notifyError,
   timestampToHumanReadbleDate,
@@ -18,9 +18,11 @@ interface HomeTableProps {
 
 function HomeTable({ isAdmin }: HomeTableProps) {
   const navigate = useNavigate();
-  const [postsTask, setPostsTask] = useState<AsyncOp<Post[], null>>({
-    status: "pending",
-  });
+  const [postsTask, setPostsTask] = useState<AsyncOp<PostRetrieveData[], null>>(
+    {
+      status: "pending",
+    }
+  );
 
   useEffect(() => {
     const handleGetPosts = async () => {

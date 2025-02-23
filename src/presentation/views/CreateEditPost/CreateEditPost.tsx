@@ -32,11 +32,11 @@ function CreateEditPost() {
       content: content,
       createdOn: +new Date(),
       editedOn: +new Date(),
-      author: user.name ?? user.email,
       coverImage: photo,
       language: "en",
       categories: [],
       status: "published",
+      authorId: user.id,
     });
     setIsLoading(false);
     if (result.error) {

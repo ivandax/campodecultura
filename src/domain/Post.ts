@@ -1,13 +1,24 @@
+import { DocumentReference } from "firebase/firestore";
+import { AppUser } from "./AppUser";
 export interface CreatePostData {
   title: string;
   content: string;
   createdOn: number;
   editedOn: number;
-  author: string;
+  authorId: string;
   coverImage: string | null;
   categories: string[];
   language: "en" | "es";
   status: "draft" | "published";
 }
 
-export type Post = CreatePostData & { id: string };
+export type PostRetrieveData = CreatePostData & {
+  authorRef: DocumentReference;
+  id: string;
+};
+
+export type Post = CreatePostData & {
+  authorRef: DocumentReference;
+  author: AppUser;
+  id: string;
+};

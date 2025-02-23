@@ -14,14 +14,18 @@ import {
 import { tryCatch } from "./tryCatch";
 import { Result } from "@src/domain/Result";
 import { parseDoc } from "./utils";
-import { CreatePostData, Post } from "@src/domain/Post";
+import { CreatePostData, Post, PostRetrieveData } from "@src/domain/Post";
 
 export async function createPost(
   postData: CreatePostData
 ): Promise<Result<string>> {
   const db = getFirestore();
   const callback = async (): Promise<string> => {
-    const ref = await addDoc(collection(db, "posts"), postData);
+    const userRef = doc(db, "users", postData.authorId);
+    const ref = await addDoc(collection(db, "posts"), {
+      ...postData,
+      authorRef: userRef,
+    });
     return ref.id;
   };
   return tryCatch(callback);
@@ -41,9 +45,11 @@ export async function getPost(postId: string): Promise<Result<Post | null>> {
   return tryCatch(callback);
 }
 
-export async function getPosts(isAdmin: boolean): Promise<Result<Post[]>> {
+export async function getPosts(
+  isAdmin: boolean
+): Promise<Result<PostRetrieveData[]>> {
   const db = getFirestore();
-  const callback = async (): Promise<Post[]> => {
+  const callback = async (): Promise<PostRetrieveData[]> => {
     const collectionRef = collection(db, "posts");
     const q = isAdmin
       ? query(collectionRef, orderBy("createdOn", "asc"))
@@ -54,12 +60,15 @@ export async function getPosts(isAdmin: boolean): Promise<Result<Post[]>> {
         );
     const documents = await getDocs(q);
     if (documents.size > 0) {
-      const parsed: Post[] = [];
-      documents.forEach((item) => {
-        const store = parseDoc<Post>(item);
-        parsed.push(store);
-      });
-      return parsed;
+      const posts = await Promise.all(
+        documents.docs.map(async (doc) => {
+          const post = parseDoc<PostRetrieveData>(doc);
+
+          return post;
+        })
+      );
+      console.log(posts);
+      return posts;
     } else {
       return [];
     }
