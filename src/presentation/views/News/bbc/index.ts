@@ -1,1 +1,0 @@
-export { Bbc } from "./Bbc";

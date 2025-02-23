@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import * as S from "./News.Styles";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { Spinner } from "@src/presentation/components/Spinner";
-import { Bbc } from "./bbc";
+import { NewsFeed } from "./NewsFeed";
 
 function News() {
   const { userTask } = useAuthStore((state) => state);
@@ -18,7 +18,7 @@ function News() {
           </S.LoadingWrapper>
         ) : (
           <S.NewsWrapper>
-            <Bbc />
+            <NewsFeed />
           </S.NewsWrapper>
         )}
       </S.Main>
