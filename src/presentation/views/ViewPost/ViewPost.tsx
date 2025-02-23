@@ -81,7 +81,9 @@ function ViewPost() {
             "es"
           )}`}</S.GrayWrapper>
           <S.Content>{parse(post.content)}</S.Content>
-          <S.GrayWrapper>{`Written by: ${post.author}`}</S.GrayWrapper>
+          <S.GrayWrapper>{`Written by: ${
+            post.author?.name ?? "Not found"
+          }`}</S.GrayWrapper>
           <CommentsSection postId={post.id} user={user} />
           <S.Footer>
             <MainButton onClick={() => navigate("/home")}>Go back</MainButton>

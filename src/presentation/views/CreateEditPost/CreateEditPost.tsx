@@ -125,7 +125,7 @@ function CreateEditPost() {
         onChange={(e) => setTitle(e.target.value)}
         placeholder="Title"
         required
-        disabled={isLoadingPost}
+        disabled={isLoadingPost || !user}
       />
       {isLoadingPost && <Spinner />}
       <ReactQuill
@@ -140,6 +140,7 @@ function CreateEditPost() {
         }}
         formats={["bold", "italic", "underline", "image", "list", "bullet"]}
         className="custom-quill-editor"
+        readOnly={!user}
       />
       <h5>Cover image (optional)</h5>
       <input type="file" accept="image/*" onChange={handlePhotoUpload} />
@@ -150,7 +151,7 @@ function CreateEditPost() {
       )}
       {isEditMode && (
         <MainButton
-          disabled={isLoading}
+          disabled={isLoading || !user}
           onClick={(e) => {
             e.preventDefault();
             handleEditPost(e);
@@ -160,7 +161,7 @@ function CreateEditPost() {
         </MainButton>
       )}
 
-      <MainButton type="submit" disabled={isLoading}>
+      <MainButton type="submit" disabled={isLoading || !user}>
         {isLoading ? "Saving..." : "Save and exit"}
       </MainButton>
       {message && <p>{message}</p>}

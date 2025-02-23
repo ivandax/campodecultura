@@ -38,7 +38,14 @@ export async function getPost(postId: string): Promise<Result<Post | null>> {
     const docRef = doc(db, "posts", postId);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      return parseDoc<Post>(docSnap);
+      const post = parseDoc<PostRetrieveData>(docSnap);
+      const userRef = post.authorRef;
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        const parsedUser = parseDoc<AppUser>(userDoc);
+        return { ...post, author: parsedUser };
+      }
+      return { ...post, author: null };
     } else {
       return null;
     }
@@ -72,7 +79,6 @@ export async function getPosts(isAdmin: boolean): Promise<Result<Post[]>> {
           return { ...post, author: null };
         })
       );
-      console.log(posts);
       return posts;
     } else {
       return [];
