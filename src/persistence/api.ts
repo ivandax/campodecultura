@@ -6,7 +6,13 @@ export const fetchNews = async (
 ) => {
   try {
     const response = await fetch(
-      `${baseUrl}?country=${country}&category=${category}&apiKey=${apiKey}`
+      `${baseUrl}?country=${country}&category=${category}&apiKey=${apiKey}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
 
     if (!response.ok) {
@@ -14,6 +20,7 @@ export const fetchNews = async (
     }
 
     const data = await response.json();
+    console.log(data);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return data.articles.map((article: any) => ({

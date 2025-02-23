@@ -18,7 +18,8 @@ function NewsFeed() {
 
   useEffect(() => {
     const loadNews = async () => {
-      const articles = await fetchNews("us", "technology", BASE_URL, API_KEY);
+      const articles = await fetchNews(BASE_URL, API_KEY, "us", "technology");
+      console.log(articles);
       setNews(articles);
     };
 
