@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPosts } from "@src/persistence/post";
 import { AsyncOp } from "@src/presentation/types/AsyncOp";
+import { Spinner } from "../Spinner";
 
 interface HomeTableProps {
   isAdmin: boolean;
@@ -54,7 +55,10 @@ function HomeTable({ isAdmin }: HomeTableProps) {
       <tbody>
         {postsTask.status === "in-progress" && (
           <TableRow>
-            <TableCell>Loading...</TableCell>
+            <TableCell>
+              <Spinner />
+            </TableCell>
+            <TableCell></TableCell>
             <TableCell></TableCell>
           </TableRow>
         )}

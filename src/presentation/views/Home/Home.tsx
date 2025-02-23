@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { Main, Wrapper, LoadingWrapper } from "./Home.Styles";
 import { HomeTable } from "@src/presentation/components/HomeTable";
 import { useAuthStore } from "@src/presentation/store/authStore";
+import { Spinner } from "@src/presentation/components/Spinner";
 
 function Home() {
   const { userTask } = useAuthStore((state) => state);
@@ -17,7 +18,9 @@ function Home() {
       <Main>
         <ViewTitle>Posts</ViewTitle>
         {userTask.status === "pending" || userTask.status === "in-progress" ? (
-          <LoadingWrapper>Loading...</LoadingWrapper>
+          <LoadingWrapper>
+            <Spinner />
+          </LoadingWrapper>
         ) : (
           <HomeTable isAdmin={isAdmin} />
         )}

@@ -62,14 +62,6 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
           </SidebarItem>
         </>
       )}
-
-      {/* <SidebarItem
-        onClick={() => handleNavigate("/sponsors")}
-        $active={location.pathname === "/sponsors"}
-        $displayOn={displayOn}
-      >
-        Sponsors
-      </SidebarItem> */}
     </SidebarList>
   );
 }
