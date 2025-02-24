@@ -5,6 +5,8 @@ export const FormWrapper = styled.form`
   flex-direction: column;
   padding: 24px;
   gap: 8px;
+  max-height: 100%;
+  overflow: auto;
 
   input {
     padding: 4px;
