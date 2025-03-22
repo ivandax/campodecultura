@@ -8,10 +8,12 @@ import "react-quill/dist/quill.snow.css";
 import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 import { notifyError, notifySuccess } from "@src/presentation/utils";
 import { Spinner } from "@src/presentation/components/Spinner";
+import { RadioGroup } from "@src/presentation/components/RadioGroup/RadioGroup";
 
 function CreateEditPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [status, setStatus] = useState<"draft" | "published">("draft");
   const [photo, setPhoto] = useState<null | string>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<null | string>(null);
@@ -35,7 +37,7 @@ function CreateEditPost() {
       coverImage: photo,
       language: "en",
       categories: [],
-      status: "published",
+      status: status,
       authorId: user.id,
     });
     setIsLoading(false);
@@ -56,6 +58,7 @@ function CreateEditPost() {
       content: content,
       coverImage: photo,
       editedOn: +new Date(),
+      status,
     });
     setIsLoading(false);
     if (result.error) {
@@ -107,6 +110,7 @@ function CreateEditPost() {
         setTitle(postResult.data.title);
         setContent(postResult.data.content);
         setPhoto(postResult.data.coverImage);
+        setStatus(postResult.data.status);
       }
     };
 
@@ -149,6 +153,18 @@ function CreateEditPost() {
           <img src={photo} alt="Preview" style={{ maxWidth: "100%" }} />
         </PhotoPreview>
       )}
+      <RadioGroup
+        name="status"
+        options={[
+          { label: "Draft", value: "draft" },
+          { label: "Published", value: "published" },
+        ]}
+        selectedValue={status}
+        onChange={setStatus}
+        color="#ffffff"
+        backgroundColor="#007bff"
+        borderColor="#007bff"
+      />
       {isEditMode && (
         <MainButton
           disabled={isLoading || !user}
