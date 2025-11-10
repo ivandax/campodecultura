@@ -27,7 +27,7 @@ const RadioGroup = <T extends string | number>({
   return (
     <S.RadioGroupWrapper>
       {options.map((option) => (
-        <S.RadioWrapper>
+        <S.RadioWrapper key={option.value}>
           <input
             type="radio"
             name={name}

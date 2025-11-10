@@ -99,6 +99,7 @@ function CreateEditPost() {
 
   useEffect(() => {
     const handleGetPost = async () => {
+      if (!user) return;
       if (postId) {
         setIsLoadingPost(true);
         const postResult = await getPost(postId);
@@ -111,6 +112,10 @@ function CreateEditPost() {
           setMessage("Data is null");
           return;
         }
+        if (postResult.data.author?.id !== user.id) {
+          notifyError("Post does not belong to the user");
+          return;
+        }
         setTitle(postResult.data.title);
         setContent(postResult.data.content);
         setPhoto(postResult.data.coverImage);
@@ -119,7 +124,7 @@ function CreateEditPost() {
     };
 
     handleGetPost();
-  }, [postId]);
+  }, [postId, user, userId]);
 
   const isEditMode = postId !== undefined;
 

@@ -17,19 +17,19 @@ function ViewPost() {
   const { postId, userId } = useParams();
   const { userTask } = useAuthStore();
 
-  // ADMIN
   const [deleteInput, setDeleteInput] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const userIsAdmin =
+  const userIsOwner =
     userTask.status === "successful" &&
     userTask.data !== null &&
-    userTask.data.role === "ADMIN";
+    userId &&
+    userTask.data.id === userId;
 
   const user = userTask.status === "successful" ? userTask.data : null;
 
   const handleDelete = async () => {
-    if (!postId || !userIsAdmin) return;
+    if (!postId || !userIsOwner) return;
     setIsDeleting(true);
     const result = await deletePost(postId);
     setIsDeleting(false);
@@ -40,7 +40,7 @@ function ViewPost() {
     }
 
     setMessage("Post removed");
-    if(userId){
+    if (userId) {
       navigate(`/posts/${userId}`);
       return;
     }
@@ -93,10 +93,12 @@ function ViewPost() {
             <MainButton onClick={() => navigate("/home")}>Go back</MainButton>
           </S.Footer>
 
-          {userId && userIsAdmin && (
+          {userId && userIsOwner && (
             <S.AdminBlock>
               <h5>Author actions</h5>
-              <button onClick={() => navigate(`/posts/${userId}/edit/${postId}`)}>
+              <button
+                onClick={() => navigate(`/posts/${userId}/edit/${postId}`)}
+              >
                 Edit post
               </button>
               <h5

@@ -29,7 +29,7 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (user) {
         const userProfileResult = await getUser(user.uid);
         if (userProfileResult.data) {
-          if (user.emailVerified) {
+          if (user.emailVerified && !userProfileResult.data.verified) {
             await updateUser({ verified: true }, user.uid);
             set({
               userTask: {
@@ -48,7 +48,7 @@ export const useAuthStore = create<AuthState>((set) => ({
             name: "",
             createdOn: +new Date(),
             verified: false,
-            role: "STANDARD",
+            role: "ADMIN",
           };
           const createResult = await createUser(newProfile, user.uid);
           if (createResult.data) {
@@ -107,6 +107,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({ userTask: { status: "in-progress" } });
     const result: Result<void> = await signup(email, password);
     if (result.error) {
+      console.error(result.error);
       set({
         userTask: {
           status: "failed",

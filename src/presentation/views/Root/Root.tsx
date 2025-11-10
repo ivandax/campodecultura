@@ -9,6 +9,7 @@ import { Login } from "@src/presentation/views/Login";
 import { SignUp } from "@src/presentation/views/SignUp";
 import { CreateEditPost } from "@src/presentation/views/CreateEditPost";
 import { ViewPost } from "@src/presentation/views/ViewPost";
+import { MyProfile } from "@src/presentation/views/MyProfile";
 import { LandingPage } from "@src/presentation/views/LandingPage";
 import { AnalyticsTracker } from "@src/presentation/components/AnalyticsTracker";
 import { Analytics } from "firebase/analytics";
@@ -37,6 +38,7 @@ const Root: React.FC<RootProps> = ({ analytics }: RootProps) => {
               element={<CreateEditPost />}
             />
             <Route path="/posts/:userId/view/:postId" element={<ViewPost />} />
+            <Route path="/my-profile" element={<MyProfile />} />
             <Route path="/" element={<Navigate to="/home" replace />} />
           </Routes>
         </MainContent>

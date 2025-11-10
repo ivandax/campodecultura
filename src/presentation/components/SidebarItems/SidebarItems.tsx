@@ -26,6 +26,8 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
 
   const getMyPostsUrl = (userId: string | undefined) => `/posts/${userId}`;
 
+  const getMyProfileUrl = () => `/my-profile`;
+
   return (
     <SidebarList>
       <SidebarItem
@@ -50,6 +52,13 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
             $displayOn={displayOn}
           >
             Create post
+          </SidebarItem>
+          <SidebarItem
+            onClick={() => handleNavigate(getMyProfileUrl())}
+            $active={location.pathname === getMyProfileUrl()}
+            $displayOn={displayOn}
+          >
+            My profile
           </SidebarItem>
         </>
       )}
