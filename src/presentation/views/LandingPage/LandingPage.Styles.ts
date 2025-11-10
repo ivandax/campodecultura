@@ -51,7 +51,7 @@ export const FeatureCard = styled.div`
   padding: 16px;
   border-radius: 8px;
   background-color: ${(props) => props.theme.colors.reallyLightBlue};
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 
   h4 {
     margin-bottom: 8px;
