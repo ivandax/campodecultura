@@ -35,7 +35,7 @@ const Root: React.FC<RootProps> = ({ analytics }: RootProps) => {
               path="/posts/:userId/edit/:postId"
               element={<CreateEditPost />}
             />
-            <Route path="posts/:userId/view/:postId" element={<ViewPost />} />
+            <Route path="/posts/:userId/view/:postId" element={<ViewPost />} />
             <Route path="/" element={<Navigate to="/home" replace />} />
           </Routes>
         </MainContent>

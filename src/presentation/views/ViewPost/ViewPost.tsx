@@ -14,7 +14,7 @@ function ViewPost() {
   const [post, setPost] = useState<Post | null>(null);
   const [message, setMessage] = useState<null | string>(null);
   const navigate = useNavigate();
-  const { postId } = useParams();
+  const { postId, userId } = useParams();
   const { userTask } = useAuthStore();
 
   // ADMIN
@@ -40,6 +40,10 @@ function ViewPost() {
     }
 
     setMessage("Post removed");
+    if(userId){
+      navigate(`/posts/${userId}`);
+      return;
+    }
     navigate("/home");
   };
 
@@ -89,10 +93,10 @@ function ViewPost() {
             <MainButton onClick={() => navigate("/home")}>Go back</MainButton>
           </S.Footer>
 
-          {userIsAdmin && (
+          {userId && userIsAdmin && (
             <S.AdminBlock>
-              <h5>ADMIN actions</h5>
-              <button onClick={() => navigate(`/edit/${postId}`)}>
+              <h5>Author actions</h5>
+              <button onClick={() => navigate(`/posts/${userId}/edit/${postId}`)}>
                 Edit post
               </button>
               <h5

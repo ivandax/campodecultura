@@ -19,7 +19,7 @@ function CreateEditPost() {
   const [message, setMessage] = useState<null | string>(null);
   const { userTask } = useAuthStore();
   const navigate = useNavigate();
-  const { postId } = useParams();
+  const { postId, userId } = useParams();
   const [isLoadingPost, setIsLoadingPost] = useState(false);
 
   const user = userTask.status === "successful" ? userTask.data : null;
@@ -43,6 +43,10 @@ function CreateEditPost() {
     setIsLoading(false);
     if (result.error) {
       setMessage(result.error.message);
+      return;
+    }
+    if (userId) {
+      navigate(`/posts/${userId}`);
       return;
     }
     navigate("/home");

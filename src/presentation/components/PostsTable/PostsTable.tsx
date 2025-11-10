@@ -80,7 +80,7 @@ function PostsTable({ isOwner, userId }: PostsTableProps) {
           postsTask.data.map((item) => (
             <TableRow
               key={item.title}
-              onClick={() => navigate(`/view/${item.id}`)}
+              onClick={() => navigate(`/posts/${item.author?.id}/view/${item.id}`)}
             >
               <TableCell $pointer onClick={() => void 0} $width={20}>
                 <H2CategoryTitle>{item.title}</H2CategoryTitle>
