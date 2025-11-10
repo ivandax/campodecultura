@@ -1,17 +1,21 @@
 import { ViewTitle } from "@src/presentation/components/ViewTitle";
-import { Outlet } from "react-router-dom";
-import { Main, Wrapper, LoadingWrapper } from "./Home.Styles";
-import { HomeTable } from "@src/presentation/components/HomeTable";
+import { Outlet, useParams } from "react-router-dom";
+import { Main, Wrapper, LoadingWrapper } from "./MyPosts.Styles";
+import { PostsTable } from "@src/presentation/components/PostsTable";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { Spinner } from "@src/presentation/components/Spinner";
 
-function Home() {
+function MyPosts() {
   const { userTask } = useAuthStore((state) => state);
+  const { userId } = useParams();
 
-  const isAdmin =
-    userTask.status === "successful" && userTask.data?.role === "ADMIN"
-      ? true
-      : false;
+  if (!userId) {
+    return (
+      <Main>
+        <ViewTitle>User ID is missing</ViewTitle>
+      </Main>
+    );
+  }
 
   return (
     <Wrapper>
@@ -21,13 +25,13 @@ function Home() {
           <LoadingWrapper>
             <Spinner />
           </LoadingWrapper>
-        ) : (
-          <HomeTable isAdmin={isAdmin} />
-        )}
+        ) : userTask.status === "successful" ? (
+          <PostsTable isOwner={userTask.data?.id === userId} userId={userId} />
+        ) : null}
       </Main>
       <Outlet />
     </Wrapper>
   );
 }
 
-export { Home };
+export { MyPosts };

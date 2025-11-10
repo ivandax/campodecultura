@@ -1,4 +1,4 @@
-import { Table, TableCell, TableRow } from "./HomeTable.Styles";
+import { Table, TableCell, TableRow } from "./PostsTable.Styles";
 import { BodyText, H2CategoryTitle } from "@src/presentation/components/Texts";
 import { TableHeaderCell } from "@src/presentation/components/TableHeaderCell";
 import { Post } from "@src/domain/Post";
@@ -8,15 +8,16 @@ import {
 } from "@src/presentation/utils";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getPosts } from "@src/persistence/post";
+import { getPostsForUser } from "@src/persistence/post";
 import { AsyncOp } from "@src/presentation/types/AsyncOp";
 import { Spinner } from "../Spinner";
 
-interface HomeTableProps {
-  isAdmin: boolean;
+interface PostsTableProps {
+  isOwner: boolean;
+  userId: string;
 }
 
-function HomeTable({ isAdmin }: HomeTableProps) {
+function PostsTable({ isOwner, userId }: PostsTableProps) {
   const navigate = useNavigate();
   const [postsTask, setPostsTask] = useState<AsyncOp<Post[], null>>({
     status: "pending",
@@ -25,7 +26,7 @@ function HomeTable({ isAdmin }: HomeTableProps) {
   useEffect(() => {
     const handleGetPosts = async () => {
       setPostsTask({ status: "in-progress" });
-      const posts = await getPosts(isAdmin);
+      const posts = await getPostsForUser(userId, isOwner);
 
       if (posts.error) {
         notifyError("Error loading posts");
@@ -102,4 +103,4 @@ function HomeTable({ isAdmin }: HomeTableProps) {
   );
 }
 
-export { HomeTable };
+export { PostsTable };

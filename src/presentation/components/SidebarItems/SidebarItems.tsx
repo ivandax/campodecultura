@@ -21,6 +21,11 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
     }
   };
 
+  const getCreateUrl = (userId: string | undefined) =>
+    `/posts/${userId}/create`;
+
+  const getMyPostsUrl = (userId: string | undefined) => `/posts/${userId}`;
+
   return (
     <SidebarList>
       <SidebarItem
@@ -30,19 +35,24 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
       >
         Home
       </SidebarItem>
-      {userTask.status === "successful" &&
-        userTask.data !== null &&
-        userTask.data.role === "ADMIN" && (
-          <>
-            <SidebarItem
-              onClick={() => handleNavigate("/create")}
-              $active={location.pathname === "/create"}
-              $displayOn={displayOn}
-            >
-              Create post
-            </SidebarItem>
-          </>
-        )}
+      {userTask.status === "successful" && userTask.data !== null && (
+        <>
+          <SidebarItem
+            onClick={() => handleNavigate(getMyPostsUrl(userTask.data?.id))}
+            $active={location.pathname === getMyPostsUrl(userTask.data?.id)}
+            $displayOn={displayOn}
+          >
+            My Posts
+          </SidebarItem>
+          <SidebarItem
+            onClick={() => handleNavigate(getCreateUrl(userTask.data?.id))}
+            $active={location.pathname === getCreateUrl(userTask.data?.id)}
+            $displayOn={displayOn}
+          >
+            Create post
+          </SidebarItem>
+        </>
+      )}
 
       {userTask.status === "successful" && userTask.data === null && (
         <>
