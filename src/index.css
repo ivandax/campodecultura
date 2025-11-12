@@ -17,3 +17,7 @@ a {
 .custom-quill-editor .ql-editor {
   min-height: 150px;
 }
+
+input {
+  padding: 4px;
+}
