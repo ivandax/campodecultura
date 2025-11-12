@@ -20,3 +20,10 @@ export const FormWrapper = styled.form`
 export const PhotoPreview = styled.div`
   width: 200px;
 `;
+
+export const ActionsSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 400px;
+`;

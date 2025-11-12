@@ -1,38 +1,29 @@
 import { getUser, updateUser } from "@src/persistence/user";
 import * as S from "./MyProfile.Styles";
-import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { notifyError, notifySuccess } from "@src/presentation/utils";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AppUser } from "@src/domain/AppUser";
 
+// MyProfile.tsx
 function MyProfile() {
   const navigate = useNavigate();
   const { userTask, logout } = useAuthStore();
   const user = userTask.status === "successful" ? userTask.data : null;
   const [userProfile, setUserProfile] = useState<null | AppUser>(null);
 
-  const handleGetProfile = useCallback(
-    async (id: string) => {
-      const result = await getUser(id);
-      if (result.error) {
-        notifyError("Error getting user");
-        return;
-      }
-      if (result.data === null) {
-        notifyError("Error getting user = null");
-        return;
-      }
-      setUserProfile(result.data);
-    },
-    [setUserProfile] // Dependencies
-  );
+  const handleGetProfile = useCallback(async (id: string) => {
+    const result = await getUser(id);
+    if (result.error || result.data === null) {
+      notifyError("Error getting user");
+      return;
+    }
+    setUserProfile(result.data);
+  }, []);
 
   useEffect(() => {
-    if (user) {
-      handleGetProfile(user.id);
-    }
+    if (user) handleGetProfile(user.id);
   }, [user, handleGetProfile]);
 
   const handleLogout = async () => {
@@ -48,9 +39,9 @@ function MyProfile() {
       );
       if (result.error) {
         notifyError("Error updating user name");
-        return;
+      } else {
+        notifySuccess("User name updated successfully");
       }
-      notifySuccess("User name updated successfully");
     }
   }, [userProfile]);
 
@@ -67,7 +58,7 @@ function MyProfile() {
             <strong>Email:</strong> {user.email}
           </S.InfoLine>
           {userProfile && (
-            <input
+            <S.Input
               type="text"
               value={userProfile.name}
               onChange={(e) =>
@@ -82,9 +73,12 @@ function MyProfile() {
         <p>Loading user data...</p>
       )}
 
-      <S.ActionBlock>
-        <MainButton onClick={handleLogout}>Log out</MainButton>
-      </S.ActionBlock>
+      <S.Divider />
+
+      <S.LogoutSection>
+        <S.LogoutText>Logging out will end your current session.</S.LogoutText>
+        <S.LogoutButton onClick={handleLogout}>Log out</S.LogoutButton>
+      </S.LogoutSection>
     </S.Wrapper>
   );
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { FormWrapper, PhotoPreview } from "./CreateEditPost.Styles";
+import * as S from "./CreateEditPost.Styles";
 import { createPost, editPost, getPost } from "@src/persistence/post";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { useNavigate, useParams } from "react-router-dom";
@@ -15,8 +15,8 @@ function CreateEditPost() {
   const [content, setContent] = useState("");
   const [status, setStatus] = useState<"draft" | "published">("draft");
   const [photo, setPhoto] = useState<null | string>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<null | string>(null);
+  const [isLoadingCreate, setIsLoadingCreate] = useState(false);
+  const [isLoadingEdit, setIsLoadingEdit] = useState(false);
   const { userTask } = useAuthStore();
   const navigate = useNavigate();
   const { postId, userId } = useParams();
@@ -27,8 +27,7 @@ function CreateEditPost() {
   const handleCreatePost = async (e: React.FormEvent) => {
     if (!user) return;
     e.preventDefault();
-    setIsLoading(true);
-    setMessage(null);
+    setIsLoadingCreate(true);
     const result = await createPost({
       title,
       content: content,
@@ -40,9 +39,9 @@ function CreateEditPost() {
       status: status,
       authorId: user.id,
     });
-    setIsLoading(false);
+    setIsLoadingCreate(false);
     if (result.error) {
-      setMessage(result.error.message);
+      notifyError(result.error.message);
       return;
     }
     if (userId) {
@@ -55,8 +54,7 @@ function CreateEditPost() {
   const handleEditPost = async (e: React.FormEvent) => {
     if (!user || !postId) return;
     e.preventDefault();
-    setIsLoading(true);
-    setMessage(null);
+    setIsLoadingEdit(true);
     const result = await editPost(postId, {
       title,
       content: content,
@@ -64,7 +62,7 @@ function CreateEditPost() {
       editedOn: +new Date(),
       status,
     });
-    setIsLoading(false);
+    setIsLoadingEdit(false);
     if (result.error) {
       notifyError("Something went wrong while saving.");
       return;
@@ -83,7 +81,7 @@ function CreateEditPost() {
 
     const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
     if (file.size > maxSizeInBytes) {
-      setMessage("Image size must be less than 2MB.");
+      notifyError("Image size must be less than 2MB.");
       return;
     }
 
@@ -92,7 +90,7 @@ function CreateEditPost() {
       setPhoto(reader.result as string); // Base64 string
     };
     reader.onerror = () => {
-      setMessage("Error loading the image.");
+      notifyError("Error loading the image.");
     };
     reader.readAsDataURL(file);
   };
@@ -105,11 +103,11 @@ function CreateEditPost() {
         const postResult = await getPost(postId);
         setIsLoadingPost(false);
         if (postResult.error) {
-          setMessage(postResult.error.message);
+          notifyError(postResult.error.message);
           return;
         }
         if (postResult.data === null) {
-          setMessage("Data is null");
+          notifyError("Data is null");
           return;
         }
         if (postResult.data.author?.id !== user.id) {
@@ -129,7 +127,7 @@ function CreateEditPost() {
   const isEditMode = postId !== undefined;
 
   return (
-    <FormWrapper
+    <S.FormWrapper
       onSubmit={isEditMode ? handleEditPostAndNavigateAway : handleCreatePost}
     >
       <h5>{isEditMode ? "Edit post" : "Create post"}</h5>
@@ -158,9 +156,9 @@ function CreateEditPost() {
       <h5>Cover image (optional)</h5>
       <input type="file" accept="image/*" onChange={handlePhotoUpload} />
       {photo && (
-        <PhotoPreview>
+        <S.PhotoPreview>
           <img src={photo} alt="Preview" style={{ maxWidth: "100%" }} />
-        </PhotoPreview>
+        </S.PhotoPreview>
       )}
       <RadioGroup
         name="status"
@@ -174,23 +172,24 @@ function CreateEditPost() {
         backgroundColor="#007bff"
         borderColor="#007bff"
       />
-      {isEditMode && (
-        <MainButton
-          disabled={isLoading || !user}
-          onClick={(e) => {
-            e.preventDefault();
-            handleEditPost(e);
-          }}
-        >
-          {isLoading ? "Saving..." : "Save changes"}
-        </MainButton>
-      )}
-
-      <MainButton type="submit" disabled={isLoading || !user}>
-        {isLoading ? "Saving..." : "Save and exit"}
-      </MainButton>
-      {message && <p>{message}</p>}
-    </FormWrapper>
+      <S.ActionsSection>
+        {isEditMode ? (
+          <MainButton
+            disabled={isLoadingEdit || !user}
+            onClick={(e) => {
+              e.preventDefault();
+              handleEditPost(e);
+            }}
+          >
+            {isLoadingEdit ? "Saving..." : "Save changes"}
+          </MainButton>
+        ) : (
+          <MainButton type="submit" disabled={isLoadingCreate || !user}>
+            {isLoadingCreate ? "Saving..." : "Save and exit"}
+          </MainButton>
+        )}
+      </S.ActionsSection>
+    </S.FormWrapper>
   );
 }
 
