@@ -6,6 +6,7 @@ import {
     sendEmailVerification,
     User as FirebaseUser,
     Unsubscribe,
+    sendPasswordResetEmail,
 } from "firebase/auth";
 import { tryCatch } from "./tryCatch";
 import { Result } from "@src/domain/Result";
@@ -42,4 +43,12 @@ async function login(email: string, password: string): Promise<Result<FirebaseUs
     return tryCatch(callback);
 }
 
-export { signup, logout, login, registerAuthObserver };
+async function requestPasswordReset(email: string): Promise<Result<void>> {
+  const callback = async (): Promise<void> => {
+    const auth = getAuth();
+    await sendPasswordResetEmail(auth, email);
+  };
+  return tryCatch(callback);
+}
+
+export { signup, logout, login, registerAuthObserver, requestPasswordReset };

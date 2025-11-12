@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { LoginFormWrapper } from "./Login.Styles";
 import { useAuthStore } from "@src/presentation/store/authStore";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { notifyError } from "@src/presentation/utils";
 
 function Login() {
@@ -40,6 +40,7 @@ function Login() {
       <button type="submit" disabled={userTask.status === "in-progress"}>
         {userTask.status === "in-progress" ? "Logging in..." : "Log in"}
       </button>
+      <Link to="/recover-password">Forgot password?</Link>
     </LoginFormWrapper>
   );
 }

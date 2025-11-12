@@ -13,6 +13,7 @@ import { MyProfile } from "@src/presentation/views/MyProfile";
 import { LandingPage } from "@src/presentation/views/LandingPage";
 import { AnalyticsTracker } from "@src/presentation/components/AnalyticsTracker";
 import { Analytics } from "firebase/analytics";
+import { RecoverPassword } from "../RecoverPassword";
 
 interface RootProps {
   analytics: Analytics;
@@ -32,6 +33,7 @@ const Root: React.FC<RootProps> = ({ analytics }: RootProps) => {
             <Route path="/posts/:userId" element={<MyPosts />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/recover-password" element={<RecoverPassword />} />
             <Route path="/posts/:userId/create" element={<CreateEditPost />} />
             <Route
               path="/posts/:userId/edit/:postId"
