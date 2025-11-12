@@ -2,6 +2,7 @@ import { useState } from "react";
 import { LoginFormWrapper } from "./Login.Styles";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { useNavigate } from "react-router-dom";
+import { notifyError } from "@src/presentation/utils";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -11,9 +12,11 @@ function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    const userOrNull = await login(email, password);
-    if (userOrNull) {
+    const user = await login(email, password);
+    if (user) {
       navigate("/home");
+    } else {
+      notifyError("Could not log in. Please check your credentials.");
     }
   };
 
@@ -37,7 +40,6 @@ function Login() {
       <button type="submit" disabled={userTask.status === "in-progress"}>
         {userTask.status === "in-progress" ? "Logging in..." : "Log in"}
       </button>
-      {userTask.status === "failed" && <p>{userTask.error.message}</p>}
     </LoginFormWrapper>
   );
 }

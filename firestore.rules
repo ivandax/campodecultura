@@ -6,8 +6,7 @@ service cloud.firestore {
     match /users/{userId} {
       allow read;
       allow write, update: if request.auth != null
-                           && request.auth.uid == userId
-                           && request.auth.token.email_verified == true;
+                           && request.auth.uid == userId;
     }
 
     match /comments/{commentId} {

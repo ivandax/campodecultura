@@ -51,6 +51,7 @@ export const useAuthStore = create<AuthState>((set) => ({
             role: "ADMIN",
           };
           const createResult = await createUser(newProfile, user.uid);
+          console.log(createResult);
           if (createResult.data) {
             set({
               userTask: {

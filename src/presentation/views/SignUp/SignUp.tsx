@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { SignUpFormWrapper } from "./SignUp.Styles";
 import { useAuthStore } from "@src/presentation/store/authStore";
+import { notifySuccess } from "@src/presentation/utils";
 
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState<null | string>(null);
   const { signup, userTask } = useAuthStore();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     const maybeError = await signup(email, password);
     if (!maybeError) {
-      setMessage("Account created. Please check your inbox.");
+      notifySuccess("Account created. Please check your email to verify.");
     }
   };
 
@@ -37,7 +37,6 @@ function SignUp() {
         {userTask.status === "in-progress" ? "Creating..." : "Create account"}
       </button>
       {userTask.status === "failed" && <p>{userTask.error.message}</p>}
-      {message && <p>{message}</p>}
     </SignUpFormWrapper>
   );
 }
