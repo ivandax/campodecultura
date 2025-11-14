@@ -50,6 +50,7 @@ const RadioGroup = <T extends string | number>({
             $color={color}
             $backgroundColor={backgroundColor}
             $borderColor={borderColor}
+            onClick={() => onChange(option.value)}
           >
             {option.label}
           </S.RadioWrapper>
