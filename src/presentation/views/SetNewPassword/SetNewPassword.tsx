@@ -6,6 +6,7 @@ import {
   completePasswordReset,
   verifyPasswordCode,
 } from "@src/persistence/auth";
+import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 
 function SetNewPassword() {
   const [searchParams] = useSearchParams();
@@ -20,7 +21,6 @@ function SetNewPassword() {
     const verify = async () => {
       if (!oobCode) {
         notifyError("Invalid password reset link.");
-        setIsVerifying(false);
         navigate("/");
         return;
       }
@@ -29,7 +29,10 @@ function SetNewPassword() {
         await verifyPasswordCode(oobCode);
       } catch {
         notifyError("Password reset link is invalid or expired.");
+        navigate("/");
       }
+
+      setIsVerifying(false);
     };
 
     verify();
@@ -74,12 +77,11 @@ function SetNewPassword() {
         onChange={(e) => setNewPassword(e.target.value)}
         placeholder="New password"
         required
-        disabled={isVerifying === false}
       />
 
-      <button type="submit" disabled={isSubmitting || isVerifying === false}>
+      <MainButton type="submit" disabled={isSubmitting}>
         {isSubmitting ? "Updating..." : "Set Password"}
-      </button>
+      </MainButton>
     </S.Wrapper>
   );
 }

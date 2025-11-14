@@ -2,6 +2,7 @@ import { useState } from "react";
 import { RequestPasswordWrapper } from "./RecoverPassword.Styles";
 import { notifyError, notifySuccess } from "@src/presentation/utils";
 import { requestPasswordReset } from "@src/persistence/auth";
+import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 
 function RecoverPassword() {
   const [email, setEmail] = useState("");
@@ -33,9 +34,9 @@ function RecoverPassword() {
         required
         disabled={isDisabled}
       />
-      <button type="submit" disabled={isLoading}>
+      <MainButton type="submit" disabled={isLoading}>
         {isLoading ? "Sending..." : "Request"}
-      </button>
+      </MainButton>
     </RequestPasswordWrapper>
   );
 }
