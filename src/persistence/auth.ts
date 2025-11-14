@@ -8,6 +8,8 @@ import {
   Unsubscribe,
   sendPasswordResetEmail,
   applyActionCode,
+  verifyPasswordResetCode,
+  confirmPasswordReset,
 } from "firebase/auth";
 import { tryCatch } from "./tryCatch";
 import { Result } from "@src/domain/Result";
@@ -69,6 +71,30 @@ async function verifyEmail(oobCode: string): Promise<Result<void>> {
   return tryCatch(callback);
 }
 
+async function verifyPasswordCode(
+  oobCode: string
+): Promise<Result<{ email: string }>> {
+  const callback = async () => {
+    const auth = getAuth();
+    const email = await verifyPasswordResetCode(auth, oobCode);
+    return { email };
+  };
+
+  return tryCatch(callback);
+}
+
+async function completePasswordReset(
+  oobCode: string,
+  newPassword: string
+): Promise<Result<void>> {
+  const callback = async () => {
+    const auth = getAuth();
+    await confirmPasswordReset(auth, oobCode, newPassword);
+  };
+
+  return tryCatch(callback);
+}
+
 export {
   signup,
   logout,
@@ -76,4 +102,6 @@ export {
   registerAuthObserver,
   requestPasswordReset,
   verifyEmail,
+  verifyPasswordCode,
+  completePasswordReset,
 };
