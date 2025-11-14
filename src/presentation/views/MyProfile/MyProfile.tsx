@@ -12,6 +12,7 @@ function MyProfile() {
   const { userTask, logout } = useAuthStore();
   const user = userTask.status === "successful" ? userTask.data : null;
   const [userProfile, setUserProfile] = useState<null | AppUser>(null);
+  const [displayName, setDisplayName] = useState("");
 
   const handleGetProfile = useCallback(async (id: string) => {
     const result = await getUser(id);
@@ -20,6 +21,7 @@ function MyProfile() {
       return;
     }
     setUserProfile(result.data);
+    setDisplayName(result.data.name);
   }, []);
 
   useEffect(() => {
@@ -32,18 +34,16 @@ function MyProfile() {
   };
 
   const handleNameBlur = useCallback(async () => {
+    if (!userProfile || displayName === userProfile.name) return;
     if (userProfile) {
-      const result = await updateUser(
-        { name: userProfile.name },
-        userProfile.id
-      );
+      const result = await updateUser({ name: displayName }, userProfile.id);
       if (result.error) {
         notifyError("Error updating user name");
       } else {
         notifySuccess("User name updated successfully");
       }
     }
-  }, [userProfile]);
+  }, [displayName, userProfile]);
 
   return (
     <S.Wrapper>
@@ -60,10 +60,8 @@ function MyProfile() {
           {userProfile && (
             <S.Input
               type="text"
-              value={userProfile.name}
-              onChange={(e) =>
-                setUserProfile({ ...userProfile, name: e.target.value })
-              }
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
               placeholder="Display name"
               onBlur={handleNameBlur}
             />
