@@ -1,9 +1,11 @@
-export type AppUser = CreateAppUserData & { id: string };
+export type AppUser = CreateAppUserData & {
+  id: string;
+  emailVerified: boolean;
+};
 
 export type CreateAppUserData = {
   email: string;
   name: string;
-  verified: boolean;
   createdOn: number;
-  role: "ADMIN" | "STANDARD"
+  role: "ADMIN" | "STANDARD";
 };

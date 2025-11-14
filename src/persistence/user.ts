@@ -7,13 +7,14 @@ import { Result } from "@src/domain/Result";
 
 async function createUser(
   userData: CreateAppUserData,
-  userId: string
+  userId: string,
+  emailVerified: boolean
 ): Promise<Result<AppUser>> {
   const db = getFirestore();
   const callback = async (): Promise<AppUser> => {
     const userRef = doc(db, "users", userId);
     await setDoc(userRef, userData);
-    return { ...userData, id: userId };
+    return { ...userData, id: userId, emailVerified };
   };
   return tryCatch(callback);
 }

@@ -8,7 +8,7 @@ import {
 } from "@src/persistence/auth";
 
 import { User as FirebaseUser, Unsubscribe } from "firebase/auth";
-import { createUser, getUser, updateUser } from "@src/persistence/user";
+import { createUser, getUser } from "@src/persistence/user";
 import { AppUser, CreateAppUserData } from "@src/domain/AppUser";
 import { AsyncOp } from "../types/AsyncOp";
 
@@ -29,34 +29,32 @@ export const useAuthStore = create<AuthState>((set) => ({
       if (user) {
         const userProfileResult = await getUser(user.uid);
         if (userProfileResult.data) {
-          if (user.emailVerified && !userProfileResult.data.verified) {
-            await updateUser({ verified: true }, user.uid);
-            set({
-              userTask: {
-                status: "successful",
-                data: { ...userProfileResult.data, verified: true },
+          set({
+            userTask: {
+              status: "successful",
+              data: {
+                ...userProfileResult.data,
+                emailVerified: user.emailVerified,
               },
-            });
-          } else {
-            set({
-              userTask: { status: "successful", data: userProfileResult.data },
-            });
-          }
+            },
+          });
         } else {
           const newProfile: CreateAppUserData = {
             email: user.email ?? "",
             name: "",
             createdOn: +new Date(),
-            verified: false,
             role: "ADMIN",
           };
-          const createResult = await createUser(newProfile, user.uid);
-          console.log(createResult);
+          const createResult = await createUser(
+            newProfile,
+            user.uid,
+            user.emailVerified
+          );
           if (createResult.data) {
             set({
               userTask: {
                 status: "successful",
-                data: { ...newProfile, id: user.uid },
+                data: createResult.data,
               },
             });
           } else {
