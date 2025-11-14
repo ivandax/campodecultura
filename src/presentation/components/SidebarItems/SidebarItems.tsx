@@ -28,6 +28,10 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
 
   const getMyProfileUrl = () => `/my-profile`;
 
+  const showLoginAndSignUp =
+    (userTask.status === "successful" && userTask.data === null) ||
+    userTask.status === "failed";
+
   return (
     <SidebarList>
       <SidebarItem
@@ -63,7 +67,7 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
         </>
       )}
 
-      {userTask.status === "successful" && userTask.data === null && (
+      {showLoginAndSignUp && (
         <>
           <SidebarItem
             onClick={() => handleNavigate("/login")}

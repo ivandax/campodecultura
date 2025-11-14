@@ -2,6 +2,7 @@ import { useState } from "react";
 import { SignUpFormWrapper } from "./SignUp.Styles";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { notifySuccess } from "@src/presentation/utils";
+import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 
 function SignUp() {
   const [email, setEmail] = useState("");
@@ -33,10 +34,9 @@ function SignUp() {
         placeholder="Password"
         required
       />
-      <button type="submit" disabled={userTask.status === "in-progress"}>
+      <MainButton type="submit" disabled={userTask.status === "in-progress"}>
         {userTask.status === "in-progress" ? "Creating..." : "Create account"}
-      </button>
-      {userTask.status === "failed" && <p>{userTask.error.message}</p>}
+      </MainButton>
     </SignUpFormWrapper>
   );
 }

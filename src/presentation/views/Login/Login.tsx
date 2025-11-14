@@ -3,6 +3,7 @@ import { LoginFormWrapper } from "./Login.Styles";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { Link, useNavigate } from "react-router-dom";
 import { notifyError } from "@src/presentation/utils";
+import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -37,9 +38,9 @@ function Login() {
         placeholder="Password"
         required
       />
-      <button type="submit" disabled={userTask.status === "in-progress"}>
+      <MainButton type="submit" disabled={userTask.status === "in-progress"}>
         {userTask.status === "in-progress" ? "Logging in..." : "Log in"}
-      </button>
+      </MainButton>
       <Link to="/recover-password">Forgot password?</Link>
     </LoginFormWrapper>
   );
