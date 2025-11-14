@@ -48,7 +48,7 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
             $active={location.pathname === getMyPostsUrl(userTask.data?.id)}
             $displayOn={displayOn}
           >
-            My Posts
+            My posts
           </SidebarItem>
           <SidebarItem
             onClick={() => handleNavigate(getCreateUrl(userTask.data?.id))}

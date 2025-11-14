@@ -50,7 +50,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
 
     const commentData: CreateCommentData = {
       text: newComment,
-      author: user.name ?? user.email,
+      author: user.name !== "" ? user.name : user.email,
       createdOn: Date.now(),
       postId,
       userId: user.id,
