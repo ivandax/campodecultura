@@ -9,6 +9,7 @@ import { useAuthStore } from "@src/presentation/store/authStore";
 import { DeleteButton } from "@src/presentation/components/Buttons/DeleteButton";
 import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 import { CommentsSection } from "@src/presentation/components/CommentsSection";
+import { Spinner } from "@src/presentation/components/Spinner";
 
 function ViewPost() {
   const [post, setPost] = useState<Post | null>(null);
@@ -67,7 +68,9 @@ function ViewPost() {
   return (
     <S.Wrapper>
       {!post ? (
-        <S.LoadingWrapper>Loading...</S.LoadingWrapper>
+        <S.LoadingWrapper>
+          <Spinner />
+        </S.LoadingWrapper>
       ) : (
         <>
           {post.coverImage ? (
