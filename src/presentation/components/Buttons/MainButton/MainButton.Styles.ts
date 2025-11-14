@@ -12,4 +12,12 @@ export const MainButton = styled.button`
   &:disabled {
     cursor: not-allowed;
   }
+
+  &:hover {
+    background-color: ${(props) => props.theme.colors.lightprimary};
+  }
+
+  &:active {
+    background-color: ${(props) => props.theme.colors.lightprimary};
+  }
 `;

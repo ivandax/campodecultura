@@ -4,7 +4,11 @@ import * as S from "./ViewPost.Styles";
 import { getPost, deletePost } from "@src/persistence/post";
 import { useNavigate, useParams } from "react-router-dom";
 import { Post } from "@src/domain/Post";
-import { timestampToHumanReadbleDate } from "@src/presentation/utils";
+import {
+  notifyError,
+  notifySuccess,
+  timestampToHumanReadbleDate,
+} from "@src/presentation/utils";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { DeleteButton } from "@src/presentation/components/Buttons/DeleteButton";
 import { MainButton } from "@src/presentation/components/Buttons/MainButton";
@@ -65,6 +69,15 @@ function ViewPost() {
     handleGetPost();
   }, [postId]);
 
+  const handleCopyUrl = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      notifySuccess("Post URL copied to clipboard!");
+    } catch (err) {
+      notifyError("Failed to copy URL");
+    }
+  };
+
   return (
     <S.Wrapper>
       {!post ? (
@@ -82,7 +95,10 @@ function ViewPost() {
               />
             </S.PhotoPreview>
           ) : null}
-          <h3>{post.title}</h3>
+          <S.Top>
+            <h3>{post.title}</h3>
+            <MainButton onClick={handleCopyUrl}>Copy URL</MainButton>
+          </S.Top>
           <S.GrayWrapper>{`Edited on: ${timestampToHumanReadbleDate(
             post.editedOn,
             "es"

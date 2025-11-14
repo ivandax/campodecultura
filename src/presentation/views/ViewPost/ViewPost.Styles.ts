@@ -46,3 +46,9 @@ export const AdminBlock = styled.div`
   border-radius: 8px;
   background-color: ${(props) => props.theme.colors.lightwarning};
 `;
+
+export const Top = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
