@@ -4,6 +4,7 @@ import { Main, Wrapper, LoadingWrapper } from "./MyPosts.Styles";
 import { PostsTable } from "@src/presentation/components/PostsTable";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { Spinner } from "@src/presentation/components/Spinner";
+import { NotificationBanner } from "@src/presentation/components/Banner/Banner";
 
 function MyPosts() {
   const { userTask } = useAuthStore((state) => state);
@@ -26,7 +27,15 @@ function MyPosts() {
             <Spinner />
           </LoadingWrapper>
         ) : userTask.status === "successful" ? (
-          <PostsTable isOwner={userTask.data?.id === userId} userId={userId} />
+          <>
+            {userTask.data?.emailVerified === false && (
+              <NotificationBanner visible={true} />
+            )}
+            <PostsTable
+              isOwner={userTask.data?.id === userId}
+              userId={userId}
+            />
+          </>
         ) : null}
       </Main>
       <Outlet />

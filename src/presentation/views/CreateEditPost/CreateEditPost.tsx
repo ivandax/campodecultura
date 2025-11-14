@@ -9,6 +9,7 @@ import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 import { notifyError, notifySuccess } from "@src/presentation/utils";
 import { Spinner } from "@src/presentation/components/Spinner";
 import { RadioGroup } from "@src/presentation/components/RadioGroup/RadioGroup";
+import { NotificationBanner } from "@src/presentation/components/Banner/Banner";
 
 function CreateEditPost() {
   const [title, setTitle] = useState("");
@@ -127,69 +128,72 @@ function CreateEditPost() {
   const isEditMode = postId !== undefined;
 
   return (
-    <S.FormWrapper
-      onSubmit={isEditMode ? handleEditPostAndNavigateAway : handleCreatePost}
-    >
-      <h5>{isEditMode ? "Edit post" : "Create post"}</h5>
-      <input
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        placeholder="Title"
-        required
-        disabled={isLoadingPost || !user}
-      />
-      {isLoadingPost && <Spinner />}
-      <ReactQuill
-        value={content}
-        onChange={(value) => setContent(value)}
-        modules={{
-          toolbar: [
-            ["bold", "italic", "underline"],
-            ["image"],
-            [{ list: "ordered" }, { list: "bullet" }],
-          ],
-        }}
-        formats={["bold", "italic", "underline", "image", "list", "bullet"]}
-        className="custom-quill-editor"
-        readOnly={!user}
-      />
-      <h5>Cover image (optional)</h5>
-      <input type="file" accept="image/*" onChange={handlePhotoUpload} />
-      {photo && (
-        <S.PhotoPreview>
-          <img src={photo} alt="Preview" style={{ maxWidth: "100%" }} />
-        </S.PhotoPreview>
-      )}
-      <RadioGroup
-        name="status"
-        options={[
-          { label: "Draft", value: "draft" },
-          { label: "Published", value: "published" },
-        ]}
-        selectedValue={status}
-        onChange={setStatus}
-        color="#ffffff"
-        backgroundColor="#007bff"
-        borderColor="#007bff"
-      />
-      <S.ActionsSection>
-        {isEditMode ? (
-          <MainButton
-            disabled={isLoadingEdit || !user}
-            onClick={(e) => {
-              e.preventDefault();
-              handleEditPost(e);
-            }}
-          >
-            {isLoadingEdit ? "Saving..." : "Save changes"}
-          </MainButton>
-        ) : (
-          <MainButton type="submit" disabled={isLoadingCreate || !user}>
-            {isLoadingCreate ? "Saving..." : "Save and exit"}
-          </MainButton>
+    <>
+      {user?.emailVerified === false && <NotificationBanner visible={true} />}
+      <S.FormWrapper
+        onSubmit={isEditMode ? handleEditPostAndNavigateAway : handleCreatePost}
+      >
+        <h5>{isEditMode ? "Edit post" : "Create post"}</h5>
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="Title"
+          required
+          disabled={isLoadingPost || !user}
+        />
+        {isLoadingPost && <Spinner />}
+        <ReactQuill
+          value={content}
+          onChange={(value) => setContent(value)}
+          modules={{
+            toolbar: [
+              ["bold", "italic", "underline"],
+              ["image"],
+              [{ list: "ordered" }, { list: "bullet" }],
+            ],
+          }}
+          formats={["bold", "italic", "underline", "image", "list", "bullet"]}
+          className="custom-quill-editor"
+          readOnly={!user}
+        />
+        <h5>Cover image (optional)</h5>
+        <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+        {photo && (
+          <S.PhotoPreview>
+            <img src={photo} alt="Preview" style={{ maxWidth: "100%" }} />
+          </S.PhotoPreview>
         )}
-      </S.ActionsSection>
-    </S.FormWrapper>
+        <RadioGroup
+          name="status"
+          options={[
+            { label: "Draft", value: "draft" },
+            { label: "Published", value: "published" },
+          ]}
+          selectedValue={status}
+          onChange={setStatus}
+          color="#ffffff"
+          backgroundColor="#007bff"
+          borderColor="#007bff"
+        />
+        <S.ActionsSection>
+          {isEditMode ? (
+            <MainButton
+              disabled={isLoadingEdit || !user}
+              onClick={(e) => {
+                e.preventDefault();
+                handleEditPost(e);
+              }}
+            >
+              {isLoadingEdit ? "Saving..." : "Save changes"}
+            </MainButton>
+          ) : (
+            <MainButton type="submit" disabled={isLoadingCreate || !user}>
+              {isLoadingCreate ? "Saving..." : "Save and exit"}
+            </MainButton>
+          )}
+        </S.ActionsSection>
+      </S.FormWrapper>
+    </>
   );
 }
 
