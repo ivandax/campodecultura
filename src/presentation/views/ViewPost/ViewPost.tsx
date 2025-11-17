@@ -101,11 +101,11 @@ function ViewPost() {
             <h3>{post.title}</h3>
             <MainButton onClick={handleCopyUrl}>Copy URL</MainButton>
           </S.Top>
+          <S.Paper>{parse(post.content)}</S.Paper>
           <S.GrayWrapper>{`Edited on: ${timestampToHumanReadbleDate(
             post.editedOn,
             "es"
           )}`}</S.GrayWrapper>
-          <S.Content>{parse(post.content)}</S.Content>
           <S.GrayWrapper>{`Written by: ${
             post.author?.name ?? "Not found"
           }`}</S.GrayWrapper>
