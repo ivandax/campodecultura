@@ -59,11 +59,14 @@ export const Paper = styled.div`
   padding: 32px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
-  min-height: 300px;
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: 8px;
+
+  li {
+    list-style-type: disc !important;
+  }
 `;
