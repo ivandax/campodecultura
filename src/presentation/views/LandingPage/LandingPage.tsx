@@ -19,9 +19,9 @@ function LandingPage() {
         </S.Subtitle>
         <S.Description>
           Here, every voice matters. Create thoughtful posts, essays, and
-          reflections using our intuitive editor powered by <b>React Quill</b>.
-          Whether you’re a writer, a thinker, or simply someone with a story to
-          tell — this is your space to express it.
+          reflections with our intuitive writing tools. Whether you’re a writer,
+          a thinker, or simply someone with a story to tell — this is your space
+          to express it.
         </S.Description>
 
         <S.ActionBlock>

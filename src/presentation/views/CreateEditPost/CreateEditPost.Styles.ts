@@ -27,3 +27,10 @@ export const ActionsSection = styled.div`
   gap: 8px;
   max-width: 400px;
 `;
+
+export const ConfigurationSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 400px;
+`;

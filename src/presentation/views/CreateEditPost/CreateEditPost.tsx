@@ -15,6 +15,7 @@ function CreateEditPost() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [status, setStatus] = useState<"draft" | "published">("draft");
+  const [acceptComments, setAcceptComments] = useState(false);
   const [photo, setPhoto] = useState<null | string>(null);
   const [isLoadingCreate, setIsLoadingCreate] = useState(false);
   const [isLoadingEdit, setIsLoadingEdit] = useState(false);
@@ -22,6 +23,8 @@ function CreateEditPost() {
   const navigate = useNavigate();
   const { postId, userId } = useParams();
   const [isLoadingPost, setIsLoadingPost] = useState(false);
+
+  const enableCoverImage = false;
 
   const user = userTask.status === "successful" ? userTask.data : null;
 
@@ -39,6 +42,7 @@ function CreateEditPost() {
       categories: [],
       status: status,
       authorId: user.id,
+      acceptComments: acceptComments,
     });
     setIsLoadingCreate(false);
     if (result.error) {
@@ -62,6 +66,7 @@ function CreateEditPost() {
       coverImage: photo,
       editedOn: +new Date(),
       status,
+      acceptComments,
     });
     setIsLoadingEdit(false);
     if (result.error) {
@@ -119,6 +124,7 @@ function CreateEditPost() {
         setContent(postResult.data.content);
         setPhoto(postResult.data.coverImage);
         setStatus(postResult.data.status);
+        setAcceptComments(postResult.data?.acceptComments ?? false);
       }
     };
 
@@ -156,25 +162,54 @@ function CreateEditPost() {
           className="custom-quill-editor"
           readOnly={!user}
         />
-        <h5>Cover image (optional)</h5>
-        <input type="file" accept="image/*" onChange={handlePhotoUpload} />
-        {photo && (
-          <S.PhotoPreview>
-            <img src={photo} alt="Preview" style={{ maxWidth: "100%" }} />
-          </S.PhotoPreview>
+        {enableCoverImage && (
+          <>
+            <h5>Cover image (optional)</h5>
+            <input type="file" accept="image/*" onChange={handlePhotoUpload} />
+            {photo && (
+              <S.PhotoPreview>
+                <img src={photo} alt="Preview" style={{ maxWidth: "100%" }} />
+              </S.PhotoPreview>
+            )}
+          </>
         )}
-        <RadioGroup
-          name="status"
-          options={[
-            { label: "Draft", value: "draft" },
-            { label: "Published", value: "published" },
-          ]}
-          selectedValue={status}
-          onChange={setStatus}
-          color="#ffffff"
-          backgroundColor="#007bff"
-          borderColor="#007bff"
-        />
+        <S.ConfigurationSection>
+          <div>
+            <h5>Visibility</h5>
+            <RadioGroup
+              name="status"
+              options={[
+                { label: "Draft", value: "draft" },
+                { label: "Published", value: "published" },
+              ]}
+              selectedValue={status}
+              onChange={setStatus}
+              color="#ffffff"
+              backgroundColor="#007bff"
+              borderColor="#007bff"
+            />
+          </div>
+          <div>
+            <h5>Comments configuration</h5>
+            <RadioGroup
+              name="comments-configuration"
+              options={[
+                { label: "Accept comments", value: "accept-comments" },
+                { label: "Comments disabled", value: "comments-disabled" },
+              ]}
+              selectedValue={
+                acceptComments ? "accept-comments" : "comments-disabled"
+              }
+              onChange={(value) =>
+                setAcceptComments(value === "accept-comments")
+              }
+              color="#ffffff"
+              backgroundColor="#007bff"
+              borderColor="#007bff"
+            />
+          </div>
+        </S.ConfigurationSection>
+
         <S.ActionsSection>
           {isEditMode ? (
             <MainButton

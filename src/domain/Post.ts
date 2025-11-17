@@ -10,6 +10,7 @@ export interface CreatePostData {
   categories: string[];
   language: "en" | "es";
   status: "draft" | "published";
+  acceptComments: boolean;
 }
 
 export type PostRetrieveData = CreatePostData & {

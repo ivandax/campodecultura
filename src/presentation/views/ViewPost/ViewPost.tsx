@@ -22,6 +22,8 @@ function ViewPost() {
   const { postId, userId } = useParams();
   const { userTask } = useAuthStore();
 
+  const enableCoverImage = false;
+
   const [deleteInput, setDeleteInput] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -86,7 +88,7 @@ function ViewPost() {
         </S.LoadingWrapper>
       ) : (
         <>
-          {post.coverImage ? (
+          {post.coverImage && enableCoverImage ? (
             <S.PhotoPreview>
               <img
                 src={post.coverImage}
@@ -107,7 +109,9 @@ function ViewPost() {
           <S.GrayWrapper>{`Written by: ${
             post.author?.name ?? "Not found"
           }`}</S.GrayWrapper>
-          <CommentsSection postId={post.id} user={user} />
+          {post.acceptComments && (
+            <CommentsSection postId={post.id} user={user} />
+          )}
           <S.Footer>
             <MainButton onClick={() => navigate("/home")}>Go back</MainButton>
           </S.Footer>
