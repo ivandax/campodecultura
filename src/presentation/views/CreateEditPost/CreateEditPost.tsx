@@ -154,7 +154,6 @@ function CreateEditPost() {
           modules={{
             toolbar: [
               ["bold", "italic", "underline"],
-              ["image"],
               [{ list: "ordered" }, { list: "bullet" }],
             ],
           }}
@@ -212,15 +211,23 @@ function CreateEditPost() {
 
         <S.ActionsSection>
           {isEditMode ? (
-            <MainButton
-              disabled={isLoadingEdit || !user}
-              onClick={(e) => {
-                e.preventDefault();
-                handleEditPost(e);
-              }}
-            >
-              {isLoadingEdit ? "Saving..." : "Save changes"}
-            </MainButton>
+            <>
+              <MainButton
+                disabled={isLoadingEdit || !user}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleEditPost(e);
+                }}
+              >
+                {isLoadingEdit ? "Saving..." : "Save changes"}
+              </MainButton>
+              <MainButton
+                disabled={isLoadingEdit || !user || !postId}
+                onClick={() => navigate(`/posts/${userId}/view/${postId}`)}
+              >
+                View post
+              </MainButton>
+            </>
           ) : (
             <MainButton type="submit" disabled={isLoadingCreate || !user}>
               {isLoadingCreate ? "Saving..." : "Save and exit"}
