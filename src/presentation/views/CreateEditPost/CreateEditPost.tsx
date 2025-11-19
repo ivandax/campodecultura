@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as S from "./CreateEditPost.Styles";
 import { createPost, editPost, getPost } from "@src/persistence/post";
 import { useAuthStore } from "@src/presentation/store/authStore";
@@ -23,6 +23,7 @@ function CreateEditPost() {
   const navigate = useNavigate();
   const { postId, userId } = useParams();
   const [isLoadingPost, setIsLoadingPost] = useState(false);
+  const quillRef = useRef<ReactQuill | null>(null);
 
   const enableCoverImage = false;
 
@@ -133,6 +134,29 @@ function CreateEditPost() {
 
   const isEditMode = postId !== undefined;
 
+  useEffect(() => {
+    const editor = document.querySelector(".ql-editor");
+    if (!editor) return;
+
+    const handlePaste = (e: Event) => {
+      const evt = e as ClipboardEvent;
+
+      if (evt.clipboardData?.files?.length) {
+        notifyError("Pasting files not supported");
+        evt.preventDefault();
+      }
+
+      const html = evt.clipboardData?.getData("text/html");
+      if (html && html.includes("<img")) {
+        notifyError("Images not supported");
+        evt.preventDefault();
+      }
+    };
+
+    editor.addEventListener("paste", handlePaste);
+    return () => editor.removeEventListener("paste", handlePaste);
+  }, []);
+
   return (
     <>
       {user?.emailVerified === false && <NotificationBanner visible={true} />}
@@ -149,6 +173,7 @@ function CreateEditPost() {
         />
         {isLoadingPost && <Spinner />}
         <ReactQuill
+          ref={quillRef}
           value={content}
           onChange={(value) => setContent(value)}
           modules={{
