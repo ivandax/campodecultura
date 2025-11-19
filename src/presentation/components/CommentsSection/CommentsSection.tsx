@@ -158,7 +158,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
                       <strong>{comment.author}</strong>: {comment.text}
                     </S.CommentText>
                     <S.CommentDate>
-                      {timestampToHumanReadbleDate(comment.createdOn, "es")}
+                      {timestampToHumanReadbleDate(comment.createdOn, "en")}
                     </S.CommentDate>
                   </>
                 )}

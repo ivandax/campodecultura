@@ -86,6 +86,8 @@ function ViewPost() {
         <S.LoadingWrapper>
           <Spinner />
         </S.LoadingWrapper>
+      ) : post.status === "draft" && !userIsOwner ? (
+        <div>This post is a draft and access if forbidden</div>
       ) : (
         <>
           {post.coverImage && enableCoverImage ? (
@@ -104,7 +106,7 @@ function ViewPost() {
           <S.Paper>{parse(post.content)}</S.Paper>
           <S.GrayWrapper>{`Edited on: ${timestampToHumanReadbleDate(
             post.editedOn,
-            "es"
+            "en"
           )}`}</S.GrayWrapper>
           <S.GrayWrapper>{`Written by: ${
             post.author?.name ?? "Not found"
