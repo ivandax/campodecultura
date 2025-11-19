@@ -102,31 +102,43 @@ function CreateEditPost() {
     reader.readAsDataURL(file);
   };
 
+  const resetForm = () => {
+    setTitle("");
+    setContent("");
+    setPhoto(null);
+    setStatus("draft");
+    setAcceptComments(false);
+  };
+
   useEffect(() => {
     const handleGetPost = async () => {
       if (!user) return;
-      if (postId) {
-        setIsLoadingPost(true);
-        const postResult = await getPost(postId);
-        setIsLoadingPost(false);
-        if (postResult.error) {
-          notifyError(postResult.error.message);
-          return;
-        }
-        if (postResult.data === null) {
-          notifyError("Data is null");
-          return;
-        }
-        if (postResult.data.author?.id !== user.id) {
-          notifyError("Post does not belong to the user");
-          return;
-        }
-        setTitle(postResult.data.title);
-        setContent(postResult.data.content);
-        setPhoto(postResult.data.coverImage);
-        setStatus(postResult.data.status);
-        setAcceptComments(postResult.data?.acceptComments ?? false);
+
+      if (!postId) {
+        resetForm();
+        return;
       }
+
+      setIsLoadingPost(true);
+      const postResult = await getPost(postId);
+      setIsLoadingPost(false);
+      if (postResult.error) {
+        notifyError(postResult.error.message);
+        return;
+      }
+      if (postResult.data === null) {
+        notifyError("Data is null");
+        return;
+      }
+      if (postResult.data.author?.id !== user.id) {
+        notifyError("Post does not belong to the user");
+        return;
+      }
+      setTitle(postResult.data.title);
+      setContent(postResult.data.content);
+      setPhoto(postResult.data.coverImage);
+      setStatus(postResult.data.status);
+      setAcceptComments(postResult.data?.acceptComments ?? false);
     };
 
     handleGetPost();
