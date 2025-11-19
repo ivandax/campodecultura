@@ -2,11 +2,13 @@ import * as S from "./LandingPage.Styles";
 import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@src/presentation/store/authStore";
+import { useTheme } from "styled-components";
 
 function LandingPage() {
   const navigate = useNavigate();
   const { userTask } = useAuthStore();
   const user = userTask.status === "successful" ? userTask.data : null;
+  const theme = useTheme();
 
   return (
     <S.Wrapper>
@@ -22,6 +24,14 @@ function LandingPage() {
           reflections with our intuitive writing tools. Whether you’re a writer,
           a thinker, or simply someone with a story to tell — this is your space
           to express it.
+        </S.Description>
+
+        <S.Description>
+          Save your ideas as{" "}
+          <S.ColorSpan $color={theme.colors.blue}>drafts</S.ColorSpan> to keep
+          them personal, or{" "}
+          <S.ColorSpan $color={theme.colors.primary}>publish</S.ColorSpan> them
+          when you're ready to share your stories with the world.
         </S.Description>
 
         <S.ActionBlock>

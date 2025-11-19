@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
@@ -62,4 +61,8 @@ export const FeatureCard = styled.div`
     color: ${(props) => props.theme.colors.text};
     font-size: 14px;
   }
+`;
+
+export const ColorSpan = styled.span<{ $color: string }>`
+  color: ${(props) => props.$color};
 `;
