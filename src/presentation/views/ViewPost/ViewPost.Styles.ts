@@ -37,14 +37,15 @@ export const Footer = styled.div`
 `;
 
 export const AdminBlock = styled.div`
-  width: 260px;
+  width: 300px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-top: 16px;
   padding: 8px;
   border-radius: 8px;
-  background-color: ${(props) => props.theme.colors.lightwarning};
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+  background-color: ${(props) => props.theme.colors.superlightprimary};
 `;
 
 export const Top = styled.div`

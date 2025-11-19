@@ -87,7 +87,7 @@ function ViewPost() {
           <Spinner />
         </S.LoadingWrapper>
       ) : post.status === "draft" && !userIsOwner ? (
-        <div>This post is a draft and access if forbidden</div>
+        <div>This post is a draft and access is forbidden</div>
       ) : (
         <>
           {post.coverImage && enableCoverImage ? (
@@ -121,11 +121,11 @@ function ViewPost() {
           {userId && userIsOwner && (
             <S.AdminBlock>
               <h5>Author actions</h5>
-              <button
+              <MainButton
                 onClick={() => navigate(`/posts/${userId}/edit/${postId}`)}
               >
                 Edit post
-              </button>
+              </MainButton>
               <h5
                 style={{
                   marginTop: "24px",
@@ -133,11 +133,11 @@ function ViewPost() {
                   width: "100%",
                 }}
               >
-                Delete post:
+                Delete post
               </h5>
               <input
                 type="text"
-                placeholder="Write 'delete' to enable button"
+                placeholder="Type 'delete' to enable button"
                 value={deleteInput}
                 onChange={(e) => setDeleteInput(e.target.value)}
                 style={{
