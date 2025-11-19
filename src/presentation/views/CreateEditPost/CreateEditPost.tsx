@@ -173,40 +173,49 @@ function CreateEditPost() {
           </>
         )}
         <S.ConfigurationSection>
-          <div>
-            <h5>Visibility</h5>
-            <RadioGroup
-              name="status"
-              options={[
-                { label: "Draft", value: "draft" },
-                { label: "Published", value: "published" },
-              ]}
-              selectedValue={status}
-              onChange={setStatus}
-              color="#ffffff"
-              backgroundColor="#007bff"
-              borderColor="#007bff"
-            />
-          </div>
-          <div>
-            <h5>Comments configuration</h5>
-            <RadioGroup
-              name="comments-configuration"
-              options={[
-                { label: "Accept comments", value: "accept-comments" },
-                { label: "Comments disabled", value: "comments-disabled" },
-              ]}
-              selectedValue={
-                acceptComments ? "accept-comments" : "comments-disabled"
-              }
-              onChange={(value) =>
-                setAcceptComments(value === "accept-comments")
-              }
-              color="#ffffff"
-              backgroundColor="#007bff"
-              borderColor="#007bff"
-            />
-          </div>
+          <S.ConfigurationBlock>
+            <div>
+              <h5>Visibility</h5>
+              <RadioGroup
+                name="status"
+                options={[
+                  { label: "Draft", value: "draft" },
+                  { label: "Published", value: "published" },
+                ]}
+                selectedValue={status}
+                onChange={setStatus}
+                color="#ffffff"
+                backgroundColor="#007bff"
+                borderColor="#007bff"
+              />
+            </div>
+            <S.ConfigurationMessage>
+              {status === "published"
+                ? "If your post is set to Published, it is visible to everyone."
+                : "If your post is set to Draft, it will not be visible to others until you publish it."}
+            </S.ConfigurationMessage>
+          </S.ConfigurationBlock>
+          <S.ConfigurationBlock>
+            <div>
+              <h5>Comments configuration</h5>
+              <RadioGroup
+                name="comments-configuration"
+                options={[
+                  { label: "Accept comments", value: "accept-comments" },
+                  { label: "Comments disabled", value: "comments-disabled" },
+                ]}
+                selectedValue={
+                  acceptComments ? "accept-comments" : "comments-disabled"
+                }
+                onChange={(value) =>
+                  setAcceptComments(value === "accept-comments")
+                }
+                color="#ffffff"
+                backgroundColor="#007bff"
+                borderColor="#007bff"
+              />
+            </div>
+          </S.ConfigurationBlock>
         </S.ConfigurationSection>
 
         <S.ActionsSection>
