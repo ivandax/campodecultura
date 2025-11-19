@@ -100,7 +100,20 @@ function ViewPost() {
             </S.PhotoPreview>
           ) : null}
           <S.Top>
-            <h3>{post.title}</h3>
+            <S.Title>
+              <h3>{post.title}</h3>
+              <S.StatusChip
+                variant={
+                  post.status?.toLowerCase() === "draft"
+                    ? "draft"
+                    : post.status?.toLowerCase() === "published"
+                    ? "published"
+                    : "default"
+                }
+              >
+                {post.status}
+              </S.StatusChip>
+            </S.Title>
             <MainButton onClick={handleCopyUrl}>Copy URL</MainButton>
           </S.Top>
           <S.Paper>{parse(post.content)}</S.Paper>

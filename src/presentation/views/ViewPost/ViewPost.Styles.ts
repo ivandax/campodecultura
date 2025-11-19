@@ -55,6 +55,33 @@ export const Top = styled.div`
   padding-bottom: 16px;
 `;
 
+export const Title = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  h3 {
+    margin: 0;
+  }
+`;
+
+interface StatusChipProps {
+  variant?: "draft" | "published" | "default";
+}
+
+export const StatusChip = styled.span<StatusChipProps>`
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) =>
+    props.variant === "draft"
+      ? props.theme.colors.blue
+      : props.variant === "published"
+      ? props.theme.colors.primary
+      : props.theme.colors.gray};
+`;
+
 export const Paper = styled.div`
   background: #fff;
   padding: 32px;
