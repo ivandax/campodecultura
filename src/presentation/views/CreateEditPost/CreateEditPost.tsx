@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import * as S from "./CreateEditPost.Styles";
 import { createPost, editPost, getPost } from "@src/persistence/post";
 import { useAuthStore } from "@src/presentation/store/authStore";
@@ -23,7 +23,6 @@ function CreateEditPost() {
   const navigate = useNavigate();
   const { postId, userId } = useParams();
   const [isLoadingPost, setIsLoadingPost] = useState(false);
-  const quillRef = useRef<ReactQuill | null>(null);
 
   const enableCoverImage = false;
 
@@ -185,7 +184,6 @@ function CreateEditPost() {
         />
         {isLoadingPost && <Spinner />}
         <ReactQuill
-          ref={quillRef}
           value={content}
           onChange={(value) => setContent(value)}
           modules={{
