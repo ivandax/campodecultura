@@ -32,3 +32,21 @@ export const TableRow = styled.tr`
     background-color: ${(props) => props.theme.colors.lightgray};
   }
 `;
+
+interface StatusChipProps {
+  variant?: "draft" | "published" | "default";
+}
+
+export const StatusChip = styled.span<StatusChipProps>`
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  color: ${(props) => props.theme.colors.white};
+  background-color: ${(props) =>
+    props.variant === "draft"
+      ? props.theme.colors.blue
+      : props.variant === "published"
+      ? props.theme.colors.primary
+      : props.theme.colors.gray};
+`;

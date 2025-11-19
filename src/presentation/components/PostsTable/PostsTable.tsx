@@ -1,4 +1,4 @@
-import { Table, TableCell, TableRow } from "./PostsTable.Styles";
+import { Table, TableCell, TableRow, StatusChip } from "./PostsTable.Styles";
 import { BodyText, H2CategoryTitle } from "@src/presentation/components/Texts";
 import { TableHeaderCell } from "@src/presentation/components/TableHeaderCell";
 import { Post } from "@src/domain/Post";
@@ -91,7 +91,17 @@ function PostsTable({ isOwner, userId }: PostsTableProps) {
                 </H2CategoryTitle>
               </TableCell>
               <TableCell $pointer onClick={() => void 0} $width={20}>
-                <BodyText>{item.status}</BodyText>
+                <StatusChip
+                  variant={
+                    item.status?.toLowerCase() === "draft"
+                      ? "draft"
+                      : item.status?.toLowerCase() === "published"
+                      ? "published"
+                      : "default"
+                  }
+                >
+                  {item.status}
+                </StatusChip>
               </TableCell>
               <TableCell $pointer onClick={() => void 0} $width={20}>
                 <BodyText>{item.author?.name}</BodyText>
