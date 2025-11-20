@@ -57,10 +57,16 @@ export const Top = styled.div`
 
 export const Title = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
   gap: 12px;
   h3 {
     margin: 0;
+  }
+
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex-direction: row;
+    align-items: center;
   }
 `;
 

@@ -10,7 +10,7 @@ export const TopbarWrapper = styled.div`
   position: relative;
 
   /* Show in mobile */
-  @media (min-width: 768px) {
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: none;
   }
 `;
@@ -32,7 +32,8 @@ export const SidebarOverlay = styled.div<{ $isOpen: boolean }>`
   height: 100%;
   background-color: #ffffff;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
-  transform: ${({ $isOpen }) => ($isOpen ? "translateX(0)" : "translateX(100%)")};
+  transform: ${({ $isOpen }) =>
+    $isOpen ? "translateX(0)" : "translateX(100%)"};
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
 `;

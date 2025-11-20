@@ -14,4 +14,7 @@ export const theme = {
     reallyLightBlue: "#EAF2FF",
     text: "#4F4F4F",
   },
+  breakpoints: {
+    mobile: "768px",
+  },
 };

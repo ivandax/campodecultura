@@ -12,7 +12,7 @@ export const RootContainer = styled.div`
   flex-direction: column;
 
   /* Row in desktop */
-  @media (min-width: 768px) {
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
     flex-direction: row;
   }
 `;

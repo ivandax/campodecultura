@@ -7,7 +7,7 @@ export const SidebarWrapper = styled.div`
   flex-direction: column;
 
   /* Hide sidebar in mobile */
-  @media (max-width: 768px) {
+  @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: none;
   }
 `;
