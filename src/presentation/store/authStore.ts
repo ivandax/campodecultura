@@ -5,6 +5,7 @@ import {
   logout,
   registerAuthObserver,
   signup,
+  loginWithGoogle,
 } from "@src/persistence/auth";
 
 import { User as FirebaseUser, Unsubscribe } from "firebase/auth";
@@ -15,6 +16,7 @@ import { AsyncOp } from "../types/AsyncOp";
 interface AuthState {
   userTask: AsyncOp<AppUser | null, Error>;
   login: (email: string, password: string) => Promise<FirebaseUser | null>;
+  loginWithGoogle: () => Promise<FirebaseUser | null>;
   logout: () => Promise<void>;
   signup: (email: string, password: string) => Promise<null | string>;
   initializeAuth: () => Unsubscribe;
@@ -116,5 +118,20 @@ export const useAuthStore = create<AuthState>((set) => ({
       return "Error signing up";
     }
     return null;
+  },
+
+  loginWithGoogle: async (): Promise<null | FirebaseUser> => {
+    set({ userTask: { status: "in-progress" } });
+    const result: Result<FirebaseUser> = await loginWithGoogle();
+    if (result.error) {
+      set({
+        userTask: {
+          status: "failed",
+          error: new Error("Could not login with Google"),
+        },
+      });
+      return null;
+    }
+    return result.data;
   },
 }));

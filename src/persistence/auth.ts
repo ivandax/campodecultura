@@ -10,9 +10,11 @@ import {
   applyActionCode,
   verifyPasswordResetCode,
   confirmPasswordReset,
+  signInWithPopup,
 } from "firebase/auth";
 import { tryCatch } from "./tryCatch";
 import { Result } from "@src/domain/Result";
+import { provider } from "@src/google-auth";
 
 async function signup(email: string, password: string): Promise<Result<void>> {
   const callback = async (): Promise<void> => {
@@ -95,6 +97,15 @@ async function completePasswordReset(
   return tryCatch(callback);
 }
 
+async function loginWithGoogle(): Promise<Result<FirebaseUser>> {
+  const callback = async (): Promise<FirebaseUser> => {
+    const auth = getAuth();
+    const result = await signInWithPopup(auth, provider);
+    return result.user;
+  };
+  return tryCatch(callback);
+}
+
 export {
   signup,
   logout,
@@ -104,4 +115,5 @@ export {
   verifyEmail,
   verifyPasswordCode,
   completePasswordReset,
+  loginWithGoogle,
 };
