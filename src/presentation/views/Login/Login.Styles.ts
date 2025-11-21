@@ -11,3 +11,10 @@ export const LoginFormWrapper = styled.form`
     padding: 4px;
   }
 `;
+
+export const SocialActionsWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 24px;
+`;

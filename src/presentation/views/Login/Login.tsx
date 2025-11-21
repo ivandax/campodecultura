@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { LoginFormWrapper } from "./Login.Styles";
+import * as S from "./Login.Styles";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { Link, useNavigate } from "react-router-dom";
 import { notifyError } from "@src/presentation/utils";
@@ -33,7 +33,7 @@ function Login() {
   };
 
   return (
-    <LoginFormWrapper>
+    <S.LoginFormWrapper>
       <h5>Log in</h5>
       <input
         type="email"
@@ -53,11 +53,16 @@ function Login() {
         disabled={userTask.status === "in-progress"}
         onClick={handleLogin}
       >
-        {userTask.status === "in-progress" ? "Logging in..." : "Log in with email"}
+        {userTask.status === "in-progress"
+          ? "Logging in..."
+          : "Log in with email"}
       </MainButton>
-      <GoogleSignInButton onClick={handleGoogleLogin} />
       <Link to="/recover-password">Forgot password?</Link>
-    </LoginFormWrapper>
+      <S.SocialActionsWrapper>
+        <span>Other sign-in options</span>
+        <GoogleSignInButton onClick={handleGoogleLogin} />
+      </S.SocialActionsWrapper>
+    </S.LoginFormWrapper>
   );
 }
 
