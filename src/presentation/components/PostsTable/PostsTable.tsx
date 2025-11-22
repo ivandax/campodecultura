@@ -92,12 +92,12 @@ function PostsTable({ isOwner, userId }: PostsTableProps) {
               </TableCell>
               <TableCell $pointer onClick={() => void 0} $width={20}>
                 <StatusChip
-                  variant={
+                  $variant={
                     item.status?.toLowerCase() === "draft"
                       ? "draft"
                       : item.status?.toLowerCase() === "published"
-                      ? "published"
-                      : "default"
+                        ? "published"
+                        : "default"
                   }
                 >
                   {item.status}

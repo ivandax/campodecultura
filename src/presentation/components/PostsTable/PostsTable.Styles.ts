@@ -34,7 +34,7 @@ export const TableRow = styled.tr`
 `;
 
 interface StatusChipProps {
-  variant?: "draft" | "published" | "default";
+  $variant?: "draft" | "published" | "default";
 }
 
 export const StatusChip = styled.span<StatusChipProps>`
@@ -44,9 +44,9 @@ export const StatusChip = styled.span<StatusChipProps>`
   font-size: 12px;
   color: ${(props) => props.theme.colors.white};
   background-color: ${(props) =>
-    props.variant === "draft"
+    props.$variant === "draft"
       ? props.theme.colors.blue
-      : props.variant === "published"
-      ? props.theme.colors.primary
-      : props.theme.colors.gray};
+      : props.$variant === "published"
+        ? props.theme.colors.primary
+        : props.theme.colors.gray};
 `;
