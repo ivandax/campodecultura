@@ -84,14 +84,14 @@ function ViewPost() {
             <S.PhotoPreview>
               <img
                 src={post.coverImage}
-                alt="Preview"
+                alt={`Cover for ${post.title}`}
                 style={{ maxWidth: '100%' }}
               />
             </S.PhotoPreview>
           ) : null}
           <S.Top>
             <S.Title>
-              <h3>{post.title}</h3>
+              <h1>{post.title}</h1>
               <S.StatusChip
                 variant={
                   post.status?.toLowerCase() === 'draft'
@@ -111,9 +111,8 @@ function ViewPost() {
             post.editedOn,
             'en'
           )}`}</S.GrayWrapper>
-          <S.GrayWrapper>{`Written by: ${
-            post.author?.name ?? 'Not found'
-          }`}</S.GrayWrapper>
+          <S.GrayWrapper>{`Written by: ${post.author?.name ?? 'Not found'
+            }`}</S.GrayWrapper>
           {post.acceptComments && (
             <CommentsSection postId={post.id} user={user} />
           )}
@@ -138,7 +137,11 @@ function ViewPost() {
               >
                 Delete post
               </h5>
+              <S.VisuallyHiddenLabel htmlFor="delete-post-input">
+                Type delete to confirm
+              </S.VisuallyHiddenLabel>
               <input
+                id="delete-post-input"
                 type="text"
                 placeholder="Type 'delete' to enable button"
                 value={deleteInput}
