@@ -1,3 +1,3 @@
-import { MyPosts } from "./MyPosts";
+import { MyPosts } from './MyPosts';
 
 export { MyPosts };

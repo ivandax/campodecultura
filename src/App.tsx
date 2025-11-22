@@ -1,22 +1,22 @@
-import { useEffect } from "react";
-import styled, { ThemeProvider } from "styled-components";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { useEffect } from 'react';
+import styled, { ThemeProvider } from 'styled-components';
+import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { theme } from "@src/presentation/styles/theme";
-import { Root } from "@src/presentation/views/Root/Root";
-import { useAuthStore } from "@src/presentation/store/authStore";
+import { theme } from '@src/presentation/styles/theme';
+import { Root } from '@src/presentation/views/Root/Root';
+import { useAuthStore } from '@src/presentation/store/authStore';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBuHfmEg5j-eTEEM3sgHTDFMmBxAhJecu8",
-  authDomain: "campodecultura.firebaseapp.com",
-  projectId: "campodecultura",
-  storageBucket: "campodecultura.firebasestorage.app",
-  messagingSenderId: "918769580804",
-  appId: "1:918769580804:web:31b83198d50168144e2e51",
-  measurementId: "G-0BV6F3ESE0",
+  apiKey: 'AIzaSyBuHfmEg5j-eTEEM3sgHTDFMmBxAhJecu8',
+  authDomain: 'campodecultura.firebaseapp.com',
+  projectId: 'campodecultura',
+  storageBucket: 'campodecultura.firebasestorage.app',
+  messagingSenderId: '918769580804',
+  appId: '1:918769580804:web:31b83198d50168144e2e51',
+  measurementId: 'G-0BV6F3ESE0',
 };
 
 const CustomToastContainer = styled(ToastContainer)`
@@ -46,7 +46,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Root analytics={analytics}/>
+      <Root analytics={analytics} />
       <CustomToastContainer position="bottom-center" hideProgressBar={true} />
     </ThemeProvider>
   );

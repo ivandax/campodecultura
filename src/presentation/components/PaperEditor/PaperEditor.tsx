@@ -1,5 +1,5 @@
-import * as S from "./PaperEditor.Styles";
-import { useEffect, useRef, useState, useCallback } from "react";
+import * as S from './PaperEditor.Styles';
+import { useEffect, useRef, useState, useCallback } from 'react';
 
 interface PaperEditorProps {
   content: string;
@@ -46,7 +46,7 @@ export function PaperEditor({ content, onChange }: PaperEditorProps) {
   const undo = useCallback(() => {
     setHistoryIndex((currentIndex) => {
       const newIndex = Math.max(0, currentIndex - 1);
-      const value = history[newIndex] ?? "";
+      const value = history[newIndex] ?? '';
       setContent(value, false);
       return newIndex;
     });
@@ -55,7 +55,7 @@ export function PaperEditor({ content, onChange }: PaperEditorProps) {
   const redo = useCallback(() => {
     setHistoryIndex((currentIndex) => {
       const newIndex = Math.min(history.length - 1, currentIndex + 1);
-      const value = history[newIndex] ?? "";
+      const value = history[newIndex] ?? '';
       setContent(value, false);
       return newIndex;
     });
@@ -69,9 +69,10 @@ export function PaperEditor({ content, onChange }: PaperEditorProps) {
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
     // Undo/Redo keyboard combos
-    const isUndo = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "z";
-    const isRedoAlt = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "y";
-    const isRedoShift = (e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === "z";
+    const isUndo = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z';
+    const isRedoAlt = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y';
+    const isRedoShift =
+      (e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'z';
 
     if (isUndo) {
       e.preventDefault();
@@ -86,10 +87,10 @@ export function PaperEditor({ content, onChange }: PaperEditorProps) {
   const handlePaste = (e: React.ClipboardEvent<HTMLDivElement>) => {
     // sanitize paste: only plain text
     e.preventDefault();
-    const text = e.clipboardData.getData("text/plain");
+    const text = e.clipboardData.getData('text/plain');
     // insert text at cursor
     // Using execCommand for simplicity; fallback to inserting node
-    document.execCommand("insertText", false, text);
+    document.execCommand('insertText', false, text);
   };
 
   return (

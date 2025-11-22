@@ -1,4 +1,4 @@
-import * as S from "./Spinner.Styles";
+import * as S from './Spinner.Styles';
 
 interface SpinnerProps {
   size?: number;

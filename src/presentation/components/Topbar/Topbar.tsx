@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { SidebarItems } from "../SidebarItems";
+import React, { useState } from 'react';
+import { SidebarItems } from '../SidebarItems';
 import {
   Backdrop,
   BurgerButton,
   SidebarOverlay,
   TopbarWrapper,
-} from "./Topbar.Styles";
+} from './Topbar.Styles';
 
 const Topbar: React.FC = () => {
   const [isSidebarOpen, setSidebarOpen] = useState(false);

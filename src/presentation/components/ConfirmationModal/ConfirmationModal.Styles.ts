@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ModalOverlay = styled.div`
   position: fixed;
@@ -24,7 +24,7 @@ export const TitleWrapper = styled.div`
   padding: 10px 16px;
   border-radius: 8px 8px 0 0;
   background-color: ${(props) =>
-    props.color === "warning"
+    props.color === 'warning'
       ? props.theme.colors.lightwarning
       : props.theme.colors.superlightprimary};
 `;

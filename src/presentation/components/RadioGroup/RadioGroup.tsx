@@ -1,4 +1,4 @@
-import * as S from "./RadioGroup.Styles";
+import * as S from './RadioGroup.Styles';
 
 interface RadioOption<T> {
   label: string;

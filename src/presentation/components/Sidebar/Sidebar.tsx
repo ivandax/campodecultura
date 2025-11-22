@@ -1,7 +1,7 @@
-import React from "react";
+import React from 'react';
 
-import { SidebarWrapper, SidebarTitle } from "./Sidebar.Styles";
-import { SidebarItems } from "../SidebarItems";
+import { SidebarWrapper, SidebarTitle } from './Sidebar.Styles';
+import { SidebarItems } from '../SidebarItems';
 
 const Sidebar: React.FC = () => {
   return (

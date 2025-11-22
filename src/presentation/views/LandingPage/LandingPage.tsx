@@ -1,14 +1,14 @@
-import * as S from "./LandingPage.Styles";
-import { MainButton } from "@src/presentation/components/Buttons/MainButton";
-import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "@src/presentation/store/authStore";
-import { useTheme } from "styled-components";
-import { LatestPostsTable } from "@src/presentation/components/LatestPostsTable/LatestPostsTable";
+import * as S from './LandingPage.Styles';
+import { MainButton } from '@src/presentation/components/Buttons/MainButton';
+import { useNavigate } from 'react-router-dom';
+import { useAuthStore } from '@src/presentation/store/authStore';
+import { useTheme } from 'styled-components';
+import { LatestPostsTable } from '@src/presentation/components/LatestPostsTable/LatestPostsTable';
 
 function LandingPage() {
   const navigate = useNavigate();
   const { userTask } = useAuthStore();
-  const user = userTask.status === "successful" ? userTask.data : null;
+  const user = userTask.status === 'successful' ? userTask.data : null;
   const theme = useTheme();
 
   return (
@@ -28,9 +28,9 @@ function LandingPage() {
         </S.Description>
 
         <S.Description>
-          Save your ideas as{" "}
+          Save your ideas as{' '}
           <S.ColorSpan $color={theme.colors.blue}>drafts</S.ColorSpan> to keep
-          them personal, or{" "}
+          them personal, or{' '}
           <S.ColorSpan $color={theme.colors.primary}>publish</S.ColorSpan> them
           when you're ready to share your stories with the world.
         </S.Description>
@@ -41,7 +41,7 @@ function LandingPage() {
               Start writing
             </MainButton>
           ) : (
-            <MainButton onClick={() => navigate("/login")}>
+            <MainButton onClick={() => navigate('/login')}>
               Join and start writing
             </MainButton>
           )}

@@ -1,17 +1,17 @@
-import { create } from "zustand";
-import { Result } from "@src/domain/Result";
+import { create } from 'zustand';
+import { Result } from '@src/domain/Result';
 import {
   login,
   logout,
   registerAuthObserver,
   signup,
   loginWithGoogle,
-} from "@src/persistence/auth";
+} from '@src/persistence/auth';
 
-import { User as FirebaseUser, Unsubscribe } from "firebase/auth";
-import { createUser, getUser } from "@src/persistence/user";
-import { AppUser, CreateAppUserData } from "@src/domain/AppUser";
-import { AsyncOp } from "../types/AsyncOp";
+import { User as FirebaseUser, Unsubscribe } from 'firebase/auth';
+import { createUser, getUser } from '@src/persistence/user';
+import { AppUser, CreateAppUserData } from '@src/domain/AppUser';
+import { AsyncOp } from '../types/AsyncOp';
 
 interface AuthState {
   userTask: AsyncOp<AppUser | null, Error>;
@@ -23,17 +23,17 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  userTask: { status: "pending" },
+  userTask: { status: 'pending' },
 
   initializeAuth: (): Unsubscribe => {
     const cancelObserver = registerAuthObserver(async (user) => {
-      set({ userTask: { status: "in-progress" } });
+      set({ userTask: { status: 'in-progress' } });
       if (user) {
         const userProfileResult = await getUser(user.uid);
         if (userProfileResult.data) {
           set({
             userTask: {
-              status: "successful",
+              status: 'successful',
               data: {
                 ...userProfileResult.data,
                 emailVerified: user.emailVerified,
@@ -42,10 +42,10 @@ export const useAuthStore = create<AuthState>((set) => ({
           });
         } else {
           const newProfile: CreateAppUserData = {
-            email: user.email ?? "",
-            name: "",
+            email: user.email ?? '',
+            name: '',
             createdOn: +new Date(),
-            role: "ADMIN",
+            role: 'ADMIN',
           };
           const createResult = await createUser(
             newProfile,
@@ -55,34 +55,34 @@ export const useAuthStore = create<AuthState>((set) => ({
           if (createResult.data) {
             set({
               userTask: {
-                status: "successful",
+                status: 'successful',
                 data: createResult.data,
               },
             });
           } else {
             set({
               userTask: {
-                status: "failed",
-                error: new Error("Could not create user"),
+                status: 'failed',
+                error: new Error('Could not create user'),
               },
             });
           }
         }
       } else {
-        set({ userTask: { status: "successful", data: null } });
+        set({ userTask: { status: 'successful', data: null } });
       }
     });
     return cancelObserver;
   },
 
   login: async (email, password): Promise<null | FirebaseUser> => {
-    set({ userTask: { status: "in-progress" } });
+    set({ userTask: { status: 'in-progress' } });
     const result: Result<FirebaseUser> = await login(email, password);
     if (result.error) {
       set({
         userTask: {
-          status: "failed",
-          error: new Error("Could not login user"),
+          status: 'failed',
+          error: new Error('Could not login user'),
         },
       });
       return null;
@@ -91,43 +91,43 @@ export const useAuthStore = create<AuthState>((set) => ({
   },
 
   logout: async () => {
-    set({ userTask: { status: "in-progress" } });
+    set({ userTask: { status: 'in-progress' } });
     const result: Result<void> = await logout();
     if (result.error) {
       set({
         userTask: {
-          status: "failed",
-          error: new Error("Could not logout"),
+          status: 'failed',
+          error: new Error('Could not logout'),
         },
       });
     }
-    set({ userTask: { status: "successful", data: null } });
+    set({ userTask: { status: 'successful', data: null } });
   },
 
   signup: async (email, password): Promise<null | string> => {
-    set({ userTask: { status: "in-progress" } });
+    set({ userTask: { status: 'in-progress' } });
     const result: Result<void> = await signup(email, password);
     if (result.error) {
       console.error(result.error);
       set({
         userTask: {
-          status: "failed",
-          error: new Error("Could not sign up"),
+          status: 'failed',
+          error: new Error('Could not sign up'),
         },
       });
-      return "Error signing up";
+      return 'Error signing up';
     }
     return null;
   },
 
   loginWithGoogle: async (): Promise<null | FirebaseUser> => {
-    set({ userTask: { status: "in-progress" } });
+    set({ userTask: { status: 'in-progress' } });
     const result: Result<FirebaseUser> = await loginWithGoogle();
     if (result.error) {
       set({
         userTask: {
-          status: "failed",
-          error: new Error("Could not login with Google"),
+          status: 'failed',
+          error: new Error('Could not login with Google'),
         },
       });
       return null;

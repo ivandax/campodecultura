@@ -1,3 +1,3 @@
-import { FullView } from "./FullView";
+import { FullView } from './FullView';
 
 export { FullView };

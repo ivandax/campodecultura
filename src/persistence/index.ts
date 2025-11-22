@@ -1,4 +1,4 @@
-import { Result } from "@src/domain/Result";
+import { Result } from '@src/domain/Result';
 
 async function get<T>(url: string): Promise<Result<T>> {
   try {

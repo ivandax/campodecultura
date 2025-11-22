@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const TopbarWrapper = styled.div`
   display: flex;
@@ -33,7 +33,7 @@ export const SidebarOverlay = styled.div<{ $isOpen: boolean }>`
   background-color: #ffffff;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
   transform: ${({ $isOpen }) =>
-    $isOpen ? "translateX(0)" : "translateX(100%)"};
+    $isOpen ? 'translateX(0)' : 'translateX(100%)'};
   transition: transform 0.3s ease-in-out;
   z-index: 1000;
 `;
@@ -46,7 +46,9 @@ export const Backdrop = styled.div<{ $isOpen: boolean }>`
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
   opacity: ${({ $isOpen }) => ($isOpen ? 1 : 0)};
-  visibility: ${({ $isOpen }) => ($isOpen ? "visible" : "hidden")};
-  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+  visibility: ${({ $isOpen }) => ($isOpen ? 'visible' : 'hidden')};
+  transition:
+    opacity 0.3s ease-in-out,
+    visibility 0.3s ease-in-out;
   z-index: 999;
 `;

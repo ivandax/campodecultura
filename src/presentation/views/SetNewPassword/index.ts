@@ -1,3 +1,3 @@
-import { SetNewPassword } from "./SetNewPassword";
+import { SetNewPassword } from './SetNewPassword';
 
 export { SetNewPassword };

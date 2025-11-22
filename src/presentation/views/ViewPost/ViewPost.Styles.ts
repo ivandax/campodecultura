@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -71,7 +71,7 @@ export const Title = styled.div`
 `;
 
 interface StatusChipProps {
-  variant?: "draft" | "published" | "default";
+  variant?: 'draft' | 'published' | 'default';
 }
 
 export const StatusChip = styled.span<StatusChipProps>`
@@ -81,11 +81,11 @@ export const StatusChip = styled.span<StatusChipProps>`
   font-size: 12px;
   color: ${(props) => props.theme.colors.white};
   background-color: ${(props) =>
-    props.variant === "draft"
+    props.variant === 'draft'
       ? props.theme.colors.blue
-      : props.variant === "published"
-      ? props.theme.colors.primary
-      : props.theme.colors.gray};
+      : props.variant === 'published'
+        ? props.theme.colors.primary
+        : props.theme.colors.gray};
 `;
 
 export const Paper = styled.div`

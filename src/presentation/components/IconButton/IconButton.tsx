@@ -1,4 +1,4 @@
-import { IconButtonWrapper } from "./IconButton.Styles";
+import { IconButtonWrapper } from './IconButton.Styles';
 
 interface IconButtonProps {
   onClick: () => void;
@@ -14,8 +14,8 @@ const IconButton: React.FC<IconButtonProps> = ({
   return (
     <IconButtonWrapper
       onClick={onClick}
-      style={{ border: "none", background: "none", cursor: "pointer" }}
-      aria-label={ariaLabel ?? "close"}
+      style={{ border: 'none', background: 'none', cursor: 'pointer' }}
+      aria-label={ariaLabel ?? 'close'}
     >
       {icon}
     </IconButtonWrapper>

@@ -1,1 +1,1 @@
-export { AnalyticsTracker } from "./AnalyticsTracker";
+export { AnalyticsTracker } from './AnalyticsTracker';

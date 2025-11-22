@@ -1,9 +1,9 @@
-import styled, { css } from "styled-components";
-import { TableHeaderCell } from "../TableHeaderCell";
+import styled, { css } from 'styled-components';
+import { TableHeaderCell } from '../TableHeaderCell';
 
 interface SortingTableHeaderCellProps {
   $active: boolean;
-  $direction: "asc" | "desc" | undefined;
+  $direction: 'asc' | 'desc' | undefined;
 }
 
 export const SortingLabelWrapper = styled(
@@ -30,7 +30,7 @@ export const SortingLabelWrapper = styled(
     css`
       & > svg {
         opacity: 0.8;
-        transform: ${props.$direction === "desc" && "rotateX(180deg)"};
+        transform: ${props.$direction === 'desc' && 'rotateX(180deg)'};
         transition: transform 0.3s ease;
       }
     `}

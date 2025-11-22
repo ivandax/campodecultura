@@ -1,23 +1,23 @@
 interface PendingAsyncOp {
-  status: "pending";
+  status: 'pending';
 }
 
 interface InProgressAsyncOp {
-  status: "in-progress";
+  status: 'in-progress';
 }
 
 interface FailedAsyncOp<E> {
-  status: "failed";
+  status: 'failed';
   error: E;
 }
 
 interface SuccessfulAsyncOp<D> {
-  status: "successful";
+  status: 'successful';
   data: D;
 }
 
 interface ReExecutingAsyncOp<D> {
-  status: "re-executing";
+  status: 're-executing';
   data: D;
 }
 

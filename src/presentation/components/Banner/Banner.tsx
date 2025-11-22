@@ -1,4 +1,4 @@
-import * as S from "./Banner.Styles";
+import * as S from './Banner.Styles';
 
 interface NotificationBannerProps {
   visible: boolean;

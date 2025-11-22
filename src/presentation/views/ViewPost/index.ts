@@ -1,3 +1,3 @@
-import { ViewPost } from "./ViewPost";
+import { ViewPost } from './ViewPost';
 
 export { ViewPost };

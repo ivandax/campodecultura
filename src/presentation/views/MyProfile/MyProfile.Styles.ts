@@ -1,5 +1,5 @@
-import { MainButton } from "@src/presentation/components/Buttons/MainButton";
-import styled from "styled-components";
+import { MainButton } from '@src/presentation/components/Buttons/MainButton';
+import styled from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;

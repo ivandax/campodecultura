@@ -1,13 +1,13 @@
-import styled, { css } from "styled-components";
+import styled, { css } from 'styled-components';
 
 interface SidebarItemProps {
   $active: boolean;
-  $displayOn: "desktop" | "mobile";
+  $displayOn: 'desktop' | 'mobile';
 }
 
 export const SidebarItem = styled.li<SidebarItemProps>`
   color: ${({ theme, $displayOn }) =>
-    $displayOn === "mobile" ? theme.colors.black : theme.colors.lightgray};
+    $displayOn === 'mobile' ? theme.colors.black : theme.colors.lightgray};
   font-size: 14px;
   line-height: 17px;
   padding: 13px 24px;
@@ -16,7 +16,7 @@ export const SidebarItem = styled.li<SidebarItemProps>`
 
   &:hover {
     background-color: ${({ theme, $displayOn }) =>
-      $displayOn === "mobile"
+      $displayOn === 'mobile'
         ? theme.colors.lightgray
         : theme.colors.lightprimary};
   }
@@ -24,7 +24,7 @@ export const SidebarItem = styled.li<SidebarItemProps>`
     props.$active &&
     css`
       background-color: ${({ theme }) =>
-        props.$displayOn === "mobile"
+        props.$displayOn === 'mobile'
           ? theme.colors.lightgray
           : props.theme.colors.lightprimary};
     `}

@@ -1,10 +1,10 @@
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon';
 
-import { toast } from "react-toastify";
+import { toast } from 'react-toastify';
 
 export function timestampToHumanReadbleDate(
   timestamp: number,
-  locale: "es" | "en"
+  locale: 'es' | 'en'
 ): string {
   return DateTime.fromMillis(timestamp)
     .setLocale(locale)
@@ -12,9 +12,9 @@ export function timestampToHumanReadbleDate(
 }
 
 export const notifySuccess = (message?: string) => {
-  toast.success(message ?? "Operation successful!");
+  toast.success(message ?? 'Operation successful!');
 };
 
 export const notifyError = (message?: string) => {
-  toast.error(message ?? "Something went wrong!");
+  toast.error(message ?? 'Something went wrong!');
 };

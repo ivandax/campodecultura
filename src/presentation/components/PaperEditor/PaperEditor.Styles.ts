@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const PaperWrapper = styled.div`
   border: 1px solid ${(props) => props.theme.colors.gray};

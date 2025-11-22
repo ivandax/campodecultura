@@ -1,19 +1,19 @@
-import { useState } from "react";
-import { SignUpFormWrapper } from "./SignUp.Styles";
-import { useAuthStore } from "@src/presentation/store/authStore";
-import { notifySuccess } from "@src/presentation/utils";
-import { MainButton } from "@src/presentation/components/Buttons/MainButton";
+import { useState } from 'react';
+import { SignUpFormWrapper } from './SignUp.Styles';
+import { useAuthStore } from '@src/presentation/store/authStore';
+import { notifySuccess } from '@src/presentation/utils';
+import { MainButton } from '@src/presentation/components/Buttons/MainButton';
 
 function SignUp() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { signup, userTask } = useAuthStore();
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     const maybeError = await signup(email, password);
     if (!maybeError) {
-      notifySuccess("Account created. Please check your email to verify.");
+      notifySuccess('Account created. Please check your email to verify.');
     }
   };
 
@@ -34,8 +34,8 @@ function SignUp() {
         placeholder="Password"
         required
       />
-      <MainButton type="submit" disabled={userTask.status === "in-progress"}>
-        {userTask.status === "in-progress" ? "Creating..." : "Create account"}
+      <MainButton type="submit" disabled={userTask.status === 'in-progress'}>
+        {userTask.status === 'in-progress' ? 'Creating...' : 'Create account'}
       </MainButton>
     </SignUpFormWrapper>
   );

@@ -1,23 +1,23 @@
-import { getUser, updateUser } from "@src/persistence/user";
-import * as S from "./MyProfile.Styles";
-import { useAuthStore } from "@src/presentation/store/authStore";
-import { notifyError, notifySuccess } from "@src/presentation/utils";
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { AppUser } from "@src/domain/AppUser";
+import { getUser, updateUser } from '@src/persistence/user';
+import * as S from './MyProfile.Styles';
+import { useAuthStore } from '@src/presentation/store/authStore';
+import { notifyError, notifySuccess } from '@src/presentation/utils';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AppUser } from '@src/domain/AppUser';
 
 // MyProfile.tsx
 function MyProfile() {
   const navigate = useNavigate();
   const { userTask, logout } = useAuthStore();
-  const user = userTask.status === "successful" ? userTask.data : null;
+  const user = userTask.status === 'successful' ? userTask.data : null;
   const [userProfile, setUserProfile] = useState<null | AppUser>(null);
-  const [displayName, setDisplayName] = useState("");
+  const [displayName, setDisplayName] = useState('');
 
   const handleGetProfile = useCallback(async (id: string) => {
     const result = await getUser(id);
     if (result.error || result.data === null) {
-      notifyError("Error getting user");
+      notifyError('Error getting user');
       return;
     }
     setUserProfile(result.data);
@@ -30,7 +30,7 @@ function MyProfile() {
 
   const handleLogout = async () => {
     await logout();
-    navigate("/login");
+    navigate('/login');
   };
 
   const handleNameBlur = useCallback(async () => {
@@ -38,9 +38,9 @@ function MyProfile() {
     if (userProfile) {
       const result = await updateUser({ name: displayName }, userProfile.id);
       if (result.error) {
-        notifyError("Error updating user name");
+        notifyError('Error updating user name');
       } else {
-        notifySuccess("User name updated successfully");
+        notifySuccess('User name updated successfully');
       }
     }
   }, [displayName, userProfile]);

@@ -1,3 +1,3 @@
-import { PostsTable } from "./PostsTable";
+import { PostsTable } from './PostsTable';
 
 export { PostsTable };

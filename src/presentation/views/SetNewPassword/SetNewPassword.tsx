@@ -1,18 +1,18 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import * as S from "./SetNewPassword.Styles";
-import { notifyError, notifySuccess } from "@src/presentation/utils";
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import * as S from './SetNewPassword.Styles';
+import { notifyError, notifySuccess } from '@src/presentation/utils';
 import {
   completePasswordReset,
   verifyPasswordCode,
-} from "@src/persistence/auth";
-import { MainButton } from "@src/presentation/components/Buttons/MainButton";
+} from '@src/persistence/auth';
+import { MainButton } from '@src/presentation/components/Buttons/MainButton';
 
 function SetNewPassword() {
   const [searchParams] = useSearchParams();
-  const oobCode = searchParams.get("oobCode");
+  const oobCode = searchParams.get('oobCode');
 
-  const [newPassword, setNewPassword] = useState("");
+  const [newPassword, setNewPassword] = useState('');
   const [isVerifying, setIsVerifying] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
@@ -20,16 +20,16 @@ function SetNewPassword() {
   useEffect(() => {
     const verify = async () => {
       if (!oobCode) {
-        notifyError("Invalid password reset link.");
-        navigate("/");
+        notifyError('Invalid password reset link.');
+        navigate('/');
         return;
       }
 
       try {
         await verifyPasswordCode(oobCode);
       } catch {
-        notifyError("Password reset link is invalid or expired.");
-        navigate("/");
+        notifyError('Password reset link is invalid or expired.');
+        navigate('/');
       }
 
       setIsVerifying(false);
@@ -45,7 +45,7 @@ function SetNewPassword() {
     if (!oobCode) return;
 
     if (newPassword.length < 6) {
-      notifyError("Password must be at least 6 characters.");
+      notifyError('Password must be at least 6 characters.');
       return;
     }
 
@@ -56,11 +56,11 @@ function SetNewPassword() {
     setIsSubmitting(false);
 
     if (result.error) {
-      notifyError("Could not reset password.");
+      notifyError('Could not reset password.');
       return;
     }
 
-    notifySuccess("Password updated successfully! You can now log in.");
+    notifySuccess('Password updated successfully! You can now log in.');
   };
 
   if (isVerifying) {
@@ -80,7 +80,7 @@ function SetNewPassword() {
       />
 
       <MainButton type="submit" disabled={isSubmitting}>
-        {isSubmitting ? "Updating..." : "Set Password"}
+        {isSubmitting ? 'Updating...' : 'Set Password'}
       </MainButton>
     </S.Wrapper>
   );

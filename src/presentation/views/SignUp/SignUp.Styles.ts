@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SignUpFormWrapper = styled.form`
   width: 280px;

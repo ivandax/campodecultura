@@ -1,5 +1,5 @@
-import { AiOutlineLoading3Quarters } from "react-icons/ai"; // or any other spinner icon you prefer
-import styled, { keyframes } from "styled-components";
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'; // or any other spinner icon you prefer
+import styled, { keyframes } from 'styled-components';
 
 const spin = keyframes`
   from {
@@ -17,5 +17,5 @@ export const StyledSpinner = styled(AiOutlineLoading3Quarters)<{
   animation: ${spin} 1s linear infinite;
   width: ${(props) => props.$size ?? 16}px;
   height: ${(props) => props.$size ?? 16}px;
-  color: ${(props) => props.color ?? "#3b82f6"};
+  color: ${(props) => props.color ?? '#3b82f6'};
 `;

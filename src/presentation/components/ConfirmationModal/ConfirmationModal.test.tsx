@@ -1,16 +1,16 @@
-import { render, fireEvent } from "@testing-library/react";
-import { expect, vi } from "vitest";
-import { ThemeProvider } from "styled-components";
-import { ConfirmationModal } from "./ConfirmationModal";
-import { theme } from "@src/presentation/styles/theme";
+import { render, fireEvent } from '@testing-library/react';
+import { expect, vi } from 'vitest';
+import { ThemeProvider } from 'styled-components';
+import { ConfirmationModal } from './ConfirmationModal';
+import { theme } from '@src/presentation/styles/theme';
 
-describe("ConfirmationModal component", () => {
-  const mockTitle = "Delete Item";
-  const mockDescription = "Are you sure you want to delete this item?";
+describe('ConfirmationModal component', () => {
+  const mockTitle = 'Delete Item';
+  const mockDescription = 'Are you sure you want to delete this item?';
   const handleConfirm = vi.fn();
   const handleCancel = vi.fn();
 
-  it("should render modal with correct title and description", () => {
+  it('should render modal with correct title and description', () => {
     const { getByText } = render(
       <ThemeProvider theme={theme}>
         <ConfirmationModal
@@ -26,7 +26,7 @@ describe("ConfirmationModal component", () => {
     expect(getByText(mockDescription)).toBeTruthy();
   });
 
-  it("should call onCancel when close button is clicked", () => {
+  it('should call onCancel when close button is clicked', () => {
     const { getByLabelText } = render(
       <ThemeProvider theme={theme}>
         <ConfirmationModal
@@ -38,13 +38,13 @@ describe("ConfirmationModal component", () => {
       </ThemeProvider>
     );
 
-    const closeButton = getByLabelText("close");
+    const closeButton = getByLabelText('close');
     fireEvent.click(closeButton);
 
     expect(handleCancel).toHaveBeenCalled();
   });
 
-  it("should call onCancel when cancel button is clicked", () => {
+  it('should call onCancel when cancel button is clicked', () => {
     const { getByLabelText } = render(
       <ThemeProvider theme={theme}>
         <ConfirmationModal
@@ -56,13 +56,13 @@ describe("ConfirmationModal component", () => {
       </ThemeProvider>
     );
 
-    const cancelButton = getByLabelText("cancel");
+    const cancelButton = getByLabelText('cancel');
     fireEvent.click(cancelButton);
 
     expect(handleCancel).toHaveBeenCalled();
   });
 
-  it("should call onConfirm when confirm button is clicked", () => {
+  it('should call onConfirm when confirm button is clicked', () => {
     const { getByLabelText } = render(
       <ThemeProvider theme={theme}>
         <ConfirmationModal
@@ -74,7 +74,7 @@ describe("ConfirmationModal component", () => {
       </ThemeProvider>
     );
 
-    const confirmButton = getByLabelText("confirm");
+    const confirmButton = getByLabelText('confirm');
     fireEvent.click(confirmButton);
 
     expect(handleConfirm).toHaveBeenCalled();

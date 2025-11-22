@@ -1,4 +1,4 @@
-import * as S from "./DeleteButton.Styles";
+import * as S from './DeleteButton.Styles';
 
 interface DeleteButtonProps {
   deleteInput: string;
@@ -14,10 +14,10 @@ export function DeleteButton({
   return (
     <S.DeleteButton
       onClick={handleDelete}
-      disabled={deleteInput !== "delete" || isDeleting}
-      $isActive={deleteInput === "delete"}
+      disabled={deleteInput !== 'delete' || isDeleting}
+      $isActive={deleteInput === 'delete'}
     >
-      {isDeleting ? "Deleting..." : "Delete"}
+      {isDeleting ? 'Deleting...' : 'Delete'}
     </S.DeleteButton>
   );
 }

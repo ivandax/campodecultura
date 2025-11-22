@@ -7,5 +7,5 @@ export type CreateAppUserData = {
   email: string;
   name: string;
   createdOn: number;
-  role: "ADMIN" | "STANDARD";
+  role: 'ADMIN' | 'STANDARD';
 };

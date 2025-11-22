@@ -1,5 +1,5 @@
-import { FaGoogle } from "react-icons/fa";
-import * as S from "./GoogleSignInButton.Styles";
+import { FaGoogle } from 'react-icons/fa';
+import * as S from './GoogleSignInButton.Styles';
 
 interface GoogleSignInButtonProps {
   onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;

@@ -1,7 +1,7 @@
-import { Sorting } from "@src/presentation/types/Sorting";
-import { SortingLabelWrapper } from "./SortingLabel.Styles";
-import { SortIcon } from "@src/presentation/components/SortIcon";
-import { BodyText } from "@src/presentation/components/Texts";
+import { Sorting } from '@src/presentation/types/Sorting';
+import { SortingLabelWrapper } from './SortingLabel.Styles';
+import { SortIcon } from '@src/presentation/components/SortIcon';
+import { BodyText } from '@src/presentation/components/Texts';
 
 interface SortingLabelProps<T> {
   currentSorting: Sorting<T> | null;
@@ -22,12 +22,12 @@ function SortingLabel<T>({
     <SortingLabelWrapper
       $active={currentSorting?.property === property}
       $direction={
-        currentSorting?.property === property ? currentSorting.direction : "asc"
+        currentSorting?.property === property ? currentSorting.direction : 'asc'
       }
       onClick={() => onUpdateSorting(property)}
       $width={width}
     >
-      <BodyText color={"gray"}>{label}</BodyText>
+      <BodyText color={'gray'}>{label}</BodyText>
       <SortIcon />
     </SortingLabelWrapper>
   );

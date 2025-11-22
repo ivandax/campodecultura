@@ -1,4 +1,4 @@
 export type Sorting<T> = {
   property: T;
-  direction: "asc" | "desc";
+  direction: 'asc' | 'desc';
 };

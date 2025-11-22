@@ -1,21 +1,21 @@
-import React from "react";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
-import { Sidebar } from "@src/presentation/components/Sidebar";
-import { Topbar } from "@src/presentation/components/Topbar";
-import { RootContainer, MainContent, GlobalStyle } from "./Root.Styles";
-import { MyPosts } from "@src/presentation/views/MyPosts";
-import { Login } from "@src/presentation/views/Login";
-import { SignUp } from "@src/presentation/views/SignUp";
-import { CreateEditPost } from "@src/presentation/views/CreateEditPost";
-import { ViewPost } from "@src/presentation/views/ViewPost";
-import { MyProfile } from "@src/presentation/views/MyProfile";
-import { LandingPage } from "@src/presentation/views/LandingPage";
-import { AnalyticsTracker } from "@src/presentation/components/AnalyticsTracker";
-import { RecoverPassword } from "@src/presentation/views/RecoverPassword";
-import { VerifyEmail } from "@src/presentation/views/VerifyEmail";
-import { SetNewPassword } from "@src/presentation/views/SetNewPassword";
-import { Analytics } from "firebase/analytics";
+import { Sidebar } from '@src/presentation/components/Sidebar';
+import { Topbar } from '@src/presentation/components/Topbar';
+import { RootContainer, MainContent, GlobalStyle } from './Root.Styles';
+import { MyPosts } from '@src/presentation/views/MyPosts';
+import { Login } from '@src/presentation/views/Login';
+import { SignUp } from '@src/presentation/views/SignUp';
+import { CreateEditPost } from '@src/presentation/views/CreateEditPost';
+import { ViewPost } from '@src/presentation/views/ViewPost';
+import { MyProfile } from '@src/presentation/views/MyProfile';
+import { LandingPage } from '@src/presentation/views/LandingPage';
+import { AnalyticsTracker } from '@src/presentation/components/AnalyticsTracker';
+import { RecoverPassword } from '@src/presentation/views/RecoverPassword';
+import { VerifyEmail } from '@src/presentation/views/VerifyEmail';
+import { SetNewPassword } from '@src/presentation/views/SetNewPassword';
+import { Analytics } from 'firebase/analytics';
 
 interface RootProps {
   analytics: Analytics;

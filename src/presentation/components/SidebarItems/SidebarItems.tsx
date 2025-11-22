@@ -1,10 +1,10 @@
-import { SidebarList, SidebarItem } from "./SidebarItems.Styles";
-import { useNavigate, useLocation } from "react-router-dom";
+import { SidebarList, SidebarItem } from './SidebarItems.Styles';
+import { useNavigate, useLocation } from 'react-router-dom';
 
-import { useAuthStore } from "@src/presentation/store/authStore";
+import { useAuthStore } from '@src/presentation/store/authStore';
 
 interface SidebarItemsProps {
-  displayOn: "desktop" | "mobile";
+  displayOn: 'desktop' | 'mobile';
   closeSidebar?: () => void;
 }
 
@@ -29,19 +29,19 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
   const getMyProfileUrl = () => `/my-profile`;
 
   const showLoginAndSignUp =
-    (userTask.status === "successful" && userTask.data === null) ||
-    userTask.status === "failed";
+    (userTask.status === 'successful' && userTask.data === null) ||
+    userTask.status === 'failed';
 
   return (
     <SidebarList>
       <SidebarItem
-        onClick={() => handleNavigate("/home")}
-        $active={location.pathname === "/home"}
+        onClick={() => handleNavigate('/home')}
+        $active={location.pathname === '/home'}
         $displayOn={displayOn}
       >
         Home
       </SidebarItem>
-      {userTask.status === "successful" && userTask.data !== null && (
+      {userTask.status === 'successful' && userTask.data !== null && (
         <>
           <SidebarItem
             onClick={() => handleNavigate(getMyPostsUrl(userTask.data?.id))}
@@ -70,15 +70,15 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
       {showLoginAndSignUp && (
         <>
           <SidebarItem
-            onClick={() => handleNavigate("/login")}
-            $active={location.pathname === "/login"}
+            onClick={() => handleNavigate('/login')}
+            $active={location.pathname === '/login'}
             $displayOn={displayOn}
           >
             Log in
           </SidebarItem>
           <SidebarItem
-            onClick={() => handleNavigate("/signup")}
-            $active={location.pathname === "/signup"}
+            onClick={() => handleNavigate('/signup')}
+            $active={location.pathname === '/signup'}
             $displayOn={displayOn}
           >
             Create account

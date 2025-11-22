@@ -1,3 +1,3 @@
-import { RecoverPassword } from "./RecoverPassword";
+import { RecoverPassword } from './RecoverPassword';
 
 export { RecoverPassword };

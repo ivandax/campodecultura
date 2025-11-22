@@ -1,3 +1,3 @@
-import { CreateEditPost } from "./CreateEditPost";
+import { CreateEditPost } from './CreateEditPost';
 
 export { CreateEditPost };

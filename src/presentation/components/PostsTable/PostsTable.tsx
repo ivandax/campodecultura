@@ -1,16 +1,16 @@
-import { Table, TableCell, TableRow, StatusChip } from "./PostsTable.Styles";
-import { BodyText, H2CategoryTitle } from "@src/presentation/components/Texts";
-import { TableHeaderCell } from "@src/presentation/components/TableHeaderCell";
-import { Post } from "@src/domain/Post";
+import { Table, TableCell, TableRow, StatusChip } from './PostsTable.Styles';
+import { BodyText, H2CategoryTitle } from '@src/presentation/components/Texts';
+import { TableHeaderCell } from '@src/presentation/components/TableHeaderCell';
+import { Post } from '@src/domain/Post';
 import {
   notifyError,
   timestampToHumanReadbleDate,
-} from "@src/presentation/utils";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getPostsForUser } from "@src/persistence/post";
-import { AsyncOp } from "@src/presentation/types/AsyncOp";
-import { Spinner } from "../Spinner";
+} from '@src/presentation/utils';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getPostsForUser } from '@src/persistence/post';
+import { AsyncOp } from '@src/presentation/types/AsyncOp';
+import { Spinner } from '../Spinner';
 
 interface PostsTableProps {
   isOwner: boolean;
@@ -20,19 +20,19 @@ interface PostsTableProps {
 function PostsTable({ isOwner, userId }: PostsTableProps) {
   const navigate = useNavigate();
   const [postsTask, setPostsTask] = useState<AsyncOp<Post[], null>>({
-    status: "pending",
+    status: 'pending',
   });
 
   useEffect(() => {
     const handleGetPosts = async () => {
-      setPostsTask({ status: "in-progress" });
+      setPostsTask({ status: 'in-progress' });
       const posts = await getPostsForUser(userId, isOwner);
 
       if (posts.error) {
-        notifyError("Error loading posts");
+        notifyError('Error loading posts');
         return;
       }
-      setPostsTask({ status: "successful", data: posts.data });
+      setPostsTask({ status: 'successful', data: posts.data });
     };
     handleGetPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,21 +43,21 @@ function PostsTable({ isOwner, userId }: PostsTableProps) {
       <thead>
         <tr>
           <TableHeaderCell $width={20}>
-            <BodyText color={"gray"}>Title</BodyText>
+            <BodyText color={'gray'}>Title</BodyText>
           </TableHeaderCell>
           <TableHeaderCell $width={20}>
-            <BodyText color={"gray"}>Published date</BodyText>
+            <BodyText color={'gray'}>Published date</BodyText>
           </TableHeaderCell>
           <TableHeaderCell $width={20}>
-            <BodyText color={"gray"}>Status</BodyText>
+            <BodyText color={'gray'}>Status</BodyText>
           </TableHeaderCell>
           <TableHeaderCell $width={20}>
-            <BodyText color={"gray"}>Author</BodyText>
+            <BodyText color={'gray'}>Author</BodyText>
           </TableHeaderCell>
         </tr>
       </thead>
       <tbody>
-        {postsTask.status === "in-progress" && (
+        {postsTask.status === 'in-progress' && (
           <TableRow>
             <TableCell>
               <Spinner />
@@ -67,7 +67,7 @@ function PostsTable({ isOwner, userId }: PostsTableProps) {
             <TableCell></TableCell>
           </TableRow>
         )}
-        {postsTask.status === "successful" && postsTask.data.length === 0 && (
+        {postsTask.status === 'successful' && postsTask.data.length === 0 && (
           <TableRow>
             <TableCell>No data</TableCell>
             <TableCell></TableCell>
@@ -75,29 +75,31 @@ function PostsTable({ isOwner, userId }: PostsTableProps) {
             <TableCell></TableCell>
           </TableRow>
         )}
-        {postsTask.status === "successful" &&
+        {postsTask.status === 'successful' &&
           postsTask.data.length > 0 &&
           postsTask.data.map((item) => (
             <TableRow
               key={item.title}
-              onClick={() => navigate(`/posts/${item.author?.id}/view/${item.id}`)}
+              onClick={() =>
+                navigate(`/posts/${item.author?.id}/view/${item.id}`)
+              }
             >
               <TableCell $pointer onClick={() => void 0} $width={20}>
                 <H2CategoryTitle>{item.title}</H2CategoryTitle>
               </TableCell>
               <TableCell $pointer onClick={() => void 0} $width={20}>
                 <H2CategoryTitle>
-                  {timestampToHumanReadbleDate(item.createdOn, "en")}
+                  {timestampToHumanReadbleDate(item.createdOn, 'en')}
                 </H2CategoryTitle>
               </TableCell>
               <TableCell $pointer onClick={() => void 0} $width={20}>
                 <StatusChip
                   $variant={
-                    item.status?.toLowerCase() === "draft"
-                      ? "draft"
-                      : item.status?.toLowerCase() === "published"
-                        ? "published"
-                        : "default"
+                    item.status?.toLowerCase() === 'draft'
+                      ? 'draft'
+                      : item.status?.toLowerCase() === 'published'
+                        ? 'published'
+                        : 'default'
                   }
                 >
                   {item.status}

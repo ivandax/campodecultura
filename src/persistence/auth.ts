@@ -11,10 +11,10 @@ import {
   verifyPasswordResetCode,
   confirmPasswordReset,
   signInWithPopup,
-} from "firebase/auth";
-import { tryCatch } from "./tryCatch";
-import { Result } from "@src/domain/Result";
-import { provider } from "@src/google-auth";
+} from 'firebase/auth';
+import { tryCatch } from './tryCatch';
+import { Result } from '@src/domain/Result';
+import { provider } from '@src/google-auth';
 
 async function signup(email: string, password: string): Promise<Result<void>> {
   const callback = async (): Promise<void> => {

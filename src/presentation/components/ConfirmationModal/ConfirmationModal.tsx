@@ -1,7 +1,7 @@
-import { MainButton } from "../Buttons/MainButton";
-import { CloseIcon } from "../CloseIcon";
-import { IconButton } from "../IconButton";
-import { BodyText, H2CategoryTitle } from "../Texts";
+import { MainButton } from '../Buttons/MainButton';
+import { CloseIcon } from '../CloseIcon';
+import { IconButton } from '../IconButton';
+import { BodyText, H2CategoryTitle } from '../Texts';
 import {
   ButtonContainer,
   CancelButton,
@@ -9,7 +9,7 @@ import {
   ModalBox,
   ModalOverlay,
   TitleWrapper,
-} from "./ConfirmationModal.Styles";
+} from './ConfirmationModal.Styles';
 
 interface ConfirmationModalProps {
   title: string;

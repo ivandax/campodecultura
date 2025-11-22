@@ -1,3 +1,3 @@
-import { SortingLabel } from "./SortingLabel";
+import { SortingLabel } from './SortingLabel';
 
 export { SortingLabel };

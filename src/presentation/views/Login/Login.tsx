@@ -1,14 +1,14 @@
-import { useState } from "react";
-import * as S from "./Login.Styles";
-import { useAuthStore } from "@src/presentation/store/authStore";
-import { Link, useNavigate } from "react-router-dom";
-import { notifyError } from "@src/presentation/utils";
-import { MainButton } from "@src/presentation/components/Buttons/MainButton";
-import { GoogleSignInButton } from "@src/presentation/components/Buttons/GoogleSignInButton";
+import { useState } from 'react';
+import * as S from './Login.Styles';
+import { useAuthStore } from '@src/presentation/store/authStore';
+import { Link, useNavigate } from 'react-router-dom';
+import { notifyError } from '@src/presentation/utils';
+import { MainButton } from '@src/presentation/components/Buttons/MainButton';
+import { GoogleSignInButton } from '@src/presentation/components/Buttons/GoogleSignInButton';
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const { login, userTask, loginWithGoogle } = useAuthStore();
   const navigate = useNavigate();
 
@@ -16,9 +16,9 @@ function Login() {
     e.preventDefault();
     const user = await login(email, password);
     if (user) {
-      navigate("/home");
+      navigate('/home');
     } else {
-      notifyError("Could not log in. Please check your credentials.");
+      notifyError('Could not log in. Please check your credentials.');
     }
   };
 
@@ -26,9 +26,9 @@ function Login() {
     e.preventDefault();
     const user = await loginWithGoogle();
     if (user) {
-      navigate("/home");
+      navigate('/home');
     } else {
-      notifyError("Could not log in with Google.");
+      notifyError('Could not log in with Google.');
     }
   };
 
@@ -50,12 +50,12 @@ function Login() {
         required
       />
       <MainButton
-        disabled={userTask.status === "in-progress"}
+        disabled={userTask.status === 'in-progress'}
         onClick={handleLogin}
       >
-        {userTask.status === "in-progress"
-          ? "Logging in..."
-          : "Log in with email"}
+        {userTask.status === 'in-progress'
+          ? 'Logging in...'
+          : 'Log in with email'}
       </MainButton>
       <Link to="/recover-password">Forgot password?</Link>
       <S.SocialActionsWrapper>

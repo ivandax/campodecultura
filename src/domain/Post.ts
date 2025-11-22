@@ -1,5 +1,5 @@
-import { DocumentReference } from "firebase/firestore";
-import { AppUser } from "./AppUser";
+import { DocumentReference } from 'firebase/firestore';
+import { AppUser } from './AppUser';
 export interface CreatePostData {
   title: string;
   content: string;
@@ -8,8 +8,8 @@ export interface CreatePostData {
   authorId: string;
   coverImage: string | null;
   categories: string[];
-  language: "en" | "es";
-  status: "draft" | "published";
+  language: 'en' | 'es';
+  status: 'draft' | 'published';
   acceptComments: boolean;
 }
 

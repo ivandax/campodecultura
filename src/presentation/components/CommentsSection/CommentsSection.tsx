@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { CreateCommentData, Comment } from "@src/domain/Comment";
-import { Result } from "@src/domain/Result";
+import React, { useState, useEffect } from 'react';
+import { CreateCommentData, Comment } from '@src/domain/Comment';
+import { Result } from '@src/domain/Result';
 import {
   createComment,
   getCommentsByPostId,
   deleteComment,
   editComment,
-} from "@src/persistence/comment";
-import { AppUser } from "@src/domain/AppUser";
-import * as S from "./CommentsSection.Styles";
-import { Link } from "react-router-dom";
-import { timestampToHumanReadbleDate } from "@src/presentation/utils";
+} from '@src/persistence/comment';
+import { AppUser } from '@src/domain/AppUser';
+import * as S from './CommentsSection.Styles';
+import { Link } from 'react-router-dom';
+import { timestampToHumanReadbleDate } from '@src/presentation/utils';
 
 interface CommentsSectionProps {
   postId: string;
@@ -19,12 +19,12 @@ interface CommentsSectionProps {
 
 const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
   const [comments, setComments] = useState<Comment[]>([]);
-  const [newComment, setNewComment] = useState<string>("");
+  const [newComment, setNewComment] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<null | string>(null);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
-  const [editedCommentText, setEditedCommentText] = useState<string>("");
+  const [editedCommentText, setEditedCommentText] = useState<string>('');
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -33,7 +33,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
       const result: Result<Comment[]> = await getCommentsByPostId(postId);
       setLoading(false);
       if (result.error) {
-        setError("Failed to load comments");
+        setError('Failed to load comments');
         return;
       }
       setComments(result.data);
@@ -43,14 +43,14 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
   }, [postId]);
 
   const handleAddComment = async (user: AppUser) => {
-    if (newComment.trim() === "") {
-      setMessage("Comment cannot be empty");
+    if (newComment.trim() === '') {
+      setMessage('Comment cannot be empty');
       return;
     }
 
     const commentData: CreateCommentData = {
       text: newComment,
-      author: user.name !== "" ? user.name : user.email,
+      author: user.name !== '' ? user.name : user.email,
       createdOn: Date.now(),
       postId,
       userId: user.id,
@@ -62,13 +62,13 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
       return;
     }
     setComments((prev) => [...prev, { id: result.data, ...commentData }]);
-    setNewComment("");
+    setNewComment('');
   };
 
   const handleDeleteComment = async (commentId: string) => {
     const result = await deleteComment(commentId);
     if (result.error) {
-      setMessage("Failed to delete comment");
+      setMessage('Failed to delete comment');
       return;
     }
     setComments((prev) => prev.filter((comment) => comment.id !== commentId));
@@ -76,7 +76,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
 
   const resetEditMode = () => {
     setEditingCommentId(null);
-    setEditedCommentText("");
+    setEditedCommentText('');
   };
 
   const handleEditComment = (commentId: string, currentText: string) => {
@@ -85,14 +85,14 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
   };
 
   const handleSaveEditedComment = async (commentId: string) => {
-    if (editedCommentText.trim() === "") {
-      setMessage("Edited comment cannot be empty");
+    if (editedCommentText.trim() === '') {
+      setMessage('Edited comment cannot be empty');
       return;
     }
 
     const result = await editComment(commentId, { text: editedCommentText });
     if (result.error) {
-      setMessage("Failed to update comment");
+      setMessage('Failed to update comment');
       return;
     }
 
@@ -140,13 +140,13 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
                     <S.CommentEditActions>
                       <S.Button
                         onClick={resetEditMode}
-                        disabled={editedCommentText === ""}
+                        disabled={editedCommentText === ''}
                       >
                         Cancel
                       </S.Button>
                       <S.Button
                         onClick={() => handleSaveEditedComment(comment.id)}
-                        disabled={editedCommentText === ""}
+                        disabled={editedCommentText === ''}
                       >
                         Save changes
                       </S.Button>
@@ -158,7 +158,7 @@ const CommentsSection: React.FC<CommentsSectionProps> = ({ postId, user }) => {
                       <strong>{comment.author}</strong>: {comment.text}
                     </S.CommentText>
                     <S.CommentDate>
-                      {timestampToHumanReadbleDate(comment.createdOn, "en")}
+                      {timestampToHumanReadbleDate(comment.createdOn, 'en')}
                     </S.CommentDate>
                   </>
                 )}

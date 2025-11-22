@@ -1,5 +1,5 @@
-import React from "react";
-import * as S from "./MainButton.Styles";
+import React from 'react';
+import * as S from './MainButton.Styles';
 
 function MainButton({
   children,

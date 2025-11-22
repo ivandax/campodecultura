@@ -1,4 +1,4 @@
-import { Wrapper } from "./FullViewStyles";
+import { Wrapper } from './FullViewStyles';
 
 interface FullViewProps {
   title: string;

@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import parse from "html-react-parser";
-import * as S from "./ViewPost.Styles";
-import { getPost, deletePost } from "@src/persistence/post";
-import { useNavigate, useParams } from "react-router-dom";
-import { Post } from "@src/domain/Post";
-import { timestampToHumanReadbleDate } from "@src/presentation/utils";
-import { useAuthStore } from "@src/presentation/store/authStore";
-import { DeleteButton } from "@src/presentation/components/Buttons/DeleteButton";
-import { MainButton } from "@src/presentation/components/Buttons/MainButton";
-import { CommentsSection } from "@src/presentation/components/CommentsSection";
-import { Spinner } from "@src/presentation/components/Spinner";
-import { useCopyUrl } from "@src/presentation/hooks/use-copy-url";
+import { useEffect, useState } from 'react';
+import parse from 'html-react-parser';
+import * as S from './ViewPost.Styles';
+import { getPost, deletePost } from '@src/persistence/post';
+import { useNavigate, useParams } from 'react-router-dom';
+import { Post } from '@src/domain/Post';
+import { timestampToHumanReadbleDate } from '@src/presentation/utils';
+import { useAuthStore } from '@src/presentation/store/authStore';
+import { DeleteButton } from '@src/presentation/components/Buttons/DeleteButton';
+import { MainButton } from '@src/presentation/components/Buttons/MainButton';
+import { CommentsSection } from '@src/presentation/components/CommentsSection';
+import { Spinner } from '@src/presentation/components/Spinner';
+import { useCopyUrl } from '@src/presentation/hooks/use-copy-url';
 
 function ViewPost() {
   const [post, setPost] = useState<Post | null>(null);
@@ -21,16 +21,16 @@ function ViewPost() {
 
   const enableCoverImage = false;
 
-  const [deleteInput, setDeleteInput] = useState("");
+  const [deleteInput, setDeleteInput] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
   const userIsOwner =
-    userTask.status === "successful" &&
+    userTask.status === 'successful' &&
     userTask.data !== null &&
     userId &&
     userTask.data.id === userId;
 
-  const user = userTask.status === "successful" ? userTask.data : null;
+  const user = userTask.status === 'successful' ? userTask.data : null;
 
   const handleDelete = async () => {
     if (!postId || !userIsOwner) return;
@@ -43,18 +43,18 @@ function ViewPost() {
       return;
     }
 
-    setMessage("Post removed");
+    setMessage('Post removed');
     if (userId) {
       navigate(`/posts/${userId}`);
       return;
     }
-    navigate("/home");
+    navigate('/home');
   };
 
   useEffect(() => {
     const handleGetPost = async () => {
       if (!postId) {
-        setMessage("Error getting id from params");
+        setMessage('Error getting id from params');
         return;
       }
       const postResult = await getPost(postId);
@@ -76,7 +76,7 @@ function ViewPost() {
         <S.LoadingWrapper>
           <Spinner />
         </S.LoadingWrapper>
-      ) : post.status === "draft" && !userIsOwner ? (
+      ) : post.status === 'draft' && !userIsOwner ? (
         <div>This post is a draft and access is forbidden</div>
       ) : (
         <>
@@ -85,7 +85,7 @@ function ViewPost() {
               <img
                 src={post.coverImage}
                 alt="Preview"
-                style={{ maxWidth: "100%" }}
+                style={{ maxWidth: '100%' }}
               />
             </S.PhotoPreview>
           ) : null}
@@ -94,11 +94,11 @@ function ViewPost() {
               <h3>{post.title}</h3>
               <S.StatusChip
                 variant={
-                  post.status?.toLowerCase() === "draft"
-                    ? "draft"
-                    : post.status?.toLowerCase() === "published"
-                    ? "published"
-                    : "default"
+                  post.status?.toLowerCase() === 'draft'
+                    ? 'draft'
+                    : post.status?.toLowerCase() === 'published'
+                      ? 'published'
+                      : 'default'
                 }
               >
                 {post.status}
@@ -109,16 +109,16 @@ function ViewPost() {
           <S.Paper>{parse(post.content)}</S.Paper>
           <S.GrayWrapper>{`Edited on: ${timestampToHumanReadbleDate(
             post.editedOn,
-            "en"
+            'en'
           )}`}</S.GrayWrapper>
           <S.GrayWrapper>{`Written by: ${
-            post.author?.name ?? "Not found"
+            post.author?.name ?? 'Not found'
           }`}</S.GrayWrapper>
           {post.acceptComments && (
             <CommentsSection postId={post.id} user={user} />
           )}
           <S.Footer>
-            <MainButton onClick={() => navigate("/home")}>Go back</MainButton>
+            <MainButton onClick={() => navigate('/home')}>Go back</MainButton>
           </S.Footer>
 
           {userId && userIsOwner && (
@@ -131,9 +131,9 @@ function ViewPost() {
               </MainButton>
               <h5
                 style={{
-                  marginTop: "24px",
-                  padding: "8px",
-                  width: "100%",
+                  marginTop: '24px',
+                  padding: '8px',
+                  width: '100%',
                 }}
               >
                 Delete post
@@ -144,7 +144,7 @@ function ViewPost() {
                 value={deleteInput}
                 onChange={(e) => setDeleteInput(e.target.value)}
                 style={{
-                  padding: "8px",
+                  padding: '8px',
                 }}
               />
               <DeleteButton

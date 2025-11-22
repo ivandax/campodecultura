@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const RadioGroupWrapper = styled.div`
   display: flex;
@@ -31,7 +31,9 @@ export const RadioWrapper = styled.label<{
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.3s, border-color 0.3s;
+    transition:
+      background-color 0.3s,
+      border-color 0.3s;
 
     svg {
       display: none;
