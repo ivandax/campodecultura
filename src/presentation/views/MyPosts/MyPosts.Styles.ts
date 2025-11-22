@@ -8,6 +8,13 @@ export const Wrapper = styled.div`
   overflow: auto;
 `;
 
+export const Top = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px;
+`;
+
 export const Main = styled.div`
   flex-grow: 1;
 `;

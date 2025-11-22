@@ -4,16 +4,13 @@ import * as S from "./ViewPost.Styles";
 import { getPost, deletePost } from "@src/persistence/post";
 import { useNavigate, useParams } from "react-router-dom";
 import { Post } from "@src/domain/Post";
-import {
-  notifyError,
-  notifySuccess,
-  timestampToHumanReadbleDate,
-} from "@src/presentation/utils";
+import { timestampToHumanReadbleDate } from "@src/presentation/utils";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { DeleteButton } from "@src/presentation/components/Buttons/DeleteButton";
 import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 import { CommentsSection } from "@src/presentation/components/CommentsSection";
 import { Spinner } from "@src/presentation/components/Spinner";
+import { useCopyUrl } from "@src/presentation/hooks/use-copy-url";
 
 function ViewPost() {
   const [post, setPost] = useState<Post | null>(null);
@@ -71,14 +68,7 @@ function ViewPost() {
     handleGetPost();
   }, [postId]);
 
-  const handleCopyUrl = async () => {
-    try {
-      await navigator.clipboard.writeText(window.location.href);
-      notifySuccess("Post URL copied to clipboard!");
-    } catch (err) {
-      notifyError("Failed to copy URL");
-    }
-  };
+  const handleCopyUrl = useCopyUrl();
 
   return (
     <S.Wrapper>

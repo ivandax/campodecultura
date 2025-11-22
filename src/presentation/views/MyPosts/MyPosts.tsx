@@ -1,31 +1,39 @@
 import { ViewTitle } from "@src/presentation/components/ViewTitle";
 import { Outlet, useParams } from "react-router-dom";
-import { Main, Wrapper, LoadingWrapper } from "./MyPosts.Styles";
+import * as S from "./MyPosts.Styles";
 import { PostsTable } from "@src/presentation/components/PostsTable";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { Spinner } from "@src/presentation/components/Spinner";
 import { NotificationBanner } from "@src/presentation/components/Banner/Banner";
+import { useCopyUrl } from "@src/presentation/hooks/use-copy-url";
+import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 
 function MyPosts() {
   const { userTask } = useAuthStore((state) => state);
   const { userId } = useParams();
 
+  const handleCopyUrl = useCopyUrl();
+
   if (!userId) {
     return (
-      <Main>
+      <S.Main>
         <ViewTitle>User ID is missing</ViewTitle>
-      </Main>
+      </S.Main>
     );
   }
 
   return (
-    <Wrapper>
-      <Main>
-        <ViewTitle>Posts</ViewTitle>
+    <S.Wrapper>
+      <S.Main>
+        <S.Top>
+          <ViewTitle>Posts</ViewTitle>
+          <MainButton onClick={handleCopyUrl}>Copy URL</MainButton>
+        </S.Top>
+
         {userTask.status === "pending" || userTask.status === "in-progress" ? (
-          <LoadingWrapper>
+          <S.LoadingWrapper>
             <Spinner />
-          </LoadingWrapper>
+          </S.LoadingWrapper>
         ) : userTask.status === "successful" ? (
           <>
             {userTask.data?.emailVerified === false && (
@@ -37,9 +45,9 @@ function MyPosts() {
             />
           </>
         ) : null}
-      </Main>
+      </S.Main>
       <Outlet />
-    </Wrapper>
+    </S.Wrapper>
   );
 }
 
