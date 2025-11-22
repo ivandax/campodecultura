@@ -9,7 +9,7 @@ export const TopbarWrapper = styled.div`
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: relative;
 
-  /* Show in mobile */
+  /* Hide in desktop */
   @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
     display: none;
   }

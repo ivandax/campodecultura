@@ -32,7 +32,10 @@ export const ConfigurationSection = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  max-width: 500px;
+
+  @media (min-width: ${(props) => props.theme.breakpoints.mobile}) {
+    flex-direction: row;
+  }
 `;
 
 export const ConfigurationBlock = styled.div`
@@ -42,6 +45,7 @@ export const ConfigurationBlock = styled.div`
   border-radius: 8px;
   display: flex;
   gap: 16px;
+  width: 300px;
 `;
 
 export const ConfigurationMessage = styled.div`

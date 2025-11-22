@@ -16,6 +16,14 @@ a {
 
 .custom-quill-editor .ql-editor {
   min-height: 150px;
+  overflow-y: auto;
+}
+
+@media (min-width: 768px) {
+  .custom-quill-editor .ql-editor {
+    height: 320px;
+    max-height: 320px;
+  }
 }
 
 input {
