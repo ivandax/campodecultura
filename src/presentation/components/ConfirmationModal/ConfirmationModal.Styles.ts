@@ -26,7 +26,7 @@ export const TitleWrapper = styled.div`
   background-color: ${(props) =>
     props.color === "warning"
       ? props.theme.colors.lightwarning
-      : props.theme.colors.white};
+      : props.theme.colors.superlightprimary};
 `;
 
 export const DescriptionWrapper = styled.p`

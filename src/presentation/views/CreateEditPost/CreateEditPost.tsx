@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import * as S from "./CreateEditPost.Styles";
 import { createPost, editPost, getPost } from "@src/persistence/post";
 import { useAuthStore } from "@src/presentation/store/authStore";
@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { MainButton } from "@src/presentation/components/Buttons/MainButton";
+import { ConfirmationModal } from "@src/presentation/components/ConfirmationModal/ConfirmationModal";
 import { notifyError, notifySuccess } from "@src/presentation/utils";
 import { Spinner } from "@src/presentation/components/Spinner";
 import { RadioGroup } from "@src/presentation/components/RadioGroup/RadioGroup";
@@ -23,6 +24,16 @@ function CreateEditPost() {
   const navigate = useNavigate();
   const { postId, userId } = useParams();
   const [isLoadingPost, setIsLoadingPost] = useState(false);
+
+  // Track initial values for unsaved changes detection
+  const initialValuesRef = useRef({
+    title: "",
+    content: "",
+    status: "draft",
+    acceptComments: false,
+  });
+
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
 
   const enableCoverImage = false;
 
@@ -73,6 +84,13 @@ function CreateEditPost() {
       notifyError("Something went wrong while saving.");
       return;
     }
+    // Set ref values for prevent unsaved changes prompt
+    initialValuesRef.current = {
+      title,
+      content,
+      status,
+      acceptComments,
+    };
     notifySuccess("Successfully edited the post");
   };
 
@@ -138,6 +156,13 @@ function CreateEditPost() {
       setPhoto(postResult.data.coverImage);
       setStatus(postResult.data.status);
       setAcceptComments(postResult.data?.acceptComments ?? false);
+      // Save initial values for unsaved changes detection
+      initialValuesRef.current = {
+        title: postResult.data.title,
+        content: postResult.data.content,
+        status: postResult.data.status,
+        acceptComments: postResult.data?.acceptComments ?? false,
+      };
     };
 
     handleGetPost();
@@ -167,6 +192,32 @@ function CreateEditPost() {
     editor.addEventListener("paste", handlePaste);
     return () => editor.removeEventListener("paste", handlePaste);
   }, []);
+
+  // Check for unsaved changes
+  const hasUnsavedChanges =
+    title !== initialValuesRef.current.title ||
+    content !== initialValuesRef.current.content ||
+    status !== initialValuesRef.current.status ||
+    acceptComments !== initialValuesRef.current.acceptComments;
+
+  // Handler for view post button
+  const handleViewPostClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (hasUnsavedChanges) {
+      setShowConfirmModal(true);
+    } else {
+      navigate(`/posts/${userId}/view/${postId}`);
+    }
+  };
+
+  const handleConfirmNavigate = () => {
+    setShowConfirmModal(false);
+    navigate(`/posts/${userId}/view/${postId}`);
+  };
+
+  const handleCancelNavigate = () => {
+    setShowConfirmModal(false);
+  };
 
   return (
     <>
@@ -267,7 +318,7 @@ function CreateEditPost() {
               </MainButton>
               <MainButton
                 disabled={isLoadingEdit || !user || !postId}
-                onClick={() => navigate(`/posts/${userId}/view/${postId}`)}
+                onClick={handleViewPostClick}
               >
                 View post
               </MainButton>
@@ -279,6 +330,14 @@ function CreateEditPost() {
           )}
         </S.ActionsSection>
       </S.FormWrapper>
+      {showConfirmModal && (
+        <ConfirmationModal
+          title="Unsaved changes"
+          description="You have unsaved changes. Are you sure you want to leave without saving?"
+          onConfirm={handleConfirmNavigate}
+          onCancel={handleCancelNavigate}
+        />
+      )}
     </>
   );
 }

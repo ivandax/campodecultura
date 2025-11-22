@@ -1,8 +1,8 @@
+import { MainButton } from "../Buttons/MainButton";
 import { CloseIcon } from "../CloseIcon";
 import { IconButton } from "../IconButton";
 import { BodyText, H2CategoryTitle } from "../Texts";
 import {
-  ConfirmButton,
   ButtonContainer,
   CancelButton,
   DescriptionWrapper,
@@ -27,8 +27,8 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   return (
     <ModalOverlay>
       <ModalBox>
-        <TitleWrapper color="warning">
-          <H2CategoryTitle color="warning">{title}</H2CategoryTitle>
+        <TitleWrapper color="primary">
+          <H2CategoryTitle color="primary">{title}</H2CategoryTitle>
           <IconButton
             onClick={onCancel}
             icon={<CloseIcon width="20px" height="20px" />}
@@ -43,9 +43,9 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
           <CancelButton onClick={onCancel} aria-label="cancel">
             Cancel
           </CancelButton>
-          <ConfirmButton onClick={onConfirm} aria-label="confirm">
+          <MainButton onClick={onConfirm} aria-label="confirm">
             Confirm
-          </ConfirmButton>
+          </MainButton>
         </ButtonContainer>
       </ModalBox>
     </ModalOverlay>
