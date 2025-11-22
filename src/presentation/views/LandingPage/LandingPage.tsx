@@ -3,6 +3,7 @@ import { MainButton } from "@src/presentation/components/Buttons/MainButton";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@src/presentation/store/authStore";
 import { useTheme } from "styled-components";
+import { LatestPostsTable } from "@src/presentation/components/LatestPostsTable/LatestPostsTable";
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -66,6 +67,11 @@ function LandingPage() {
           <p>Comment, discuss, and build a community of creative minds.</p>
         </S.FeatureCard>
       </S.Features>
+
+      <S.IntroSection>
+        <S.SectionTitle>Latest Posts</S.SectionTitle>
+        <LatestPostsTable />
+      </S.IntroSection>
     </S.Wrapper>
   );
 }

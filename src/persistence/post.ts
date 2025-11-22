@@ -10,6 +10,7 @@ import {
   setDoc,
   where,
   orderBy,
+  limit,
 } from "firebase/firestore";
 import { tryCatch } from "./tryCatch";
 import { Result } from "@src/domain/Result";
@@ -60,10 +61,10 @@ export async function getPosts(isAdmin: boolean): Promise<Result<Post[]>> {
     const q = isAdmin
       ? query(collectionRef, orderBy("createdOn", "asc"))
       : query(
-          collectionRef,
-          where("status", "==", "published"),
-          orderBy("createdOn", "asc")
-        );
+        collectionRef,
+        where("status", "==", "published"),
+        orderBy("createdOn", "asc")
+      );
     const documents = await getDocs(q);
     if (documents.size > 0) {
       const posts = await Promise.all(
@@ -117,16 +118,51 @@ export async function getPostsForUser(
     const collectionRef = collection(db, "posts");
     const q = isOwner
       ? query(
-          collectionRef,
-          where("authorRef", "==", doc(db, "users", userId)),
-          orderBy("createdOn", "asc")
-        )
+        collectionRef,
+        where("authorRef", "==", doc(db, "users", userId)),
+        orderBy("createdOn", "asc")
+      )
       : query(
-          collectionRef,
-          where("authorRef", "==", doc(db, "users", userId)),
-          where("status", "==", "published"),
-          orderBy("createdOn", "asc")
-        );
+        collectionRef,
+        where("authorRef", "==", doc(db, "users", userId)),
+        where("status", "==", "published"),
+        orderBy("createdOn", "asc")
+      );
+    const documents = await getDocs(q);
+    if (documents.size > 0) {
+      const posts = await Promise.all(
+        documents.docs.map(async (doc) => {
+          const post = parseDoc<PostRetrieveData>(doc);
+
+          const userRef = post.authorRef;
+          const userDoc = await getDoc(userRef);
+          if (userDoc.exists()) {
+            const parsedUser = parseDoc<AppUser>(userDoc);
+            return { ...post, author: parsedUser };
+          }
+          return { ...post, author: null };
+        })
+      );
+      return posts;
+    } else {
+      return [];
+    }
+  };
+  return tryCatch(callback);
+}
+
+export async function getLatestPosts(
+  limitCount: number
+): Promise<Result<Post[]>> {
+  const db = getFirestore();
+  const callback = async (): Promise<Post[]> => {
+    const collectionRef = collection(db, "posts");
+    const q = query(
+      collectionRef,
+      where("status", "==", "published"),
+      orderBy("createdOn", "desc"),
+      limit(limitCount)
+    );
     const documents = await getDocs(q);
     if (documents.size > 0) {
       const posts = await Promise.all(

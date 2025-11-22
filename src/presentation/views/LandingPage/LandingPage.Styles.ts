@@ -29,6 +29,10 @@ export const Subtitle = styled.h4`
   color: ${(props) => props.theme.colors.gray};
 `;
 
+export const SectionTitle = styled.h4`
+  font-size: 18px;
+`;
+
 export const Description = styled.p`
   line-height: 1.6;
   color: ${(props) => props.theme.colors.text};
