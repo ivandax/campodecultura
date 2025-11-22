@@ -11,12 +11,35 @@ import {
   where,
   orderBy,
   limit,
+  Query,
 } from "firebase/firestore";
 import { tryCatch } from "./tryCatch";
 import { Result } from "@src/domain/Result";
 import { parseDoc } from "./utils";
 import { CreatePostData, Post, PostRetrieveData } from "@src/domain/Post";
 import { AppUser } from "@src/domain/AppUser";
+
+async function fetchAndEnrichPosts(q: Query): Promise<Post[]> {
+  const documents = await getDocs(q);
+  if (documents.size > 0) {
+    const posts = await Promise.all(
+      documents.docs.map(async (doc) => {
+        const post = parseDoc<PostRetrieveData>(doc);
+
+        const userRef = post.authorRef;
+        const userDoc = await getDoc(userRef);
+        if (userDoc.exists()) {
+          const parsedUser = parseDoc<AppUser>(userDoc);
+          return { ...post, author: parsedUser };
+        }
+        return { ...post, author: null };
+      })
+    );
+    return posts;
+  } else {
+    return [];
+  }
+}
 
 export async function createPost(
   postData: CreatePostData
@@ -65,25 +88,7 @@ export async function getPosts(isAdmin: boolean): Promise<Result<Post[]>> {
         where("status", "==", "published"),
         orderBy("createdOn", "asc")
       );
-    const documents = await getDocs(q);
-    if (documents.size > 0) {
-      const posts = await Promise.all(
-        documents.docs.map(async (doc) => {
-          const post = parseDoc<PostRetrieveData>(doc);
-
-          const userRef = post.authorRef;
-          const userDoc = await getDoc(userRef);
-          if (userDoc.exists()) {
-            const parsedUser = parseDoc<AppUser>(userDoc);
-            return { ...post, author: parsedUser };
-          }
-          return { ...post, author: null };
-        })
-      );
-      return posts;
-    } else {
-      return [];
-    }
+    return await fetchAndEnrichPosts(q);
   };
   return tryCatch(callback);
 }
@@ -128,25 +133,7 @@ export async function getPostsForUser(
         where("status", "==", "published"),
         orderBy("createdOn", "asc")
       );
-    const documents = await getDocs(q);
-    if (documents.size > 0) {
-      const posts = await Promise.all(
-        documents.docs.map(async (doc) => {
-          const post = parseDoc<PostRetrieveData>(doc);
-
-          const userRef = post.authorRef;
-          const userDoc = await getDoc(userRef);
-          if (userDoc.exists()) {
-            const parsedUser = parseDoc<AppUser>(userDoc);
-            return { ...post, author: parsedUser };
-          }
-          return { ...post, author: null };
-        })
-      );
-      return posts;
-    } else {
-      return [];
-    }
+    return await fetchAndEnrichPosts(q);
   };
   return tryCatch(callback);
 }
@@ -163,25 +150,7 @@ export async function getLatestPosts(
       orderBy("createdOn", "desc"),
       limit(limitCount)
     );
-    const documents = await getDocs(q);
-    if (documents.size > 0) {
-      const posts = await Promise.all(
-        documents.docs.map(async (doc) => {
-          const post = parseDoc<PostRetrieveData>(doc);
-
-          const userRef = post.authorRef;
-          const userDoc = await getDoc(userRef);
-          if (userDoc.exists()) {
-            const parsedUser = parseDoc<AppUser>(userDoc);
-            return { ...post, author: parsedUser };
-          }
-          return { ...post, author: null };
-        })
-      );
-      return posts;
-    } else {
-      return [];
-    }
+    return await fetchAndEnrichPosts(q);
   };
   return tryCatch(callback);
 }
