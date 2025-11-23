@@ -64,6 +64,17 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
           >
             My profile
           </SidebarItem>
+          {
+            userTask.data.role === 'DEV' && (
+              <SidebarItem
+                onClick={() => handleNavigate('/all-users')}
+                $active={location.pathname === '/all-users'}
+                $displayOn={displayOn}
+              >
+                All users
+              </SidebarItem>
+            )
+          }
         </>
       )}
 

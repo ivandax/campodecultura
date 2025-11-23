@@ -1,4 +1,11 @@
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  getDocs,
+} from 'firebase/firestore';
 
 import { tryCatch } from './tryCatch';
 import { parseDoc } from './utils';
@@ -45,4 +52,14 @@ async function getUser(id: string): Promise<Result<AppUser | null>> {
   return tryCatch(callback);
 }
 
-export { getUser, createUser, updateUser };
+async function getAllUsers(): Promise<Result<AppUser[]>> {
+  const db = getFirestore();
+  const callback = async (): Promise<AppUser[]> => {
+    const usersRef = collection(db, 'users');
+    const querySnapshot = await getDocs(usersRef);
+    return querySnapshot.docs.map((doc) => parseDoc<AppUser>(doc));
+  };
+  return tryCatch(callback);
+}
+
+export { getUser, createUser, updateUser, getAllUsers };

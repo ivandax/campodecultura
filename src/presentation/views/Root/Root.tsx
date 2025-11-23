@@ -11,6 +11,7 @@ import { CreateEditPost } from '@src/presentation/views/CreateEditPost';
 import { ViewPost } from '@src/presentation/views/ViewPost';
 import { MyProfile } from '@src/presentation/views/MyProfile';
 import { LandingPage } from '@src/presentation/views/LandingPage';
+import { AllUsers } from '@src/presentation/views/AllUsers/AllUsers';
 import { AnalyticsTracker } from '@src/presentation/components/AnalyticsTracker';
 import { RecoverPassword } from '@src/presentation/views/RecoverPassword';
 import { VerifyEmail } from '@src/presentation/views/VerifyEmail';
@@ -45,6 +46,7 @@ const Root: React.FC<RootProps> = ({ analytics }: RootProps) => {
             />
             <Route path="/posts/:userId/view/:postId" element={<ViewPost />} />
             <Route path="/my-profile" element={<MyProfile />} />
+            <Route path="/all-users" element={<AllUsers />} />
             <Route path="/" element={<Navigate to="/home" replace />} />
           </Routes>
         </MainContent>
