@@ -8,6 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { theme } from '@src/presentation/styles/theme';
 import { Root } from '@src/presentation/views/Root/Root';
 import { useAuthStore } from '@src/presentation/store/authStore';
+import { useLanguageStore } from './presentation/store/languageStore';
+import i18n from './i18n';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyBuHfmEg5j-eTEEM3sgHTDFMmBxAhJecu8',
@@ -35,6 +37,7 @@ const analytics = getAnalytics(app);
 
 function App() {
   const initializeAuth = useAuthStore((state) => state.initializeAuth);
+  const selectedLanguage = useLanguageStore((state) => state.selectedLanguage);
 
   useEffect(() => {
     const cancelObserver = initializeAuth();
@@ -43,6 +46,12 @@ function App() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (selectedLanguage) {
+      i18n.changeLanguage(selectedLanguage);
+    }
+  }, [selectedLanguage]);
 
   return (
     <ThemeProvider theme={theme}>

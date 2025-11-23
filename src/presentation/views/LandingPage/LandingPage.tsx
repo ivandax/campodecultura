@@ -4,45 +4,44 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@src/presentation/store/authStore';
 import { useTheme } from 'styled-components';
 import { LatestPostsTable } from '@src/presentation/components/LatestPostsTable/LatestPostsTable';
+import { useTranslation } from 'react-i18next';
 
 function LandingPage() {
   const navigate = useNavigate();
   const { userTask } = useAuthStore();
   const user = userTask.status === 'successful' ? userTask.data : null;
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <S.Wrapper>
       <S.IntroSection>
         <S.Title>
-          Welcome to <span>CultureTxt</span>
+          {t('landingPage.welcome')} <span>CultureTxt</span>
         </S.Title>
-        <S.Subtitle>
-          A space to share your words, culture, and imagination.
-        </S.Subtitle>
-        <S.Description>
-          Here, every voice matters. Create thoughtful posts, essays, and
-          reflections with our intuitive writing tools. Whether you’re a writer,
-          a thinker, or simply someone with a story to tell — this is your space
-          to express it.
-        </S.Description>
+        <S.Subtitle>{t('landingPage.subtitle')}</S.Subtitle>
+        <S.Description>{t('landingPage.description')}</S.Description>
 
         <S.Description>
-          Save your ideas as{' '}
-          <S.ColorSpan $color={theme.colors.blue}>drafts</S.ColorSpan> to keep
-          them personal, or{' '}
-          <S.ColorSpan $color={theme.colors.primary}>publish</S.ColorSpan> them
-          when you're ready to share your stories with the world.
+          {t('landingPage.save-ideas')}{' '}
+          <S.ColorSpan $color={theme.colors.blue}>
+            {t('landingPage.drafts')}
+          </S.ColorSpan>{' '}
+          {t('landingPage.keep-personal')}{' '}
+          <S.ColorSpan $color={theme.colors.primary}>
+            {t('landingPage.publish')}
+          </S.ColorSpan>{' '}
+          {t('landingPage.share-stories')}
         </S.Description>
 
         <S.ActionBlock>
           {user ? (
             <MainButton onClick={() => navigate(`/posts/${user?.id}/create`)}>
-              Start writing
+              {t('landingPage.start-writing')}
             </MainButton>
           ) : (
             <MainButton onClick={() => navigate('/login')}>
-              Join and start writing
+              {t('landingPage.join-and-start-writing')}
             </MainButton>
           )}
         </S.ActionBlock>
@@ -50,26 +49,23 @@ function LandingPage() {
 
       <S.Features>
         <S.FeatureCard>
-          <h4>✍️ Create</h4>
-          <p>Write and format your texts easily with our modern editor.</p>
+          <h4>{t('landingPage.create-title')}</h4>
+          <p>{t('landingPage.create-desc')}</p>
         </S.FeatureCard>
 
         <S.FeatureCard>
-          <h4>🌍 Discover</h4>
-          <p>
-            Explore posts from people sharing culture, stories, and insights
-            from around the world.
-          </p>
+          <h4>{t('landingPage.discover-title')}</h4>
+          <p>{t('landingPage.discover-desc')}</p>
         </S.FeatureCard>
 
         <S.FeatureCard>
-          <h4>💬 Connect</h4>
-          <p>Comment, discuss, and build a community of creative minds.</p>
+          <h4>{t('landingPage.connect-title')}</h4>
+          <p>{t('landingPage.connect-desc')}</p>
         </S.FeatureCard>
       </S.Features>
 
       <S.IntroSection>
-        <S.SectionTitle>Latest Posts</S.SectionTitle>
+        <S.SectionTitle>{t('landingPage.latest-posts')}</S.SectionTitle>
         <LatestPostsTable />
       </S.IntroSection>
     </S.Wrapper>

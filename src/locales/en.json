@@ -1,0 +1,21 @@
+{
+  "landingPage": {
+    "welcome": "Welcome to",
+    "subtitle": "A space to share your words, culture, and imagination.",
+    "description": "Here, every voice matters. Create thoughtful posts, essays, and reflections with our intuitive writing tools. Whether you’re a writer, a thinker, or simply someone with a story to tell — this is your space to express it.",
+    "save-ideas": "Save your ideas as",
+    "drafts": "drafts",
+    "keep-personal": "to keep them personal, or",
+    "publish": "publish",
+    "share-stories": "them when you're ready to share your stories with the world.",
+    "start-writing": "Start writing",
+    "join-and-start-writing": "Join and start writing",
+    "create-title": "✍️ Create",
+    "create-desc": "Write and format your texts easily with our modern editor.",
+    "discover-title": "🌍 Discover",
+    "discover-desc": "Explore posts from people sharing culture, stories, and insights from around the world.",
+    "connect-title": "💬 Connect",
+    "connect-desc": "Comment, discuss, and build a community of creative minds.",
+    "latest-posts": "Latest Posts"
+  }
+}
