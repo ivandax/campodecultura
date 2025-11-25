@@ -17,5 +17,22 @@
     "connect-title": "💬 Conectar",
     "connect-desc": "Comenta, debate y construye una comunidad de mentes creativas.",
     "latest-posts": "Últimas Publicaciones"
+  },
+  "myProfile": {
+    "title": "Mi Perfil",
+    "subtitle": "Gestiona tu cuenta",
+    "email": "Correo electrónico:",
+    "displayNamePlaceholder": "Nombre para mostrar",
+    "loading": "Cargando datos de usuario...",
+    "logoutWarning": "Cerrar sesión terminará tu sesión actual.",
+    "logoutButton": "Cerrar sesión",
+    "errorGettingUser": "Error al obtener usuario",
+    "errorUpdatingName": "Error al actualizar nombre de usuario",
+    "successUpdatingName": "Nombre de usuario actualizado exitosamente",
+    "languages": {
+      "en": "Inglés",
+      "es": "Español",
+      "fr": "Francés"
+    }
   }
 }

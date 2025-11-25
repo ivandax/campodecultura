@@ -17,5 +17,22 @@
     "connect-title": "💬 Connect",
     "connect-desc": "Comment, discuss, and build a community of creative minds.",
     "latest-posts": "Latest Posts"
+  },
+  "myProfile": {
+    "title": "My Profile",
+    "subtitle": "Manage your account",
+    "email": "Email:",
+    "displayNamePlaceholder": "Display name",
+    "loading": "Loading user data...",
+    "logoutWarning": "Logging out will end your current session.",
+    "logoutButton": "Log out",
+    "errorGettingUser": "Error getting user",
+    "errorUpdatingName": "Error updating user name",
+    "successUpdatingName": "User name updated successfully",
+    "languages": {
+      "en": "English",
+      "es": "Spanish",
+      "fr": "French"
+    }
   }
 }

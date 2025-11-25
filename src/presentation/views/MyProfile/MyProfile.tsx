@@ -7,9 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import { AppUser } from '@src/domain/AppUser';
 import { useLanguageStore } from '@src/presentation/store/languageStore';
 import { Dropdown } from '@src/presentation/components/Dropdown';
+import { useTranslation } from 'react-i18next';
 
 // MyProfile.tsx
 function MyProfile() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { userTask, logout } = useAuthStore();
   const user = userTask.status === 'successful' ? userTask.data : null;
@@ -23,11 +25,12 @@ function MyProfile() {
   const handleGetProfile = useCallback(async (id: string) => {
     const result = await getUser(id);
     if (result.error || result.data === null) {
-      notifyError('Error getting user');
+      notifyError(t('myProfile.errorGettingUser'));
       return;
     }
     setUserProfile(result.data);
     setDisplayName(result.data.name);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -44,17 +47,18 @@ function MyProfile() {
     if (userProfile) {
       const result = await updateUser({ name: displayName }, userProfile.id);
       if (result.error) {
-        notifyError('Error updating user name');
+        notifyError(t('myProfile.errorUpdatingName'));
       } else {
-        notifySuccess('User name updated successfully');
+        notifySuccess(t('myProfile.successUpdatingName'));
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayName, userProfile]);
 
   const languageOptions = [
-    { value: 'en', label: 'English' },
-    { value: 'es', label: 'Spanish' },
-    { value: 'fr', label: 'French' },
+    { value: 'en', label: t('myProfile.languages.en') },
+    { value: 'es', label: t('myProfile.languages.es') },
+    { value: 'fr', label: t('myProfile.languages.fr') },
   ];
 
   const handleUpdateLanguage = (value: string | number) => {
@@ -66,14 +70,14 @@ function MyProfile() {
   return (
     <S.Wrapper>
       <S.HeaderSection>
-        <S.Title>My Profile</S.Title>
-        <S.Subtitle>Manage your account</S.Subtitle>
+        <S.Title>{t('myProfile.title')}</S.Title>
+        <S.Subtitle>{t('myProfile.subtitle')}</S.Subtitle>
       </S.HeaderSection>
 
       {user ? (
         <S.ProfileInfo>
           <S.InfoLine>
-            <strong>Email:</strong> {user.email}
+            <strong>{t('myProfile.email')}</strong> {user.email}
           </S.InfoLine>
           {userProfile && (
             <>
@@ -81,7 +85,7 @@ function MyProfile() {
                 type="text"
                 value={displayName}
                 onChange={(e) => setDisplayName(e.target.value)}
-                placeholder="Display name"
+                placeholder={t('myProfile.displayNamePlaceholder')}
                 onBlur={handleNameBlur}
               />
               <Dropdown
@@ -93,14 +97,16 @@ function MyProfile() {
           )}
         </S.ProfileInfo>
       ) : (
-        <p>Loading user data...</p>
+        <p>{t('myProfile.loading')}</p>
       )}
 
       <S.Divider />
 
       <S.LogoutSection>
-        <S.LogoutText>Logging out will end your current session.</S.LogoutText>
-        <S.LogoutButton onClick={handleLogout}>Log out</S.LogoutButton>
+        <S.LogoutText>{t('myProfile.logoutWarning')}</S.LogoutText>
+        <S.LogoutButton onClick={handleLogout}>
+          {t('myProfile.logoutButton')}
+        </S.LogoutButton>
       </S.LogoutSection>
     </S.Wrapper>
   );
