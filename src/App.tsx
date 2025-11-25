@@ -48,9 +48,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (selectedLanguage) {
-      i18n.changeLanguage(selectedLanguage);
-    }
+    i18n.changeLanguage(selectedLanguage);
   }, [selectedLanguage]);
 
   return (
