@@ -12,7 +12,7 @@ export const theme = {
     lightwarning: '#F2D7D7',
     blue: '#2F80ED',
     reallyLightBlue: '#EAF2FF',
-    text: '#4F4F4F',
+    text: '#black',
   },
   breakpoints: {
     mobile: '768px',

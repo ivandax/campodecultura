@@ -1,0 +1,21 @@
+{
+  "landingPage": {
+    "welcome": "Bienvenido a",
+    "subtitle": "Un espacio para compartir tus palabras, cultura e imaginación.",
+    "description": "Aquí, cada voz importa. Crea publicaciones reflexivas, ensayos y reflexiones con nuestras herramientas de escritura intuitivas. Ya seas escritor, pensador, o simplemente alguien con una historia que contar — este es tu espacio para expresarla.",
+    "save-ideas": "Guarda tus ideas como",
+    "drafts": "borradores",
+    "keep-personal": "para mantenerlos personales, o",
+    "publish": "publícalos",
+    "share-stories": "cuando estés listo para compartir tus historias con el mundo.",
+    "start-writing": "Empezar a escribir",
+    "join-and-start-writing": "Únete y empieza a escribir",
+    "create-title": "✍️ Crear",
+    "create-desc": "Escribe y da formato a tus textos fácilmente con nuestro editor moderno.",
+    "discover-title": "🌍 Descubrir",
+    "discover-desc": "Explora publicaciones de personas compartiendo cultura, historias y perspectivas de todo el mundo.",
+    "connect-title": "💬 Conectar",
+    "connect-desc": "Comenta, debate y construye una comunidad de mentes creativas.",
+    "latest-posts": "Últimas Publicaciones"
+  }
+}

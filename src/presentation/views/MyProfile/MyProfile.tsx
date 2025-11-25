@@ -5,6 +5,8 @@ import { notifyError, notifySuccess } from '@src/presentation/utils';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppUser } from '@src/domain/AppUser';
+import { useLanguageStore } from '@src/presentation/store/languageStore';
+import { Dropdown } from '@src/presentation/components/Dropdown';
 
 // MyProfile.tsx
 function MyProfile() {
@@ -13,6 +15,10 @@ function MyProfile() {
   const user = userTask.status === 'successful' ? userTask.data : null;
   const [userProfile, setUserProfile] = useState<null | AppUser>(null);
   const [displayName, setDisplayName] = useState('');
+  const selectedLanguage = useLanguageStore((state) => state.selectedLanguage);
+  const updateSelectedLanguage = useLanguageStore(
+    (state) => state.updateSelectedLanguage
+  );
 
   const handleGetProfile = useCallback(async (id: string) => {
     const result = await getUser(id);
@@ -45,6 +51,18 @@ function MyProfile() {
     }
   }, [displayName, userProfile]);
 
+  const languageOptions = [
+    { value: 'en', label: 'English' },
+    { value: 'es', label: 'Spanish' },
+    { value: 'fr', label: 'French' },
+  ];
+
+  const handleUpdateLanguage = (value: string | number) => {
+    if (value === 'es' || value === 'en' || value === 'fr') {
+      updateSelectedLanguage(value);
+    }
+  };
+
   return (
     <S.Wrapper>
       <S.HeaderSection>
@@ -58,13 +76,20 @@ function MyProfile() {
             <strong>Email:</strong> {user.email}
           </S.InfoLine>
           {userProfile && (
-            <S.Input
-              type="text"
-              value={displayName}
-              onChange={(e) => setDisplayName(e.target.value)}
-              placeholder="Display name"
-              onBlur={handleNameBlur}
-            />
+            <>
+              <S.Input
+                type="text"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                placeholder="Display name"
+                onBlur={handleNameBlur}
+              />
+              <Dropdown
+                options={languageOptions}
+                onChange={handleUpdateLanguage}
+                selectedValue={selectedLanguage}
+              />
+            </>
           )}
         </S.ProfileInfo>
       ) : (

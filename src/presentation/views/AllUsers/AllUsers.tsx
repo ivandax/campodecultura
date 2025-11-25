@@ -65,9 +65,6 @@ const AllUsers: React.FC = () => {
             <TableHeaderCell $width={20}>
               <BodyText color={'gray'}>Created On</BodyText>
             </TableHeaderCell>
-            <TableHeaderCell $width={10}>
-              <BodyText color={'gray'}>Verified</BodyText>
-            </TableHeaderCell>
           </tr>
         </thead>
         <tbody>
@@ -102,9 +99,6 @@ const AllUsers: React.FC = () => {
                   <BodyText>
                     {timestampToHumanReadbleDate(user.createdOn, 'en')}
                   </BodyText>
-                </TableCell>
-                <TableCell>
-                  <BodyText>{user.emailVerified ? 'Yes' : 'No'}</BodyText>
                 </TableCell>
               </TableRow>
             ))}
