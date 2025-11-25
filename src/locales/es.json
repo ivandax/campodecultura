@@ -132,5 +132,15 @@
     "noName": "Sin nombre",
     "accessDenied": "Acceso denegado",
     "errorLoading": "Error al cargar usuarios"
+  },
+  "sidebar": {
+    "title": "Culturetxt.com",
+    "home": "Inicio",
+    "myPosts": "Mis publicaciones",
+    "createPost": "Crear publicación",
+    "myProfile": "Mi perfil",
+    "allUsers": "Todos los usuarios",
+    "login": "Iniciar sesión",
+    "createAccount": "Crear cuenta"
   }
 }

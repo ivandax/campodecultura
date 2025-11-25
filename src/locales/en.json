@@ -132,5 +132,15 @@
     "noName": "No name set",
     "accessDenied": "Access denied",
     "errorLoading": "Error loading users"
+  },
+  "sidebar": {
+    "title": "Culturetxt.com",
+    "home": "Home",
+    "myPosts": "My posts",
+    "createPost": "Create post",
+    "myProfile": "My profile",
+    "allUsers": "All users",
+    "login": "Log in",
+    "createAccount": "Create account"
   }
 }

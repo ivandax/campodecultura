@@ -1,5 +1,6 @@
 import { SidebarList, SidebarItem } from './SidebarItems.Styles';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 import { useAuthStore } from '@src/presentation/store/authStore';
 
@@ -9,6 +10,7 @@ interface SidebarItemsProps {
 }
 
 export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -39,7 +41,7 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
         $active={location.pathname === '/home'}
         $displayOn={displayOn}
       >
-        Home
+        {t('sidebar.home')}
       </SidebarItem>
       {userTask.status === 'successful' && userTask.data !== null && (
         <>
@@ -48,33 +50,31 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
             $active={location.pathname === getMyPostsUrl(userTask.data?.id)}
             $displayOn={displayOn}
           >
-            My posts
+            {t('sidebar.myPosts')}
           </SidebarItem>
           <SidebarItem
             onClick={() => handleNavigate(getCreateUrl(userTask.data?.id))}
             $active={location.pathname === getCreateUrl(userTask.data?.id)}
             $displayOn={displayOn}
           >
-            Create post
+            {t('sidebar.createPost')}
           </SidebarItem>
           <SidebarItem
             onClick={() => handleNavigate(getMyProfileUrl())}
             $active={location.pathname === getMyProfileUrl()}
             $displayOn={displayOn}
           >
-            My profile
+            {t('sidebar.myProfile')}
           </SidebarItem>
-          {
-            userTask.data.role === 'DEV' && (
-              <SidebarItem
-                onClick={() => handleNavigate('/all-users')}
-                $active={location.pathname === '/all-users'}
-                $displayOn={displayOn}
-              >
-                All users
-              </SidebarItem>
-            )
-          }
+          {userTask.data.role === 'DEV' && (
+            <SidebarItem
+              onClick={() => handleNavigate('/all-users')}
+              $active={location.pathname === '/all-users'}
+              $displayOn={displayOn}
+            >
+              {t('sidebar.allUsers')}
+            </SidebarItem>
+          )}
         </>
       )}
 
@@ -85,14 +85,14 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
             $active={location.pathname === '/login'}
             $displayOn={displayOn}
           >
-            Log in
+            {t('sidebar.login')}
           </SidebarItem>
           <SidebarItem
             onClick={() => handleNavigate('/signup')}
             $active={location.pathname === '/signup'}
             $displayOn={displayOn}
           >
-            Create account
+            {t('sidebar.createAccount')}
           </SidebarItem>
         </>
       )}
