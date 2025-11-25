@@ -8,4 +8,7 @@ export type CreateAppUserData = {
   name: string;
   createdOn: number;
   role: 'ADMIN' | 'STANDARD' | 'DEV';
+  preferences: {
+    language: 'en' | 'es' | 'fr' | null;
+  };
 };

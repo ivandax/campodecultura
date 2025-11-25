@@ -5,7 +5,6 @@ import { useAuthStore } from '@src/presentation/store/authStore';
 import { useTheme } from 'styled-components';
 import { LatestPostsTable } from '@src/presentation/components/LatestPostsTable/LatestPostsTable';
 import { useTranslation } from 'react-i18next';
-import { useLanguageStore } from '@src/presentation/store/languageStore';
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -13,8 +12,6 @@ function LandingPage() {
   const user = userTask.status === 'successful' ? userTask.data : null;
   const theme = useTheme();
   const { t } = useTranslation();
-  const selectedLanguage = useLanguageStore((state) => state.selectedLanguage);
-  console.log(selectedLanguage);
 
   return (
     <S.Wrapper>

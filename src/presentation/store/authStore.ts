@@ -46,6 +46,9 @@ export const useAuthStore = create<AuthState>((set) => ({
             name: '',
             createdOn: +new Date(),
             role: 'ADMIN',
+            preferences: {
+              language: null,
+            },
           };
           const createResult = await createUser(
             newProfile,
