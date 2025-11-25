@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import * as S from './SetNewPassword.Styles';
 import { notifyError, notifySuccess } from '@src/presentation/utils';
@@ -9,6 +10,7 @@ import {
 import { MainButton } from '@src/presentation/components/Buttons/MainButton';
 
 function SetNewPassword() {
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const oobCode = searchParams.get('oobCode');
 
@@ -20,7 +22,7 @@ function SetNewPassword() {
   useEffect(() => {
     const verify = async () => {
       if (!oobCode) {
-        notifyError('Invalid password reset link.');
+        notifyError(t('setNewPassword.errorInvalidLink'));
         navigate('/');
         return;
       }
@@ -28,7 +30,7 @@ function SetNewPassword() {
       try {
         await verifyPasswordCode(oobCode);
       } catch {
-        notifyError('Password reset link is invalid or expired.');
+        notifyError(t('setNewPassword.errorExpiredLink'));
         navigate('/');
       }
 
@@ -37,7 +39,7 @@ function SetNewPassword() {
 
     verify();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [oobCode]);
+  }, [oobCode, t]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,7 +47,7 @@ function SetNewPassword() {
     if (!oobCode) return;
 
     if (newPassword.length < 6) {
-      notifyError('Password must be at least 6 characters.');
+      notifyError(t('setNewPassword.errorPasswordLength'));
       return;
     }
 
@@ -56,31 +58,33 @@ function SetNewPassword() {
     setIsSubmitting(false);
 
     if (result.error) {
-      notifyError('Could not reset password.');
+      notifyError(t('setNewPassword.errorReset'));
       return;
     }
 
-    notifySuccess('Password updated successfully! You can now log in.');
+    notifySuccess(t('setNewPassword.successReset'));
   };
 
   if (isVerifying) {
-    return <S.Wrapper>Verifying reset link…</S.Wrapper>;
+    return <S.Wrapper>{t('setNewPassword.verifying')}</S.Wrapper>;
   }
 
   return (
     <S.Wrapper onSubmit={handleSubmit}>
-      <h5>Create a new password</h5>
+      <h5>{t('setNewPassword.title')}</h5>
 
       <input
         type="password"
         value={newPassword}
         onChange={(e) => setNewPassword(e.target.value)}
-        placeholder="New password"
+        placeholder={t('setNewPassword.passwordPlaceholder')}
         required
       />
 
       <MainButton type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Updating...' : 'Set Password'}
+        {isSubmitting
+          ? t('setNewPassword.updating')
+          : t('setNewPassword.setPasswordButton')}
       </MainButton>
     </S.Wrapper>
   );

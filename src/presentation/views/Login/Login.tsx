@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as S from './Login.Styles';
 import { useAuthStore } from '@src/presentation/store/authStore';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,6 +8,7 @@ import { MainButton } from '@src/presentation/components/Buttons/MainButton';
 import { GoogleSignInButton } from '@src/presentation/components/Buttons/GoogleSignInButton';
 
 function Login() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { login, userTask, loginWithGoogle } = useAuthStore();
@@ -18,7 +20,7 @@ function Login() {
     if (user) {
       navigate('/home');
     } else {
-      notifyError('Could not log in. Please check your credentials.');
+      notifyError(t('login.errorLogin'));
     }
   };
 
@@ -28,25 +30,25 @@ function Login() {
     if (user) {
       navigate('/home');
     } else {
-      notifyError('Could not log in with Google.');
+      notifyError(t('login.errorGoogle'));
     }
   };
 
   return (
     <S.LoginFormWrapper>
-      <h5>Log in</h5>
+      <h5>{t('login.title')}</h5>
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
+        placeholder={t('login.emailPlaceholder')}
         required
       />
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
+        placeholder={t('login.passwordPlaceholder')}
         required
       />
       <MainButton
@@ -54,12 +56,12 @@ function Login() {
         onClick={handleLogin}
       >
         {userTask.status === 'in-progress'
-          ? 'Logging in...'
-          : 'Log in with email'}
+          ? t('login.loggingIn')
+          : t('login.loginButton')}
       </MainButton>
-      <Link to="/recover-password">Forgot password?</Link>
+      <Link to="/recover-password">{t('login.forgotPassword')}</Link>
       <S.SocialActionsWrapper>
-        <span>Other sign-in options</span>
+        <span>{t('login.otherOptions')}</span>
         <GoogleSignInButton onClick={handleGoogleLogin} />
       </S.SocialActionsWrapper>
     </S.LoginFormWrapper>

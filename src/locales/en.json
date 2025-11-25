@@ -34,5 +34,44 @@
       "es": "Spanish",
       "fr": "French"
     }
+  },
+  "login": {
+    "title": "Log in",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "loggingIn": "Logging in...",
+    "loginButton": "Log in with email",
+    "forgotPassword": "Forgot password?",
+    "otherOptions": "Other sign-in options",
+    "errorLogin": "Could not log in. Please check your credentials.",
+    "errorGoogle": "Could not log in with Google."
+  },
+  "signup": {
+    "title": "Create account",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "creating": "Creating...",
+    "createAccountButton": "Create account",
+    "successCreation": "Account created. Please check your email to verify."
+  },
+  "setNewPassword": {
+    "title": "Create a new password",
+    "passwordPlaceholder": "New password",
+    "verifying": "Verifying reset link…",
+    "updating": "Updating...",
+    "setPasswordButton": "Set Password",
+    "errorInvalidLink": "Invalid password reset link.",
+    "errorExpiredLink": "Password reset link is invalid or expired.",
+    "errorPasswordLength": "Password must be at least 6 characters.",
+    "errorReset": "Could not reset password.",
+    "successReset": "Password updated successfully! You can now log in."
+  },
+  "recoverPassword": {
+    "title": "Request reset of password",
+    "emailPlaceholder": "Email",
+    "sending": "Sending...",
+    "requestButton": "Request",
+    "errorRequest": "Could not request a reset of password",
+    "successRequest": "Request to reset password sent! Please check your inbox"
   }
 }
