@@ -1,4 +1,5 @@
 import { ViewTitle } from '@src/presentation/components/ViewTitle';
+import { useTranslation } from 'react-i18next';
 import { Outlet, useParams } from 'react-router-dom';
 import * as S from './MyPosts.Styles';
 import { PostsTable } from '@src/presentation/components/PostsTable';
@@ -9,6 +10,7 @@ import { useCopyUrl } from '@src/presentation/hooks/use-copy-url';
 import { MainButton } from '@src/presentation/components/Buttons/MainButton';
 
 function MyPosts() {
+  const { t } = useTranslation();
   const { userTask } = useAuthStore((state) => state);
   const { userId } = useParams();
 
@@ -17,7 +19,7 @@ function MyPosts() {
   if (!userId) {
     return (
       <S.Main>
-        <ViewTitle>User ID is missing</ViewTitle>
+        <ViewTitle>{t('myPosts.userIdMissing')}</ViewTitle>
       </S.Main>
     );
   }
@@ -26,8 +28,10 @@ function MyPosts() {
     <S.Wrapper>
       <S.Main>
         <S.Top>
-          <ViewTitle>Posts</ViewTitle>
-          <MainButton onClick={handleCopyUrl}>Copy URL</MainButton>
+          <ViewTitle>{t('myPosts.title')}</ViewTitle>
+          <MainButton onClick={handleCopyUrl}>
+            {t('myPosts.copyUrl')}
+          </MainButton>
         </S.Top>
 
         {userTask.status === 'pending' || userTask.status === 'in-progress' ? (

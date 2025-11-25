@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Container,
   Table,
@@ -20,6 +21,7 @@ import { Spinner } from '@src/presentation/components/Spinner';
 import { useAuthStore } from '@src/presentation/store/authStore';
 
 const AllUsers: React.FC = () => {
+  const { t } = useTranslation();
   const appUserTask = useAuthStore((state) => state.userTask);
   const [usersTask, setUsersTask] = useState<AsyncOp<AppUser[], null>>({
     status: 'pending',
@@ -31,39 +33,39 @@ const AllUsers: React.FC = () => {
         return;
       }
       if (appUserTask.data?.role !== 'DEV') {
-        notifyError('Access denied');
+        notifyError(t('allUsers.accessDenied'));
         return;
       }
       setUsersTask({ status: 'in-progress' });
       const result = await getAllUsers();
 
       if (result.error) {
-        notifyError('Error loading users');
+        notifyError(t('allUsers.errorLoading'));
         return;
       }
       setUsersTask({ status: 'successful', data: result.data });
     };
     handleGetUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [appUserTask.status]);
+  }, [appUserTask.status, t]);
 
   return (
     <Container>
-      <ViewTitle>All Users</ViewTitle>
+      <ViewTitle>{t('allUsers.title')}</ViewTitle>
       <Table>
         <thead>
           <tr>
             <TableHeaderCell $width={25}>
-              <BodyText color={'gray'}>Name</BodyText>
+              <BodyText color={'gray'}>{t('allUsers.name')}</BodyText>
             </TableHeaderCell>
             <TableHeaderCell $width={30}>
-              <BodyText color={'gray'}>Email</BodyText>
+              <BodyText color={'gray'}>{t('allUsers.email')}</BodyText>
             </TableHeaderCell>
             <TableHeaderCell $width={15}>
-              <BodyText color={'gray'}>Role</BodyText>
+              <BodyText color={'gray'}>{t('allUsers.role')}</BodyText>
             </TableHeaderCell>
             <TableHeaderCell $width={20}>
-              <BodyText color={'gray'}>Created On</BodyText>
+              <BodyText color={'gray'}>{t('allUsers.createdOn')}</BodyText>
             </TableHeaderCell>
           </tr>
         </thead>
@@ -77,7 +79,7 @@ const AllUsers: React.FC = () => {
           )}
           {usersTask.status === 'successful' && usersTask.data.length === 0 && (
             <TableRow>
-              <TableCell colSpan={5}>No users found</TableCell>
+              <TableCell colSpan={5}>{t('allUsers.noUsers')}</TableCell>
             </TableRow>
           )}
           {usersTask.status === 'successful' &&
@@ -86,7 +88,7 @@ const AllUsers: React.FC = () => {
               <TableRow key={user.id}>
                 <TableCell>
                   <H2CategoryTitle>
-                    {user.name === '' ? 'No name set' : user.name}
+                    {user.name === '' ? t('allUsers.noName') : user.name}
                   </H2CategoryTitle>
                 </TableCell>
                 <TableCell>

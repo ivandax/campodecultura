@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import parse from 'html-react-parser';
 import * as S from './ViewPost.Styles';
 import { getPost, deletePost } from '@src/persistence/post';
@@ -13,6 +14,7 @@ import { Spinner } from '@src/presentation/components/Spinner';
 import { useCopyUrl } from '@src/presentation/hooks/use-copy-url';
 
 function ViewPost() {
+  const { t } = useTranslation();
   const [post, setPost] = useState<Post | null>(null);
   const [message, setMessage] = useState<null | string>(null);
   const navigate = useNavigate();
@@ -43,7 +45,7 @@ function ViewPost() {
       return;
     }
 
-    setMessage('Post removed');
+    setMessage(t('viewPost.postRemoved'));
     if (userId) {
       navigate(`/posts/${userId}`);
       return;
@@ -54,7 +56,7 @@ function ViewPost() {
   useEffect(() => {
     const handleGetPost = async () => {
       if (!postId) {
-        setMessage('Error getting id from params');
+        setMessage(t('viewPost.errorParams'));
         return;
       }
       const postResult = await getPost(postId);
@@ -66,7 +68,7 @@ function ViewPost() {
     };
 
     handleGetPost();
-  }, [postId]);
+  }, [postId, t]);
 
   const handleCopyUrl = useCopyUrl();
 
@@ -77,7 +79,7 @@ function ViewPost() {
           <Spinner />
         </S.LoadingWrapper>
       ) : post.status === 'draft' && !userIsOwner ? (
-        <div>This post is a draft and access is forbidden</div>
+        <div>{t('viewPost.draftForbidden')}</div>
       ) : (
         <>
           {post.coverImage && enableCoverImage ? (
@@ -104,29 +106,34 @@ function ViewPost() {
                 {post.status}
               </S.StatusChip>
             </S.Title>
-            <MainButton onClick={handleCopyUrl}>Copy URL</MainButton>
+            <MainButton onClick={handleCopyUrl}>
+              {t('viewPost.copyUrl')}
+            </MainButton>
           </S.Top>
           <S.Paper>{parse(post.content)}</S.Paper>
-          <S.GrayWrapper>{`Edited on: ${timestampToHumanReadbleDate(
+          <S.GrayWrapper>{`${t('viewPost.editedOn')} ${timestampToHumanReadbleDate(
             post.editedOn,
             'en'
           )}`}</S.GrayWrapper>
-          <S.GrayWrapper>{`Written by: ${post.author?.name ?? 'Not found'
-            }`}</S.GrayWrapper>
+          <S.GrayWrapper>{`${t('viewPost.writtenBy')} ${
+            post.author?.name ?? t('viewPost.notFound')
+          }`}</S.GrayWrapper>
           {post.acceptComments && (
             <CommentsSection postId={post.id} user={user} />
           )}
           <S.Footer>
-            <MainButton onClick={() => navigate('/home')}>Go back</MainButton>
+            <MainButton onClick={() => navigate('/home')}>
+              {t('viewPost.goBack')}
+            </MainButton>
           </S.Footer>
 
           {userId && userIsOwner && (
             <S.AdminBlock>
-              <h5>Author actions</h5>
+              <h5>{t('viewPost.authorActions')}</h5>
               <MainButton
                 onClick={() => navigate(`/posts/${userId}/edit/${postId}`)}
               >
-                Edit post
+                {t('viewPost.editPost')}
               </MainButton>
               <h5
                 style={{
@@ -135,15 +142,15 @@ function ViewPost() {
                   width: '100%',
                 }}
               >
-                Delete post
+                {t('viewPost.deletePost')}
               </h5>
               <S.VisuallyHiddenLabel htmlFor="delete-post-input">
-                Type delete to confirm
+                {t('viewPost.deleteConfirm')}
               </S.VisuallyHiddenLabel>
               <input
                 id="delete-post-input"
                 type="text"
-                placeholder="Type 'delete' to enable button"
+                placeholder={t('viewPost.deletePlaceholder')}
                 value={deleteInput}
                 onChange={(e) => setDeleteInput(e.target.value)}
                 style={{

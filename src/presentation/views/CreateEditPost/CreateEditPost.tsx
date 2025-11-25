@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import * as S from './CreateEditPost.Styles';
 import { createPost, editPost, getPost } from '@src/persistence/post';
 import { useAuthStore } from '@src/presentation/store/authStore';
@@ -13,6 +14,7 @@ import { RadioGroup } from '@src/presentation/components/RadioGroup/RadioGroup';
 import { NotificationBanner } from '@src/presentation/components/Banner/Banner';
 
 function CreateEditPost() {
+  const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [status, setStatus] = useState<'draft' | 'published'>('draft');
@@ -81,7 +83,7 @@ function CreateEditPost() {
     });
     setIsLoadingEdit(false);
     if (result.error) {
-      notifyError('Something went wrong while saving.');
+      notifyError(t('createEditPost.errorSaving'));
       return;
     }
     // Set ref values for prevent unsaved changes prompt
@@ -91,7 +93,7 @@ function CreateEditPost() {
       status,
       acceptComments,
     };
-    notifySuccess('Successfully edited the post');
+    notifySuccess(t('createEditPost.successEdit'));
   };
 
   const handleEditPostAndNavigateAway = async (e: React.FormEvent) => {
@@ -105,7 +107,7 @@ function CreateEditPost() {
 
     const maxSizeInBytes = 2 * 1024 * 1024; // 2MB
     if (file.size > maxSizeInBytes) {
-      notifyError('Image size must be less than 2MB.');
+      notifyError(t('createEditPost.errorImageSize'));
       return;
     }
 
@@ -114,7 +116,7 @@ function CreateEditPost() {
       setPhoto(reader.result as string); // Base64 string
     };
     reader.onerror = () => {
-      notifyError('Error loading the image.');
+      notifyError(t('createEditPost.errorImageLoad'));
     };
     reader.readAsDataURL(file);
   };
@@ -144,11 +146,11 @@ function CreateEditPost() {
         return;
       }
       if (postResult.data === null) {
-        notifyError('Data is null');
+        notifyError(t('createEditPost.errorDataNull'));
         return;
       }
       if (postResult.data.author?.id !== user.id) {
-        notifyError('Post does not belong to the user');
+        notifyError(t('createEditPost.errorOwner'));
         return;
       }
       setTitle(postResult.data.title);
@@ -166,7 +168,7 @@ function CreateEditPost() {
     };
 
     handleGetPost();
-  }, [postId, user, userId]);
+  }, [postId, user, userId, t]);
 
   const isEditMode = postId !== undefined;
 
@@ -178,20 +180,20 @@ function CreateEditPost() {
       const evt = e as ClipboardEvent;
 
       if (evt.clipboardData?.files?.length) {
-        notifyError('Pasting files not supported');
+        notifyError(t('createEditPost.errorPasteFiles'));
         evt.preventDefault();
       }
 
       const html = evt.clipboardData?.getData('text/html');
       if (html && html.includes('<img')) {
-        notifyError('Images not supported');
+        notifyError(t('createEditPost.errorPasteImages'));
         evt.preventDefault();
       }
     };
 
     editor.addEventListener('paste', handlePaste);
     return () => editor.removeEventListener('paste', handlePaste);
-  }, []);
+  }, [t]);
 
   // Check for unsaved changes
   const hasUnsavedChanges =
@@ -225,11 +227,15 @@ function CreateEditPost() {
       <S.FormWrapper
         onSubmit={isEditMode ? handleEditPostAndNavigateAway : handleCreatePost}
       >
-        <h5>{isEditMode ? 'Edit post' : 'Create post'}</h5>
+        <h5>
+          {isEditMode
+            ? t('createEditPost.editTitle')
+            : t('createEditPost.createTitle')}
+        </h5>
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Title"
+          placeholder={t('createEditPost.titlePlaceholder')}
           required
           disabled={isLoadingPost || !user}
         />
@@ -249,7 +255,7 @@ function CreateEditPost() {
         />
         {enableCoverImage && (
           <>
-            <h5>Cover image (optional)</h5>
+            <h5>{t('createEditPost.coverImage')}</h5>
             <input type="file" accept="image/*" onChange={handlePhotoUpload} />
             {photo && (
               <S.PhotoPreview>
@@ -261,12 +267,12 @@ function CreateEditPost() {
         <S.ConfigurationSection>
           <S.ConfigurationBlock>
             <div>
-              <h5>Visibility</h5>
+              <h5>{t('createEditPost.visibility')}</h5>
               <RadioGroup
                 name="status"
                 options={[
-                  { label: 'Draft', value: 'draft' },
-                  { label: 'Published', value: 'published' },
+                  { label: t('createEditPost.draft'), value: 'draft' },
+                  { label: t('createEditPost.published'), value: 'published' },
                 ]}
                 selectedValue={status}
                 onChange={setStatus}
@@ -277,18 +283,24 @@ function CreateEditPost() {
             </div>
             <S.ConfigurationMessage>
               {status === 'published'
-                ? 'If your post is set to Published, it is visible to everyone.'
-                : 'If your post is set to Draft, it will not be visible to others until you publish it.'}
+                ? t('createEditPost.publishedDesc')
+                : t('createEditPost.draftDesc')}
             </S.ConfigurationMessage>
           </S.ConfigurationBlock>
           <S.ConfigurationBlock>
             <div>
-              <h5>Comments configuration</h5>
+              <h5>{t('createEditPost.commentsConfig')}</h5>
               <RadioGroup
                 name="comments-configuration"
                 options={[
-                  { label: 'Accept comments', value: 'accept-comments' },
-                  { label: 'Comments disabled', value: 'comments-disabled' },
+                  {
+                    label: t('createEditPost.acceptComments'),
+                    value: 'accept-comments',
+                  },
+                  {
+                    label: t('createEditPost.commentsDisabled'),
+                    value: 'comments-disabled',
+                  },
                 ]}
                 selectedValue={
                   acceptComments ? 'accept-comments' : 'comments-disabled'
@@ -314,26 +326,30 @@ function CreateEditPost() {
                   handleEditPost(e);
                 }}
               >
-                {isLoadingEdit ? 'Saving...' : 'Save changes'}
+                {isLoadingEdit
+                  ? t('createEditPost.saving')
+                  : t('createEditPost.saveChanges')}
               </MainButton>
               <MainButton
                 disabled={isLoadingEdit || !user || !postId}
                 onClick={handleViewPostClick}
               >
-                View post
+                {t('createEditPost.viewPost')}
               </MainButton>
             </>
           ) : (
             <MainButton type="submit" disabled={isLoadingCreate || !user}>
-              {isLoadingCreate ? 'Saving...' : 'Save and exit'}
+              {isLoadingCreate
+                ? t('createEditPost.saving')
+                : t('createEditPost.saveAndExit')}
             </MainButton>
           )}
         </S.ActionsSection>
       </S.FormWrapper>
       {showConfirmModal && (
         <ConfirmationModal
-          title="Unsaved changes"
-          description="You have unsaved changes. Are you sure you want to leave without saving?"
+          title={t('createEditPost.unsavedTitle')}
+          description={t('createEditPost.unsavedDesc')}
           onConfirm={handleConfirmNavigate}
           onCancel={handleCancelNavigate}
         />
