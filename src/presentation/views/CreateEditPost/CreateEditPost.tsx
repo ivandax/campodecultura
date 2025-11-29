@@ -45,6 +45,10 @@ function CreateEditPost() {
     if (!user) return;
     e.preventDefault();
     setIsLoadingCreate(true);
+    if (!title || !content) {
+      notifyError(t('createEditPost.errorEmptyFields'));
+      return;
+    }
     const result = await createPost({
       title,
       content: content,
@@ -67,6 +71,37 @@ function CreateEditPost() {
       return;
     }
     navigate('/home');
+  };
+
+  const handleCreatePostAndEdit = async (e: React.FormEvent) => {
+    if (!user) return;
+    if (!title || !content) {
+      notifyError(t('createEditPost.errorEmptyFields'));
+      return;
+    }
+    e.preventDefault();
+    setIsLoadingCreate(true);
+    const result = await createPost({
+      title,
+      content: content,
+      createdOn: +new Date(),
+      editedOn: +new Date(),
+      coverImage: photo,
+      language: 'en',
+      categories: [],
+      status: status,
+      authorId: user.id,
+      acceptComments: acceptComments,
+    });
+    setIsLoadingCreate(false);
+    if (result.error) {
+      notifyError(result.error.message);
+      return;
+    }
+    // Redirect to edit route with the newly created post
+    if (result.data) {
+      navigate(`/posts/${user.id}/edit/${result.data}`);
+    }
   };
 
   const handleEditPost = async (e: React.FormEvent) => {
@@ -338,11 +373,24 @@ function CreateEditPost() {
               </MainButton>
             </>
           ) : (
-            <MainButton type="submit" disabled={isLoadingCreate || !user}>
-              {isLoadingCreate
-                ? t('createEditPost.saving')
-                : t('createEditPost.saveAndExit')}
-            </MainButton>
+            <>
+              <MainButton
+                disabled={isLoadingCreate || !user}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleCreatePostAndEdit(e);
+                }}
+              >
+                {isLoadingCreate
+                  ? t('createEditPost.saving')
+                  : t('createEditPost.saveChanges')}
+              </MainButton>
+              <MainButton type="submit" disabled={isLoadingCreate || !user}>
+                {isLoadingCreate
+                  ? t('createEditPost.saving')
+                  : t('createEditPost.saveAndExit')}
+              </MainButton>
+            </>
           )}
         </S.ActionsSection>
       </S.FormWrapper>

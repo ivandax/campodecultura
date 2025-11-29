@@ -115,7 +115,8 @@
     "errorDataNull": "Data is null",
     "errorOwner": "Post does not belong to the user",
     "errorPasteFiles": "Pasting files not supported",
-    "errorPasteImages": "Images not supported"
+    "errorPasteImages": "Images not supported",
+    "errorEmptyFields": "Title and content are required"
   },
   "myPosts": {
     "userIdMissing": "User ID is missing",

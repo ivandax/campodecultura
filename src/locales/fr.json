@@ -115,7 +115,8 @@
     "errorDataNull": "Les données sont nulles",
     "errorOwner": "L’article n’appartient pas à l’utilisateur",
     "errorPasteFiles": "Coller des fichiers n’est pas supporté",
-    "errorPasteImages": "Les images ne sont pas supportées"
+    "errorPasteImages": "Les images ne sont pas supportées",
+    "errorEmptyFields": "Le titre et le contenu sont obligatoires"
   },
   "myPosts": {
     "userIdMissing": "ID utilisateur manquant",

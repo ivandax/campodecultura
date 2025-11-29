@@ -115,7 +115,8 @@
     "errorDataNull": "Los datos son nulos",
     "errorOwner": "La publicación no pertenece al usuario",
     "errorPasteFiles": "No se admite pegar archivos",
-    "errorPasteImages": "No se admiten imágenes"
+    "errorPasteImages": "No se admiten imágenes",
+    "errorEmptyFields": "El título y el contenido son obligatorios"
   },
   "myPosts": {
     "userIdMissing": "Falta el ID de usuario",
