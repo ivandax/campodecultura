@@ -19,6 +19,7 @@ import {
 } from '@src/presentation/utils';
 import { Spinner } from '@src/presentation/components/Spinner';
 import { useAuthStore } from '@src/presentation/store/authStore';
+import { useCopyToClipboard } from '@src/presentation/hooks/use-copy-to-clipboard';
 
 const AllUsers: React.FC = () => {
   const { t } = useTranslation();
@@ -48,6 +49,8 @@ const AllUsers: React.FC = () => {
     handleGetUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appUserTask.status, t]);
+
+  const copyToClipboard = useCopyToClipboard();
 
   return (
     <Container>
@@ -85,7 +88,7 @@ const AllUsers: React.FC = () => {
           {usersTask.status === 'successful' &&
             usersTask.data.length > 0 &&
             usersTask.data.map((user) => (
-              <TableRow key={user.id}>
+              <TableRow key={user.id} onClick={() => copyToClipboard(user.id)}>
                 <TableCell>
                   <H2CategoryTitle>
                     {user.name === '' ? t('allUsers.noName') : user.name}
