@@ -120,7 +120,8 @@
   },
   "myPosts": {
     "userIdMissing": "Falta el ID de usuario",
-    "title": "Publicaciones",
+    "title": "Publicaciones de {{userName}}",
+    "titlePlaceholder": "Publicaciones",
     "copyUrl": "Copiar URL"
   },
   "allUsers": {

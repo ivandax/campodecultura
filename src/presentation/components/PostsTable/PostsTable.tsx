@@ -51,9 +51,6 @@ function PostsTable({ isOwner, userId }: PostsTableProps) {
           <TableHeaderCell $width={20}>
             <BodyText color={'gray'}>Status</BodyText>
           </TableHeaderCell>
-          <TableHeaderCell $width={20}>
-            <BodyText color={'gray'}>Author</BodyText>
-          </TableHeaderCell>
         </tr>
       </thead>
       <tbody>
@@ -64,13 +61,11 @@ function PostsTable({ isOwner, userId }: PostsTableProps) {
             </TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
-            <TableCell></TableCell>
           </TableRow>
         )}
         {postsTask.status === 'successful' && postsTask.data.length === 0 && (
           <TableRow>
             <TableCell>No data</TableCell>
-            <TableCell></TableCell>
             <TableCell></TableCell>
             <TableCell></TableCell>
           </TableRow>
@@ -104,9 +99,6 @@ function PostsTable({ isOwner, userId }: PostsTableProps) {
                 >
                   {item.status}
                 </StatusChip>
-              </TableCell>
-              <TableCell $pointer onClick={() => void 0} $width={20}>
-                <BodyText>{item.author?.name}</BodyText>
               </TableCell>
             </TableRow>
           ))}

@@ -120,7 +120,8 @@
   },
   "myPosts": {
     "userIdMissing": "User ID is missing",
-    "title": "Posts",
+    "title": "Posts by {{userName}}",
+    "titlePlaceholder": "Posts",
     "copyUrl": "Copy URL"
   },
   "allUsers": {

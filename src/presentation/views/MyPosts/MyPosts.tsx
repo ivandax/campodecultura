@@ -28,7 +28,11 @@ function MyPosts() {
     <S.Wrapper>
       <S.Main>
         <S.Top>
-          <ViewTitle>{t('myPosts.title')}</ViewTitle>
+          <ViewTitle>
+            {userTask.status === 'successful'
+              ? t('myPosts.title', { userName: userTask.data?.name })
+              : t('myPosts.titlePlaceholder')}
+          </ViewTitle>
           <MainButton onClick={handleCopyUrl}>
             {t('myPosts.copyUrl')}
           </MainButton>
