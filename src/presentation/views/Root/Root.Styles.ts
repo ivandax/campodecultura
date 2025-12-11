@@ -19,4 +19,5 @@ export const RootContainer = styled.div`
 
 export const MainContent = styled.div`
   flex: 1;
+  overflow: hidden;
 `;
