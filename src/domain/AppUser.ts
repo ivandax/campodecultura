@@ -1,6 +1,7 @@
 export type AppUser = CreateAppUserData & {
   id: string;
   emailVerified: boolean;
+  token: string;
 };
 
 export type CreateAppUserData = {

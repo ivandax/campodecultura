@@ -16,6 +16,7 @@ import { AnalyticsTracker } from '@src/presentation/components/AnalyticsTracker'
 import { RecoverPassword } from '@src/presentation/views/RecoverPassword';
 import { VerifyEmail } from '@src/presentation/views/VerifyEmail';
 import { SetNewPassword } from '@src/presentation/views/SetNewPassword';
+import { AIChat } from '@src/presentation/views/AIChat';
 import { Analytics } from 'firebase/analytics';
 
 interface RootProps {
@@ -47,6 +48,7 @@ const Root: React.FC<RootProps> = ({ analytics }: RootProps) => {
             <Route path="/posts/:userId/view/:postId" element={<ViewPost />} />
             <Route path="/my-profile" element={<MyProfile />} />
             <Route path="/all-users" element={<AllUsers />} />
+            <Route path="/ai-chat" element={<AIChat />} />
             <Route path="/" element={<Navigate to="/home" replace />} />
           </Routes>
         </MainContent>

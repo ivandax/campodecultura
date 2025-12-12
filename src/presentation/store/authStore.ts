@@ -29,6 +29,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     const cancelObserver = registerAuthObserver(async (user) => {
       set({ userTask: { status: 'in-progress' } });
       if (user) {
+        const token = await user.getIdToken();
         const userProfileResult = await getUser(user.uid);
         if (userProfileResult.data) {
           set({
@@ -37,6 +38,7 @@ export const useAuthStore = create<AuthState>((set) => ({
               data: {
                 ...userProfileResult.data,
                 emailVerified: user.emailVerified,
+                token,
               },
             },
           });
@@ -53,13 +55,18 @@ export const useAuthStore = create<AuthState>((set) => ({
           const createResult = await createUser(
             newProfile,
             user.uid,
-            user.emailVerified
+            user.emailVerified,
+            token
           );
           if (createResult.data) {
             set({
               userTask: {
                 status: 'successful',
-                data: createResult.data,
+                data: {
+                  ...createResult.data,
+                  emailVerified: user.emailVerified,
+                  token,
+                },
               },
             });
           } else {
