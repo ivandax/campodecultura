@@ -1,6 +1,6 @@
 import { MainButton } from '../Buttons/MainButton';
 import { CloseIcon } from '../CloseIcon';
-import { IconButton } from '../IconButton';
+import { IconButton } from '../Buttons/IconButton';
 import { BodyText, H2CategoryTitle } from '../Texts';
 import {
   ButtonContainer,

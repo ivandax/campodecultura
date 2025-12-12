@@ -13,7 +13,7 @@ import { notifyError, notifySuccess } from '@src/presentation/utils';
 import { Spinner } from '@src/presentation/components/Spinner';
 import { RadioGroup } from '@src/presentation/components/RadioGroup/RadioGroup';
 import { NotificationBanner } from '@src/presentation/components/Banner/Banner';
-import { IconButton } from '@src/presentation/components/IconButton';
+import { IconButton } from '@src/presentation/components/Buttons/IconButton';
 
 function CreateEditPost() {
   const { t } = useTranslation();
@@ -258,6 +258,11 @@ function CreateEditPost() {
     setShowConfirmModal(false);
   };
 
+  const isSaveDisabled = () => {
+    const isLoading = isEditMode ? isLoadingEdit : isLoadingCreate;
+    return isLoading || !user;
+  };
+
   return (
     <>
       {user?.emailVerified === false && <NotificationBanner visible={true} />}
@@ -281,6 +286,7 @@ function CreateEditPost() {
             }}
             icon={<FaSave size={20} />}
             ariaLabel={t('createEditPost.saveChanges')}
+            disabled={isSaveDisabled()}
           />
         </S.HeaderSection>
         <input
