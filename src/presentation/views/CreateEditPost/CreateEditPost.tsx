@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
+import { FaSave } from 'react-icons/fa';
 import * as S from './CreateEditPost.Styles';
 import { createPost, editPost, getPost } from '@src/persistence/post';
 import { useAuthStore } from '@src/presentation/store/authStore';
@@ -12,6 +13,7 @@ import { notifyError, notifySuccess } from '@src/presentation/utils';
 import { Spinner } from '@src/presentation/components/Spinner';
 import { RadioGroup } from '@src/presentation/components/RadioGroup/RadioGroup';
 import { NotificationBanner } from '@src/presentation/components/Banner/Banner';
+import { IconButton } from '@src/presentation/components/IconButton';
 
 function CreateEditPost() {
   const { t } = useTranslation();
@@ -262,11 +264,25 @@ function CreateEditPost() {
       <S.FormWrapper
         onSubmit={isEditMode ? handleEditPostAndNavigateAway : handleCreatePost}
       >
-        <h5>
-          {isEditMode
-            ? t('createEditPost.editTitle')
-            : t('createEditPost.createTitle')}
-        </h5>
+        <S.HeaderSection>
+          <h5>
+            {isEditMode
+              ? t('createEditPost.editTitle')
+              : t('createEditPost.createTitle')}
+          </h5>
+          <IconButton
+            onClick={(e) => {
+              if (e) e.preventDefault();
+              if (isEditMode) {
+                handleEditPost(e as React.FormEvent);
+              } else {
+                handleCreatePostAndEdit(e as React.FormEvent);
+              }
+            }}
+            icon={<FaSave size={20} />}
+            ariaLabel={t('createEditPost.saveChanges')}
+          />
+        </S.HeaderSection>
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}

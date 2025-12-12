@@ -17,6 +17,13 @@ export const FormWrapper = styled.form`
   }
 `;
 
+export const HeaderSection = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+`;
+
 export const PhotoPreview = styled.div`
   width: 200px;
 `;

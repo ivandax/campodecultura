@@ -1,7 +1,7 @@
 import { IconButtonWrapper } from './IconButton.Styles';
 
 interface IconButtonProps {
-  onClick: () => void;
+  onClick: (e?: React.MouseEvent<HTMLButtonElement>) => void;
   icon: React.ReactNode;
   ariaLabel?: string;
 }
