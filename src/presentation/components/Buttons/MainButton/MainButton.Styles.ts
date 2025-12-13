@@ -8,6 +8,7 @@ export const MainButton = styled.button`
   transition: background-color 0.3s ease;
   border-radius: 8px;
   min-width: 150px;
+  width: fit-content;
 
   &:disabled {
     cursor: not-allowed;

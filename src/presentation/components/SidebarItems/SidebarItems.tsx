@@ -67,13 +67,22 @@ export function SidebarItems({ displayOn, closeSidebar }: SidebarItemsProps) {
             {t('sidebar.myProfile')}
           </SidebarItem>
           {userTask.data.role === 'DEV' && (
-            <SidebarItem
-              onClick={() => handleNavigate('/all-users')}
-              $active={location.pathname === '/all-users'}
-              $displayOn={displayOn}
-            >
-              {t('sidebar.allUsers')}
-            </SidebarItem>
+            <>
+              <SidebarItem
+                onClick={() => handleNavigate('/all-users')}
+                $active={location.pathname === '/all-users'}
+                $displayOn={displayOn}
+              >
+                {t('sidebar.allUsers')}
+              </SidebarItem>
+              <SidebarItem
+                onClick={() => handleNavigate('/ai-chat')}
+                $active={location.pathname === '/ai-chat'}
+                $displayOn={displayOn}
+              >
+                AI Chat
+              </SidebarItem>
+            </>
           )}
         </>
       )}

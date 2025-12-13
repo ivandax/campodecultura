@@ -5,6 +5,7 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   padding: 20px;
+  gap: 16px;
 `;
 
 export const Table = styled.table`
